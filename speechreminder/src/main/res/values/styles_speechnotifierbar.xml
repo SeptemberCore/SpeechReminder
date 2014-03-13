@@ -19,7 +19,7 @@
 
 <resources>
 
-    <style name="Theme.Speechnotifierbar" parent="@style/Theme.AppCompat">
+    <style name="Theme.Speechnotifierbar" parent="@style/speechnotifiertheme">
         <item name="actionBarItemBackground">@drawable/selectable_background_speechnotifierbar</item>
         <item name="popupMenuStyle">@style/PopupMenu.Speechnotifierbar</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Speechnotifierbar</item>

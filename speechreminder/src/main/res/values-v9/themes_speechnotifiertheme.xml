@@ -3,7 +3,7 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="speechnotifiertheme" parent="@style/_speechnotifiertheme">
+  <style name="speechnotifiertheme" parent="Theme.AppCompat">
 
     <item name="android:textSelectHandleLeft">@drawable/speechnotifiertheme_text_select_handle_left</item>
     <item name="android:textSelectHandleRight">@drawable/speechnotifiertheme_text_select_handle_right</item>
