@@ -1,31 +1,19 @@
 package core.september.speechreminder.activities;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
 import core.september.speechreminder.R;
 
 
-public class MainActivity extends ActionBarActivity {
+public class SignInUpActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-
-
-        setContentView(R.layout.activity_main);
-
-        startActivity(new Intent(this,SignInUpActivity.class));
+        setContentView(R.layout.activity_sign_in_up);
     }
 
 
@@ -33,7 +21,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.sign_in_up, menu);
         return true;
     }
 
