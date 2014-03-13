@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="speechnotifiertheme" parent="Theme.AppCompat">
+
+    <item name="android:editTextStyle">@style/EditTextspeechnotifiertheme</item>
+
+    <item name="android:textColorHighlight">#99ffbb33</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewspeechnotifiertheme</item>
+
+    <item name="android:checkboxStyle">@style/CheckBoxspeechnotifiertheme</item>
+
+    <item name="android:radioButtonStyle">@style/RadioButtonspeechnotifiertheme</item>
+
+    <item name="android:buttonStyle">@style/Buttonspeechnotifiertheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonspeechnotifiertheme</item>
+
+    <item name="android:spinnerStyle">@style/Spinnerspeechnotifiertheme</item>
+
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemspeechnotifiertheme</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarspeechnotifiertheme</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarspeechnotifiertheme</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarspeechnotifiertheme</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigspeechnotifiertheme</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallspeechnotifiertheme</item>
+
+    <item name="android:buttonStyleToggle">@style/Togglespeechnotifiertheme</item>
+
+    <item name="android:listViewStyle">@style/ListViewspeechnotifiertheme</item>
+
+    <item name="android:listViewWhiteStyle">@style/ListViewspeechnotifiertheme.White</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItemspeechnotifiertheme</item>
+
+  </style>
+
+</resources>
