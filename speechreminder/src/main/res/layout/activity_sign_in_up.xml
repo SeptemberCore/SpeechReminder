@@ -16,20 +16,21 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:padding="10dp"
-        android:background="@drawable/transparent_shadow">
+        android:background="@drawable/transparent_shadow"
+        >
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/signIn"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/signInButton" />
+            android:id="@+id/signInButton"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/signUp"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/signUpButton" />
+            android:id="@+id/signUpButton"/>
     </LinearLayout>
 </RelativeLayout>
