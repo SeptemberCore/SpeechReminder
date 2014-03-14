@@ -2,7 +2,7 @@ package core.september.speechreminder.helpers;
 
 import java.util.List;
 
-import core.september.speechremindercore.models.AppUser;
+import core.september.speechreminder.models.AppUser;
 
 /**
  * Created by christian on 19/02/14.
