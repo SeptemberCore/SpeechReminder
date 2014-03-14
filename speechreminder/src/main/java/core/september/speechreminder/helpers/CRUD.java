@@ -1,4 +1,4 @@
-package core.september.speechremindercore.helpers;
+package core.september.speechreminder.helpers;
 
 import android.util.Log;
 
@@ -6,9 +6,9 @@ import com.niusounds.sqlite.SQLiteDAO;
 
 import java.util.List;
 
-import core.september.speechremindercore.app.SpeechReminder;
-import core.september.speechremindercore.config.Config;
-import core.september.speechremindercore.iface.CRUDable;
+import core.september.speechreminder.activities.app.SpeechReminder;
+import core.september.speechreminder.config.Config;
+import core.september.speechreminder.iface.CRUDable;
 
 
 /**
@@ -50,9 +50,8 @@ public class CRUD {
     public void delete(CRUDable item, String whereClause, String whereArgs) {
         try {
             dao.delete(item.getClass(), whereClause, whereArgs);
-        }
-        catch (Throwable t) {
-            Log.e(TAG,t.getMessage(),t);
+        } catch (Throwable t) {
+            Log.e(TAG, t.getMessage(), t);
         }
     }
 }

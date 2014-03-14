@@ -1,9 +1,9 @@
-package core.september.speechremindercore.models;
+package core.september.speechreminder.models;
 
 import com.niusounds.sqlite.Persistence;
 import com.niusounds.sqlite.PrimaryKey;
 
-import core.september.speechremindercore.iface.CRUDable;
+import core.september.speechreminder.iface.CRUDable;
 
 
 /**

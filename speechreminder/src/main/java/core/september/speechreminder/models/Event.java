@@ -1,11 +1,11 @@
-package core.september.speechremindercore.models;
+package core.september.speechreminder.models;
 
 import com.niusounds.sqlite.Persistence;
 import com.niusounds.sqlite.PrimaryKey;
 
 import java.util.Date;
 
-import core.september.speechremindercore.iface.CRUDable;
+import core.september.speechreminder.iface.CRUDable;
 
 /**
  * Created by christian on 13/03/14.

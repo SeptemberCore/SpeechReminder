@@ -1,4 +1,4 @@
-package core.september.speechremindercore.app;
+package core.september.speechreminder.app;
 
 import android.app.Application;
 

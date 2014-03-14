@@ -4,8 +4,6 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mnode.ical4j/ical4j/1.0.5.2/fadaa001f5d26f4afd8c2d8a8b0aef5a556d03d8/ical4j-1.0.5.2.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mnode.ical4j/ical4j/1.0.5.2/c1984b24f95d04e9b5f25ea7f8f9cd90027d8e7c/ical4j-1.0.5.2-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>
