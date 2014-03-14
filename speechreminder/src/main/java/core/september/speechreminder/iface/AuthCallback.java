@@ -1,4 +1,4 @@
-package core.september.speechremindercore.iface;
+package core.september.speechreminder.iface;
 
 import com.quickblox.core.result.Result;
 

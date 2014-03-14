@@ -1,7 +1,7 @@
-package core.september.speechremindercore.config;
+package core.september.speechreminder.config;
 
 
-import core.september.speechremindercore.iface.CRUDable;
+import core.september.speechreminder.iface.CRUDable;
 import core.september.speechremindercore.models.Event;
 
 /**

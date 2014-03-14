@@ -1,4 +1,4 @@
-package core.september.speechremindercore.config;
+package core.september.speechreminder.config;
 
 import java.util.ArrayList;
 

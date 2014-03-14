@@ -1,4 +1,4 @@
-package core.september.speechremindercore.helpers;
+package core.september.speechreminder.helpers;
 
 import java.util.List;
 
