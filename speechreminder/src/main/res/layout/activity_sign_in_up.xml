@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@drawable/speechbackground"
-    tools:context="core.september.speechreminder.activities.SignInUpActivity">
+    tools:context=".activities.SignInUpActivity">
 
 
     <LinearLayout
@@ -15,20 +15,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:padding="10dp"
+        android:background="@drawable/transparent_shadow"
         >
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Button"
+            android:text="@string/signIn"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/button"/>
+            android:id="@+id/signInButton"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Button"
+            android:text="@string/signUp"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/button2"/>
+            android:id="@+id/signUpButton"/>
     </LinearLayout>
 </RelativeLayout>
