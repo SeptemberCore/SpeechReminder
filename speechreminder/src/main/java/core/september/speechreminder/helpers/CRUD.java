@@ -14,7 +14,7 @@ import core.september.speechreminder.iface.CRUDable;
 /**
  * Created by christian on 19/02/14.
  */
-public class CRUD {
+public class CRUD<T extends CRUDable> {
     private static CRUD instance;
     private static SQLiteDAO dao;
     private final static String TAG = CRUD.class.getSimpleName();
@@ -36,8 +36,17 @@ public class CRUD {
         dao.insert(crud);
     }
 
-    public List<? extends CRUDable> select(Class<? extends CRUDable> clazz) {
+    public List<T> select(Class<T> clazz) {
         return dao.get(clazz);
+    }
+
+    /*public List<? extends CRUDable>  selectById(Class<? extends CRUDable> clazz,long id) {
+        return dao.get(clazz,"_id=?",""+id);
+    }*/
+
+    public T selectById(Class<T> clazz,long id) {
+        List<T> list = dao.get(clazz,"_id=?",""+id);
+        return list != null && list.size() > 0 ? list.get(0) : null;
     }
 
     public void update(CRUDable item, String whereClause, String whereArgs) {
