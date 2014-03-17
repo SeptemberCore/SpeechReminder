@@ -8,5 +8,6 @@
     <string name="title_activity_sign_in_up">SignInUpActivity</string>
     <string name="signUp">Sign Up</string>
     <string name="signIn">Sign In</string>
+    <string name="repeat_on">Repeat on:</string>
 
 </resources>
