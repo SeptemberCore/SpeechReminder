@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import core.september.speechreminder.AlarmReceiver;
+import core.september.speechreminder.receivers.AlarmReceiver;
 import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.config.DaysOfWeek;

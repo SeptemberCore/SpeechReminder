@@ -1,4 +1,4 @@
-package core.september.speechreminder;
+package core.september.speechreminder.receivers;
 
 import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
@@ -11,6 +11,7 @@ import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.helpers.DaoHelper;
 import core.september.speechreminder.iface.CRUDable;
 import core.september.speechreminder.models.Event;
+import core.september.speechreminder.services.SpeechService;
 
 public class AlarmReceiver extends BroadcastReceiver {
     public AlarmReceiver() {
@@ -22,8 +23,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         // an Intent broadcast.
         //throw new UnsupportedOperationException("Not yet implemented");
         long modelId = intent.getExtras().getLong(Config.EXTRA_FIELD);
-        Event event = (Event) CRUD.getInstance().selectById(Event.class, modelId);
+        //Event event = (Event) CRUD.getInstance().selectById(Event.class, modelId);
         //START SERVICE WITH NOTIFY EVENT
+        Intent serviceIntent = new Intent(context, SpeechService.class);
+        serviceIntent.putExtra(Config.EXTRA_FIELD,modelId);
+        context.startService(serviceIntent);
 
     }
 
