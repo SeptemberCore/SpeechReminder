@@ -7,8 +7,11 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Speechab" >
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+        <uses-permission android:name="android.permission.WAKE_LOCK" />
+
         <activity
-            android:name=".activities.MainActivity"
+            android:name="core.september.speechreminder.activities.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,9 +20,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SignInUpActivity"
+            android:name="core.september.speechreminder.activities.SignInUpActivity"
             android:label="@string/title_activity_sign_in_up" >
         </activity>
+
+        <receiver
+            android:name="core.september.speechreminder.receivers.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+        <receiver
+            android:name="core.september.speechreminder.receivers.BootReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="core.september.speechreminder.receivers.SchedulerProvider"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+
+        <service
+            android:name="core.september.speechreminder.services.SpeechService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

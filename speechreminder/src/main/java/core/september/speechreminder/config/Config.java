@@ -48,5 +48,7 @@ public class Config {
     //private static List<Class<? extends CRUDable>> models = null;
     public static Class<? extends CRUDable>[] _models = new Class[]{Event.class, AppUser.class};
 
+    public static String EXTRA_FIELD = "MODEL_ID";
+
 
 }
