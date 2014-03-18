@@ -9,5 +9,18 @@
     <string name="signUp">Sign Up</string>
     <string name="signIn">Sign In</string>
     <string name="repeat_on">Repeat on:</string>
+    <string name="Title">Title</string>
+    <string name="Description">Description</string>
+    <string name="StartAt">Start at</string>
+    <string name="isAllDay">Is all day</string>
+    <string name="EndAt">End at</string>
+    <string name="Save">Save</string>
+    <string name="Sunday">S</string>
+    <string name="Monday">M</string>
+    <string name="Tuesday">T</string>
+    <string name="Wednesday">W</string>
+    <string name="Thursday">T</string>
+    <string name="Friday">F</string>
+    <string name="Saturday">S</string>
 
 </resources>
