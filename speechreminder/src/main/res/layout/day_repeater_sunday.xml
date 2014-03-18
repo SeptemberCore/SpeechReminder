@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/repeat_on"
+        android:id="@+id/eventDate" />
+
+        <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Sunday"
+                android:textColor="@color/Red"
+                android:textSize="10dp"
+                android:id="@+id/checkBoxSunday"
+                android:enabled="false" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Monday"
+                android:textSize="10dp"
+                android:enabled="false"
+                android:id="@+id/checkBoxMonday" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Tuesday"
+                android:textSize="10dp"
+                android:enabled="false"
+                android:id="@+id/checkBoxTuesday" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Wednesday"
+                android:textSize="10dp"
+                android:enabled="false"
+                android:id="@+id/checkBoxWednsesday" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Thursday"
+                android:textSize="10dp"
+                android:enabled="false"
+                android:id="@+id/checkBoxThursday" />
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Friday"
+                android:textSize="10dp"
+                android:enabled="false"
+                android:id="@+id/checkBoxFriday" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Saturday"
+                android:textColor="@color/Blue"
+                android:textSize="10dp"
+                android:enabled="false"
+                android:id="@+id/checkBoxSaturday" />
+
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+
+</merge>

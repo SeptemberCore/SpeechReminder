@@ -39,102 +39,10 @@
 
         </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/repeat_on"
-            android:id="@+id/eventDate" />
 
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+    <include layout="@layout/day_repeater_sunday"/>
 
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="S"
-                    android:textColor="@color/Red"
-                    android:textSize="10dp"
-                    android:id="@+id/checkBoxSunday"
-                    android:enabled="false" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="M"
-                    android:textSize="10dp"
-                    android:enabled="false"
-                    android:id="@+id/checkBoxMonday" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="T"
-                    android:textSize="10dp"
-                    android:enabled="false"
-                    android:id="@+id/checkBoxTuesday" />
-
-
-            </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-
-
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="W"
-                android:textSize="10dp"
-                android:enabled="false"
-                android:id="@+id/checkBoxWednsesday" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="T"
-                android:textSize="10dp"
-                android:enabled="false"
-                android:id="@+id/checkBoxThursday" />
-
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="F"
-                android:textSize="10dp"
-                android:enabled="false"
-                android:id="@+id/checkBoxFriday" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="S"
-                android:textColor="@color/Blue"
-                android:textSize="10dp"
-                android:enabled="false"
-                android:id="@+id/checkBoxSaturday" />
-
-        </LinearLayout>
-    </LinearLayout>
 
     </LinearLayout>
 
-    </LinearLayout>
