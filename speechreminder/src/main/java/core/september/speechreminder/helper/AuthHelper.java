@@ -21,7 +21,7 @@ public class AuthHelper {
         QBUser qbUser = new QBUser();
         qbUser.setLogin(login);
         qbUser.setPassword(password);
-        QBUsers.signUp(qbUser, callback, context);
+        QBUsers.signUpSignInTask(qbUser, callback, context);
     }
 	
 	

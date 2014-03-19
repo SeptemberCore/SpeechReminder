@@ -22,5 +22,8 @@
     <string name="Thursday">T</string>
     <string name="Friday">F</string>
     <string name="Saturday">S</string>
+    <string name="offLine">Work Locally</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 
 </resources>

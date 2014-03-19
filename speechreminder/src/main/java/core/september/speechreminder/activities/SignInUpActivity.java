@@ -2,11 +2,13 @@ package core.september.speechreminder.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
 import core.september.speechreminder.R;
+import core.september.speechreminder.app.SpeechReminder;
 
 
 public class SignInUpActivity extends ActionBarActivity {
@@ -14,6 +16,7 @@ public class SignInUpActivity extends ActionBarActivity {
 
     protected Button mBtnSignIn;
     protected Button mBtnSignUp;
+    protected Button mBtnWorkOffLine;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +29,26 @@ public class SignInUpActivity extends ActionBarActivity {
 
         mBtnSignIn = (Button) findViewById(R.id.signInButton);
         mBtnSignUp = (Button) findViewById(R.id.signUpButton);
+        mBtnWorkOffLine = (Button) findViewById(R.id.workOffLine);
 
 
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.workOffLine:
+                SpeechReminder.getInstance().offLine = true;
+                break;
+
+            case R.id.signInButton:
+
+                break;
+
+            case R.id.signUpButton:
+
+                break;
+
+        }
     }
 
 

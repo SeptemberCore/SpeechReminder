@@ -11,17 +11,18 @@ import com.niusounds.sqlite.PrimaryKey;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import core.september.speechreminder.receivers.AlarmReceiver;
 import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.config.DaysOfWeek;
 import core.september.speechreminder.iface.CRUDable;
+import core.september.speechreminder.receivers.AlarmReceiver;
 
 /**
  * Created by christian on 13/03/14.
@@ -127,12 +128,24 @@ public class Event implements CRUDable{
         this.lastUpdate = lastUpdate;
     }
 
+
+    public String toRowLabel() {
+        StringBuffer buffer = new StringBuffer();
+        DateTime _start = new DateTime(getStart());
+        DateTimeFormat.forPattern("dd, MMMM ").printTo(buffer,_start);
+        DateTimeFormat.forPattern("HH:mm ").printTo(buffer,_start);
+        if(!isAllDay()) {
+            DateTime _end = new DateTime(getEnd());
+            DateTimeFormat.forPattern("- HH:mm").printTo(buffer,_end);
+        }
+        return buffer.toString();
+    }
+
     public boolean isAssignable() {
 
         //return new Interval( someTime.minusHours( 3 ), someTime ).contains( checkTime );
        return getRepeatBit() > 0 ? isAssignableRepeating() : isAssignableNoRepeating();
     }
-
     public void assign() {
         if(isAssignable()){
             setAlarm();
