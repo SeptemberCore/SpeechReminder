@@ -66,4 +66,8 @@ public enum DaysOfWeek {
                                                 input >= 2 ? 2 :
                                                         input >= 1 ? 1 : 0;
     }
+
+    public int getRepeat() {
+        return repeat;
+    }
 }

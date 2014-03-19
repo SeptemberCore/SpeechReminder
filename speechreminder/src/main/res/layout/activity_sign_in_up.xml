@@ -24,13 +24,24 @@
             android:layout_height="wrap_content"
             android:text="@string/signIn"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/signInButton"/>
+            android:id="@+id/signInButton"
+            android:onClick="onClick"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/signUp"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/signUpButton"/>
+            android:id="@+id/signUpButton"
+            android:onClick="onClick"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/offLine"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/workOffLine"
+            android:onClick="onClick"/>
+
     </LinearLayout>
 </RelativeLayout>
