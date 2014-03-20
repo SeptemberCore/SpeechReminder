@@ -76,15 +76,16 @@ public class SpeechReminderActivity extends FragmentActivity {
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private String[] mPlanetTitles;
+    //private String[] mPlanetTitles;
 
+    private final static int LIST_ACTIVITY = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.speechreminder_main);
 
         mTitle = mDrawerTitle = getTitle();
-        mPlanetTitles = getResources().getStringArray(R.array.planets_array);
+        //mPlanetTitles = getResources().getStringArray(R.array.planets_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -121,7 +122,7 @@ public class SpeechReminderActivity extends FragmentActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            selectItem(LIST_ACTIVITY);
         }
     }
 
@@ -150,7 +151,7 @@ public class SpeechReminderActivity extends FragmentActivity {
         }
         // Handle action buttons
         switch(item.getItemId()) {
-        case R.id.action_websearch:
+        /*case R.id.action_websearch:
             // create intent to perform web search for this planet
             Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
             intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
@@ -160,7 +161,7 @@ public class SpeechReminderActivity extends FragmentActivity {
             } else {
                 Toast.makeText(this, R.string.app_not_available, Toast.LENGTH_LONG).show();
             }
-            return true;
+            return true;*/
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -176,6 +177,11 @@ public class SpeechReminderActivity extends FragmentActivity {
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
+        switch (position) {
+            case LIST_ACTIVITY:
+
+                break;
+        }
         Fragment fragment = new PlanetFragment();
         Bundle args = new Bundle();
         args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
@@ -215,9 +221,9 @@ public class SpeechReminderActivity extends FragmentActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /**
+/*    *//**
      * Fragment that appears in the "content_frame", shows a planet
-     */
+     *//*
     public static class PlanetFragment extends Fragment {
         public static final String ARG_PLANET_NUMBER = "planet_number";
 
@@ -238,5 +244,5 @@ public class SpeechReminderActivity extends FragmentActivity {
             getActivity().setTitle(planet);
             return rootView;
         }
-    }
+    }*/
 }
