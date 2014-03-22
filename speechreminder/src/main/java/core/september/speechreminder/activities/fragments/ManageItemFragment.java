@@ -2,6 +2,7 @@ package core.september.speechreminder.activities.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import core.september.speechreminder.R;
@@ -81,9 +83,20 @@ public class ManageItemFragment extends Fragment {
          CheckBox checkBoxFriday = (CheckBox) getActivity().findViewById(R.id.checkBoxFriday);
          CheckBox checkBoxSaturday = (CheckBox) getActivity().findViewById(R.id.checkBoxSaturday);
 
+        //yyyy-MM-dd HH:mm:ss.SSSZ
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm");
+
         editTitle.setText(selectedItem.getTitle());
         editDescription.setText(selectedItem.getDescription());
-        editStartDate.setText();
+
+        editStartDate.setText(dateFormat.format(selectedItem.getStart()));
+        editStartTime.setText(hourFormat.format(selectedItem.getStart()));
+
+        checkBoxAllDay.setChecked(selectedItem.isAllDay());
+
+        editEndDate.setText(dateFormat.format(selectedItem.getEnd()));
+        editEndTime.setText(hourFormat.format(selectedItem.getEnd()));
 
         mCurrentPosition = id;
     }
@@ -93,7 +106,7 @@ public class ManageItemFragment extends Fragment {
         super.onSaveInstanceState(outState);
 
         // Save the current article selection in case we need to recreate the fragment
-        outState.putLong(ARG_POSITION, mCurrentPosition);
+        outState.putLong(ARG_ID, mCurrentPosition);
     }
 
 }

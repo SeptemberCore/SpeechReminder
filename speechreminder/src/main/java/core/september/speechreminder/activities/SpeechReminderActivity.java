@@ -42,6 +42,7 @@ import java.util.Locale;
 
 import core.september.android.basement.AbstractNavigationDrawerActivity;
 import core.september.speechreminder.R;
+import core.september.speechreminder.activities.fragments.ListItemFragment;
 
 /**
  * This example illustrates a common usage of the DrawerLayout widget
@@ -72,7 +73,7 @@ import core.september.speechreminder.R;
  */
 public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
 
-
+    private boolean mTwoPane;
     @Override
     protected int contentView() {
         return R.layout.speechreminder_main;
@@ -119,6 +120,18 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (findViewById(R.id.two_item_layout) != null) {
+// The detail container view will be present only in the
+// large-screen layouts (res/values-large and
+// res/values-sw600dp). If this view is present, then the
+// activity should be in two-pane mode.
+            mTwoPane = true;
+
+// In two-pane mode, list items should be given the
+// 'activated' state when touched.
+
+        }
+
         if (savedInstanceState == null) {
             selectItem(0);
         }
@@ -147,7 +160,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
     @Override
     protected void selectItem(int position) {
         // update the main content by replacing fragments
-        switch (position) {
+/*        switch (position) {
             case LIST_ACTIVITY:
 
                 break;
@@ -162,7 +175,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
-        setTitle(mPlanetTitles[position]);
+        setTitle(mPlanetTitles[position]);*/
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 

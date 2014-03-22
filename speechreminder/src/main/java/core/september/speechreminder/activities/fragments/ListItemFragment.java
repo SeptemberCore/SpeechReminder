@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import core.september.speechreminder.R;
 import core.september.speechreminder.activities.adapters.EventModelAdapter;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
@@ -49,7 +50,7 @@ public class ListItemFragment extends ListFragment{
 
         // When in two-pane layout, set the listview to highlight the selected list item
         // (We do this during onStart because at the point the listview is available.)
-        if (getFragmentManager().findFragmentById(R.id.article_fragment) != null) {
+        if (getFragmentManager().findFragmentById(R.id.list_item_fragment) != null) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
     }
