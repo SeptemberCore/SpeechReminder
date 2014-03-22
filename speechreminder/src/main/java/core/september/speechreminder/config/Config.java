@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import org.joda.time.DateTimeConstants;
 
 import core.september.speechreminder.activities.SignInUpActivity;
+import core.september.speechreminder.activities.SpeechReminderActivity;
 import core.september.speechreminder.iface.CRUDable;
 import core.september.speechreminder.models.AppUser;
 import core.september.speechreminder.models.Event;
@@ -27,6 +28,8 @@ public class Config {
     public final static String END_OF_LINE = System.getProperty("line.separator");
 
     public final static Class LANDING_ACTIVITY = SignInUpActivity.class;
+    public final static Class PLANNING_ACTIVITY = SpeechReminderActivity.class;
+
 
     public static SparseArray<DaysOfWeek> dayReference() {
         if(_dayReference == null) {
