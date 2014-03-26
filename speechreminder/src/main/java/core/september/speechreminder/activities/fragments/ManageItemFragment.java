@@ -25,7 +25,24 @@ import core.september.speechreminder.models.Event;
  */
 public class ManageItemFragment extends Fragment {
     final static String ARG_ID = "eventID";
-    long mCurrentPosition = -1;
+    int mCurrentPosition = -1;
+
+    public static ManageItemFragment newInstance(int index) {
+
+        ManageItemFragment f = new ManageItemFragment();
+
+        // Supply index input as an argument.
+
+        Bundle args = new Bundle();
+
+        args.putInt(Config.PICKED_ITEM, index);
+
+        f.setArguments(args);
+
+        return f;
+
+    }
+
     Event selectedItem = null;
 
     EditText editTitle = null;
@@ -55,34 +72,26 @@ public class ManageItemFragment extends Fragment {
         // the previous article selection set by onSaveInstanceState().
         // This is primarily necessary when in the two-pane layout.
         if (savedInstanceState != null) {
-            mCurrentPosition = savedInstanceState.getLong(ARG_ID);
+            mCurrentPosition = savedInstanceState.getInt(Config.PICKED_ITEM);
         }
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.manage_event, container, false);
+
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        updateArticleView();
 
-        // During startup, check if there are arguments passed to the fragment.
-        // onStart is a good place to do this because the layout has already been
-        // applied to the fragment at this point so we can safely call the method
-        // below that sets the article text.
-        Bundle args = getArguments();
-        if (args != null) {
-            // Set article based on argument passed in
-            updateArticleView(args.getLong(ARG_ID));
-        } else if (mCurrentPosition != -1) {
-            // Set article based on saved instance state defined during onCreateView
-            updateArticleView(mCurrentPosition);
-        }
     }
 
-    public void updateArticleView(long id) {
+    public void updateArticleView() {
 
-        selectedItem = (Event) CRUD.getInstance().selectById(Event.class,id);
+        selectedItem = (Event) CRUD.getInstance().select(Event.class).get(mCurrentPosition);
 
         int repeatBit = selectedItem.getRepeatBit();
 
@@ -144,17 +153,19 @@ public class ManageItemFragment extends Fragment {
         checkBoxFriday.setChecked(repeatDays.contains(DaysOfWeek.FRIDAY));
         checkBoxSaturday.setChecked(repeatDays.contains(DaysOfWeek.SATURDAY));
 
-        mCurrentPosition = id;
     }
 
+    public int getCurrentIndex() {
+        return mCurrentPosition;
+    }
 
-    @Override
+    /*@Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         // Save the current article selection in case we need to recreate the fragment
         outState.putLong(ARG_ID, mCurrentPosition);
-    }
+    }*/
 
     private void toModel() {
         selectedItem.setTitle(editTitle.getText().toString());

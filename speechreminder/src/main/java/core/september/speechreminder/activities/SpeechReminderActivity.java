@@ -73,7 +73,7 @@ import core.september.speechreminder.models.Event;
  * An action should be an operation performed on the current contents of the window,
  * for example enabling or disabling a data overlay on top of the current content.</p>
  */
-public class SpeechReminderActivity extends AbstractNavigationDrawerActivity implements ListItemFragment.OnListItemSelectedListener {
+public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
 
     private boolean mTwoPane;
     private Event selectedEvent;
@@ -199,6 +199,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
     @Override
     public void onListItemSelected(Event event) {
         selectedEvent = event;
+        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
 

@@ -8,48 +8,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <fragment class="core.september.speechreminder.activities.fragments.ListItemFragment"
+
+        android:id="@+id/list_item" android:layout_weight="1"
+
+        android:layout_width="0px"
+
+        android:layout_height="match_parent"
+        tools:layout="@layout/simple_list_item_1" />
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:id="@+id/two_item_layout"
-        android:layout_height="fill_parent">
-
-        <fragment
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:name="core.september.speechreminder.activities.fragments.ListItemFragment"
-            android:id="@+id/list_item_fragment"
-            tools:listitem="@android:layout/item_row"
-            tools:layout="@layout/simple_list_item_activated_1" />
-
-        <fragment
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:name="core.september.speechreminder.activities.fragments.ManageItemFragment"
-            android:id="@+id/fragment"
-            tools:layout="@layout/manage_event" />
-
-
-    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 
-
-    <!-- android:layout_gravity="start" tells DrawerLayout to treat
-         this as a sliding drawer on the left side for left-to-right
-         languages and on the right side for right-to-left languages.
-         The drawer is given a fixed width in dp and extends the full height of
-         the container. A solid background is used for contrast
-         with the content view. -->
-    <ListView
-        android:id="@+id/left_drawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
 </android.support.v4.widget.DrawerLayout>
