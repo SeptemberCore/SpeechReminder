@@ -43,6 +43,8 @@ import java.util.Locale;
 import core.september.android.basement.AbstractNavigationDrawerActivity;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
+import core.september.speechreminder.helpers.CRUD;
+import core.september.speechreminder.models.Event;
 
 /**
  * This example illustrates a common usage of the DrawerLayout widget
@@ -71,9 +73,11 @@ import core.september.speechreminder.activities.fragments.ListItemFragment;
  * An action should be an operation performed on the current contents of the window,
  * for example enabling or disabling a data overlay on top of the current content.</p>
  */
-public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
+public class SpeechReminderActivity extends AbstractNavigationDrawerActivity implements ListItemFragment.OnListItemSelectedListener {
 
     private boolean mTwoPane;
+    private Event selectedEvent;
+    private final static String EVENT_KEY = "EVENT_KEY";
     @Override
     protected int contentView() {
         return R.layout.speechreminder_main;
@@ -120,6 +124,13 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(savedInstanceState != null) {
+            long  key = savedInstanceState.getLong(EVENT_KEY);
+            selectedEvent = key > -1 ?
+                    ((Event)CRUD.getInstance().selectById(Event.class,key)) :
+                    null;
+        }
+
         if (findViewById(R.id.two_item_layout) != null) {
 // The detail container view will be present only in the
 // large-screen layouts (res/values-large and
@@ -133,7 +144,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
         }
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            selectItem(-1);
         }
     }
 
@@ -179,10 +190,19 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(EVENT_KEY, selectedEvent == null ? -1 : selectedEvent.get_id());
+    }
+
+    @Override
+    public void onListItemSelected(Event event) {
+        selectedEvent = event;
+    }
 
 
-
-/*    *//**
+    /*    *//**
      * Fragment that appears in the "content_frame", shows a planet
      *//*
     public static class PlanetFragment extends Fragment {

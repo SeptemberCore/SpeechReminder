@@ -149,15 +149,23 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:layout_width="fill_parent"
+        android:padding="15dp"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent">
 
         <Button
-            android:layout_width="fill_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="@string/Save"
             android:id="@+id/buttonConfirm" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Delete"
+            android:id="@+id/buttonDelete" />
 
     </LinearLayout>
 

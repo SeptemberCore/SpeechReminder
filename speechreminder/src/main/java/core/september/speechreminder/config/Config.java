@@ -30,6 +30,12 @@ public class Config {
     public final static Class LANDING_ACTIVITY = SignInUpActivity.class;
     public final static Class PLANNING_ACTIVITY = SpeechReminderActivity.class;
 
+    public final static String HOUR_FORMAT = "HH:mm";
+    public final static String DATE_FORMAT = "yyyy/MM/dd";
+
+    public final static String SHORT_HOUR_FORMAT = "HH:mm";
+    public final static String SHORT_DATE_FORMAT = "dd, MMMM";
+
 
     public static SparseArray<DaysOfWeek> dayReference() {
         if(_dayReference == null) {

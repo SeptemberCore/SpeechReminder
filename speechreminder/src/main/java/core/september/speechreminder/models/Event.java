@@ -13,11 +13,14 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import core.september.android.basement.Util.Logger;
 import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.config.DaysOfWeek;
@@ -132,13 +135,56 @@ public class Event implements CRUDable{
     public String toRowLabel() {
         StringBuffer buffer = new StringBuffer();
         DateTime _start = new DateTime(getStart());
-        DateTimeFormat.forPattern("dd, MMMM ").printTo(buffer,_start);
-        DateTimeFormat.forPattern("HH:mm ").printTo(buffer,_start);
+        DateTimeFormat.forPattern(Config.SHORT_DATE_FORMAT).printTo(buffer,_start);
+        buffer.append(" ");
+        DateTimeFormat.forPattern(Config.SHORT_HOUR_FORMAT).printTo(buffer,_start);
         if(!isAllDay()) {
             DateTime _end = new DateTime(getEnd());
-            DateTimeFormat.forPattern("- HH:mm").printTo(buffer,_end);
+            buffer.append(" - ");
+            DateTimeFormat.forPattern(Config.SHORT_HOUR_FORMAT).printTo(buffer,_end);
         }
         return buffer.toString();
+    }
+
+    public String getHour(Date date) {
+        StringBuffer buffer = new StringBuffer();
+        DateTime _start = new DateTime(date);
+        DateTimeFormat.forPattern(Config.HOUR_FORMAT).printTo(buffer,_start);
+        return buffer.toString();
+    }
+
+    public String getStartHour() {
+        return getHour(getStart());
+    }
+
+    public String getEndHour() {
+        return getHour(getEnd());
+    }
+
+    public String getDate(Date date) {
+        StringBuffer buffer = new StringBuffer();
+        DateTime _start = new DateTime(date);
+        DateTimeFormat.forPattern(Config.DATE_FORMAT).printTo(buffer,_start);
+        return buffer.toString();
+    }
+
+    public String getStartDate() {
+        return getDate(getStart());
+    }
+
+    public String getEndDate() {
+        return getDate(getEnd());
+    }
+
+    public Date toDate(String input, String format) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            return sdf.parse(input);
+        }
+        catch (Throwable t) {
+            Logger.error(this,t );
+        }
+        return null;
     }
 
     public boolean isAssignable() {

@@ -25,5 +25,6 @@
     <string name="offLine">Work Locally</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="Delete">Delete</string>
 
 </resources>
