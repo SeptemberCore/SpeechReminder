@@ -26,5 +26,8 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="Delete">Delete</string>
+    <string name="title_activity_speechreminder">Speech Reminder</string>
+    <string name="title_activity_speechreminder_details">Details</string>
+    <string name="add_item">New Event</string>
 
 </resources>

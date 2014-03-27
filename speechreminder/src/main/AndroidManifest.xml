@@ -20,8 +20,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="core.september.speechreminder.activities.SignInUpActivity"
-            android:label="@string/title_activity_sign_in_up" >
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:name="core.september.speechreminder.activities.SpeechReminderActivity"
+            android:label="@string/title_activity_speechreminder" >
+            <meta-data android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
+
+        </activity>
+        <activity
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:name="core.september.speechreminder.activities.SpeechReminderActivity$DetailsActivity"
+            android:label="@string/title_activity_speechreminder_details" >
+            <meta-data android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
+
         </activity>
 
         <receiver

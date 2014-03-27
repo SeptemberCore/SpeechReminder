@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -82,12 +85,25 @@ public class ManageItemFragment extends Fragment {
 
     }
 
+
+
     @Override
     public void onStart() {
         super.onStart();
-        updateArticleView();
+        if(mCurrentPosition > -1) {
+            updateArticleView();
+
+        }
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(Config.PICKED_ITEM, mCurrentPosition);
+    }
+
+
 
     public void updateArticleView() {
 
@@ -202,6 +218,7 @@ public class ManageItemFragment extends Fragment {
         else {
             CRUD.getInstance().insert(selectedItem);
         }
+        selectedItem.assign();
     }
 
 }
