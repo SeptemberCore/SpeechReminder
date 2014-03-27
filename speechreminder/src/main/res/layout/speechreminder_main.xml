@@ -8,20 +8,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment class="core.september.speechreminder.activities.fragments.ListItemFragment"
 
-        android:id="@+id/list_item" android:layout_weight="1"
-
-        android:layout_width="0px"
-
-        android:layout_height="match_parent"
-        tools:layout="@layout/simple_list_item_1" />
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+        <fragment class="core.september.speechreminder.activities.fragments.ListItemFragment"
+
+            android:id="@+id/list_item_fragmet" android:layout_weight="1"
+
+            android:layout_width="0px"
+
+            android:layout_height="match_parent"
+            tools:layout="@layout/simple_list_item_1" />
+
+        </FrameLayout>
 
     <ListView android:id="@+id/left_drawer"
         android:layout_width="240dp"

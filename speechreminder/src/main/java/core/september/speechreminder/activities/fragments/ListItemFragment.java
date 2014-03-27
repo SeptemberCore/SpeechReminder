@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
 import java.util.List;
 
 import core.september.speechreminder.R;
+import core.september.speechreminder.activities.SpeechReminderActivity;
 import core.september.speechreminder.activities.adapters.EventModelAdapter;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.helpers.CRUD;
@@ -27,8 +31,24 @@ public class ListItemFragment extends ListFragment{
 
     //private OnListItemSelectedListener mCallback;
     boolean mDualPane;
-    int mCurCheckPosition = 0;
+    int mCurCheckPosition = -1;
     private Event[] eventsArray;
+
+    public interface UpdateListener {
+        void onUpdate();
+    }
+
+    private UpdateListener mListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (UpdateListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
+        }
+    }
 
 
     @Override
@@ -62,7 +82,7 @@ public class ListItemFragment extends ListFragment{
 
             // Restore last state for checked position.
 
-            mCurCheckPosition = savedState.getInt(Config.PICKED_ITEM, 0);
+            mCurCheckPosition = savedState.getInt(Config.PICKED_ITEM,-1);
 
         }
 
@@ -80,7 +100,34 @@ public class ListItemFragment extends ListFragment{
 
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
+        //MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.list_item_fragment_menu, menu);
+        //return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.add_item:
+                Event newEvent = new Event();
+                CRUD.getInstance().insert(newEvent);
+                mCurCheckPosition = CRUD.getInstance().select(Event.class).size();
+                mListener.onUpdate();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
 
@@ -163,7 +210,7 @@ public class ListItemFragment extends ListFragment{
 
             Intent intent = new Intent();
 
-            intent.setClass(getActivity(), DetailsActivity.class);
+            intent.setClass(getActivity(), SpeechReminderActivity.DetailsActivity.class);
 
             intent.putExtra(Config.PICKED_ITEM, mCurCheckPosition);
 

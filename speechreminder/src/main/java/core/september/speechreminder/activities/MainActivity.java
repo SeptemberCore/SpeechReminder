@@ -31,7 +31,8 @@ public class MainActivity extends ActionBarActivity {
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Class routing = (DaoHelper.getAppUser() == null) ? SignInUpActivity.class : Config.LANDING_ACTIVITY;
+                //Class routing = (DaoHelper.getAppUser() == null) ? SignInUpActivity.class : Config.LANDING_ACTIVITY;
+                Class routing = SpeechReminderActivity.class;
                 startActivity(new Intent(MainActivity.this,routing));
                 MainActivity.this.finish();
             }

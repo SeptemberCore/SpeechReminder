@@ -16,35 +16,22 @@
 
 package core.september.speechreminder.activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.SearchManager;
-import android.content.Intent;
+
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.support.v4.app.FragmentTransaction;
 
-import java.util.Locale;
+import android.view.MenuItem;
+
+import android.widget.ArrayAdapter;
 
 import core.september.android.basement.AbstractNavigationDrawerActivity;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.activities.fragments.ManageItemFragment;
-import core.september.speechreminder.helpers.CRUD;
+
 import core.september.speechreminder.models.Event;
 
 /**
@@ -74,7 +61,7 @@ import core.september.speechreminder.models.Event;
  * An action should be an operation performed on the current contents of the window,
  * for example enabling or disabling a data overlay on top of the current content.</p>
  */
-public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
+public class SpeechReminderActivity extends AbstractNavigationDrawerActivity implements ListItemFragment.UpdateListener {
 
     private boolean mTwoPane;
     private Event selectedEvent;
@@ -173,7 +160,17 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong(EVENT_KEY, selectedEvent == null ? -1 : selectedEvent.get_id());
+        //outState.putLong(Conf, selectedEvent == null ? -1 : selectedEvent.get_id());
+    }
+
+    @Override
+    public void onUpdate() {
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.list_item_fragmet);
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.detach(fragment);
+        ft.attach(fragment);
+        ft.commit();
     }
 
 
@@ -204,7 +201,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
         }
     }*/
 
-    public static class DialogActivity extends SpeechReminderActivity {
+    public static class DetailsActivity extends FragmentActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
