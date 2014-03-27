@@ -43,6 +43,7 @@ import java.util.Locale;
 import core.september.android.basement.AbstractNavigationDrawerActivity;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
+import core.september.speechreminder.activities.fragments.ManageItemFragment;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
 
@@ -124,28 +125,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(savedInstanceState != null) {
-            long  key = savedInstanceState.getLong(EVENT_KEY);
-            selectedEvent = key > -1 ?
-                    ((Event)CRUD.getInstance().selectById(Event.class,key)) :
-                    null;
-        }
-
-        if (findViewById(R.id.two_item_layout) != null) {
-// The detail container view will be present only in the
-// large-screen layouts (res/values-large and
-// res/values-sw600dp). If this view is present, then the
-// activity should be in two-pane mode.
-            mTwoPane = true;
-
-// In two-pane mode, list items should be given the
-// 'activated' state when touched.
-
-        }
-
-        if (savedInstanceState == null) {
-            selectItem(-1);
-        }
+        setContentView(R.layout.speechreminder_main);
     }
 
     @Override
@@ -196,11 +176,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
         outState.putLong(EVENT_KEY, selectedEvent == null ? -1 : selectedEvent.get_id());
     }
 
-    @Override
-    public void onListItemSelected(Event event) {
-        selectedEvent = event;
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }
+
 
 
     /*    *//**
@@ -227,4 +203,26 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity {
             return rootView;
         }
     }*/
+
+    public static class DialogActivity extends SpeechReminderActivity {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            if (getResources().getConfiguration().orientation
+                    == Configuration.ORIENTATION_LANDSCAPE) {
+                // If the screen is now in landscape mode, we can show the
+                // dialog in-line with the list so we don't need this activity.
+                finish();
+                return;
+            }
+
+            if (savedInstanceState == null) {
+                // During initial setup, plug in the details fragment.
+                ManageItemFragment manageItem = new ManageItemFragment();
+                manageItem.setArguments(getIntent().getExtras());
+                getSupportFragmentManager().beginTransaction().add(android.R.id.content, manageItem).commit();
+            }
+        }
+    }
 }
