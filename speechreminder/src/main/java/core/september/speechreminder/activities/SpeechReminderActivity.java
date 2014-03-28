@@ -112,7 +112,17 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.speechreminder_main);
+        //setContentView(R.layout.speechreminder_main);
+
+       /* ListItemFragment firstFragment = new ListItemFragment();
+
+        // In case this activity was started with special instructions from an
+        // Intent, pass the Intent's extras to the fragment as arguments
+        firstFragment.setArguments(getIntent().getExtras());
+
+        // Add the fragment to the 'fragment_container' FrameLayout
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.list_item_fragment, firstFragment).commit();*/
     }
 
     @Override
