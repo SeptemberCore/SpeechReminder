@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.List;
@@ -94,10 +96,11 @@ public class ListItemFragment extends ListFragment{
 
             // Make sure our UI is in the correct state.
 
-            showDetails(mCurCheckPosition);
+            
 
         }
-
+		
+		showDetails(mCurCheckPosition);
     }
 
     @Override
@@ -105,6 +108,34 @@ public class ListItemFragment extends ListFragment{
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+    
+/*
+    @Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		ListItemFragment f = (ListItemFragment) getFragmentManager()
+                                         .findFragmentById(R.id.list_item_fragment);
+    if (f != null) 
+        getFragmentManager().beginTransaction().remove(f).commit();
+	}
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.map, container, false);
+        } catch (InflateException e) {
+        */
+/* map is already there, just return view as it is *//*
+
+        }
+        return view;
+    }
+*/
 
 
     @Override
