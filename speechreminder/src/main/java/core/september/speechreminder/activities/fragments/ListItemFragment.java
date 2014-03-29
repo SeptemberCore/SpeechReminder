@@ -52,6 +52,11 @@ public class ListItemFragment extends ListFragment{
         }
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     @Override
 
@@ -93,6 +98,7 @@ public class ListItemFragment extends ListFragment{
             // In dual-pane mode, list view highlights selected item.
 
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            showDetails(mCurCheckPosition);
 
             // Make sure our UI is in the correct state.
 
@@ -100,14 +106,9 @@ public class ListItemFragment extends ListFragment{
 
         }
 		
-		showDetails(mCurCheckPosition);
+
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
     
 /*
     @Override
@@ -142,6 +143,7 @@ public class ListItemFragment extends ListFragment{
     public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
         //MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.list_item_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
         //return true;
     }
 
@@ -190,7 +192,7 @@ public class ListItemFragment extends ListFragment{
 
      */
 
-    void showDetails(int index) {
+    public void showDetails(int index) {
 
         mCurCheckPosition = index;
 

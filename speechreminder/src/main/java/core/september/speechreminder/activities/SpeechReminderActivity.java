@@ -23,15 +23,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import android.widget.ArrayAdapter;
+
+import java.util.Arrays;
 
 import core.september.android.basement.AbstractNavigationDrawerActivity;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.activities.fragments.ManageItemFragment;
 
+import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
 
 /**
@@ -83,7 +88,8 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
 
     @Override
     protected ArrayAdapter mDrawerListAdapter() {
-        return null;
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, Arrays.asList("Uno","Due"));
+        return adapter;
     }
 
 
@@ -126,7 +132,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
     }
 
     @Override
-    protected boolean handleNavigationButton(MenuItem item) {
+    protected boolean handleNavigationButton(MenuItem item, FallBackDefault fallBackDefault) {
         // Handle action buttons
         switch(item.getItemId()) {
             case 0:
@@ -141,7 +147,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
                 }*/
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return fallBackDefault.doDefault();
         }
     }
 
@@ -175,41 +181,24 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
 
     @Override
     public void onUpdate() {
-
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.list_item_fragmet);
+        ListItemFragment fragment = (ListItemFragment) getSupportFragmentManager().findFragmentById(R.id.list_item_fragmet);
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.detach(fragment);
         ft.attach(fragment);
         ft.commit();
+        fragment.showDetails(CRUD.getInstance().select(Event.class).size() -1);
     }
 
 
 
 
-    /*    *//**
-     * Fragment that appears in the "content_frame", shows a planet
-     *//*
-    public static class PlanetFragment extends Fragment {
-        public static final String ARG_PLANET_NUMBER = "planet_number";
-
-        public PlanetFragment() {
-            // Empty constructor required for fragment subclasses
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_planet, container, false);
-            int i = getArguments().getInt(ARG_PLANET_NUMBER);
-            String planet = getResources().getStringArray(R.array.planets_array)[i];
-
-            int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
-                            "drawable", getActivity().getPackageName());
-            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
-            getActivity().setTitle(planet);
-            return rootView;
-        }
+   /* @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
     }*/
+
 
     public static class DetailsActivity extends FragmentActivity {
         @Override

@@ -3,10 +3,11 @@
     package="core.september.speechreminder" >
 
     <application
+        android:name=".app.SpeechReminder"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Speechab" >
+        android:theme="@style/Theme.Sppechab" >
         <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
         <uses-permission android:name="android.permission.WAKE_LOCK" />
 
