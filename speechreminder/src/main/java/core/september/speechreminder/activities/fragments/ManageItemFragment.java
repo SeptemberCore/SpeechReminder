@@ -107,7 +107,11 @@ public class ManageItemFragment extends Fragment {
 
     public void updateArticleView() {
 
-        selectedItem = (Event) CRUD.getInstance().select(Event.class).get(mCurrentPosition);
+        List<Event> eventList = CRUD.getInstance().select(Event.class);
+
+        if(eventList == null || eventList.size() == 0) return;
+
+        selectedItem = eventList.get(mCurrentPosition);
 
         int repeatBit = selectedItem.getRepeatBit();
 
