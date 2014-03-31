@@ -3,29 +3,40 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
         android:padding="6dip"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:background="@drawable/rounded_border"
         >
 
+
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/Green"
-            android:text="22/09/1981 - 22/09/1981"
-            android:id="@+id/eventDate" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/Green"
-            android:text="This is the event title"
-            android:id="@+id/eventTitle" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Green"
+                android:text="22/09/1981 - 22/09/1981"
+                android:id="@+id/eventDate" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Green"
+                android:text="This is the event title"
+                android:id="@+id/eventTitle" />
+
+
+
+
+        </LinearLayout>
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -36,13 +47,15 @@
             android:id="@+id/checkBoxSAllDay"
             android:enabled="false" />
 
+    </LinearLayout>
 
-        </LinearLayout>
 
 
 
     <include layout="@layout/day_repeater_sunday"/>
 
 
-    </LinearLayout>
+
+
+</LinearLayout>
 
