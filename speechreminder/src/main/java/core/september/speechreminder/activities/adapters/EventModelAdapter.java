@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import core.september.android.basement.Util.Logger;
 import core.september.speechreminder.R;
+import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.config.DaysOfWeek;
 import core.september.speechreminder.models.Event;
 
@@ -20,6 +22,7 @@ import core.september.speechreminder.models.Event;
 public class EventModelAdapter extends ArrayAdapter<Event> {
     private Activity context;
     private Event[] events;
+    private ListItemFragment.UpdateListener mListener;
 
 
     static class ViewHolder {
@@ -71,11 +74,16 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
         super(context, R.layout.item_row, events);
         this.context = context;
         this.events = events;
+        try {
+            mListener = (UpdateListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
+        }
     }
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
         // reuse views
         if (rowView == null) {
@@ -96,6 +104,8 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
             viewHolder.checkBoxFriday = (CheckBox) rowView.findViewById(R.id.checkBoxFriday);
             viewHolder.checkBoxSaturday = (CheckBox) rowView.findViewById(R.id.checkBoxSaturday);
 
+            viewHolder.checkBoxSAllDay = (CheckBox) rowView.findViewById(R.id.checkBoxSAllDay);
+
             rowView.setTag(viewHolder);
         }
 
@@ -113,6 +123,13 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
                holder.getByDayOfWeek(day).setChecked(true);
            }
         }
+
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Logger.debug(this,new Throwable(""+position));
+            }
+        });
 
         return rowView;
     }

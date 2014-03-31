@@ -22,7 +22,7 @@
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:textColor="@color/Green"
             android:text="This is the event title"
             android:id="@+id/eventTitle" />
