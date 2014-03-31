@@ -120,7 +120,7 @@ public class ManageItemFragment extends Fragment {
          editDescription = (EditText) getActivity().findViewById(R.id.editDescription);
          editStartDate = (EditText) getActivity().findViewById(R.id.editStartDate);
          editStartTime = (EditText) getActivity().findViewById(R.id.editStartTime);
-         checkBoxAllDay = (CheckBox) getActivity().findViewById(R.id.checkBoxAllDay);
+         checkBoxAllDay = (CheckBox) getActivity().findViewById(R.id.checkBoxSAllDay);
          editEndDate = (EditText) getActivity().findViewById(R.id.editEndDate);
          editEndTime = (EditText) getActivity().findViewById(R.id.editEndTime);
 

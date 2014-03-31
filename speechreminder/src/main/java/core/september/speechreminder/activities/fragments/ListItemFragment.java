@@ -38,6 +38,7 @@ public class ListItemFragment extends ListFragment{
 
     public interface UpdateListener {
         void onUpdate();
+        void onElementClicked(int pos);
     }
 
     private UpdateListener mListener;
@@ -73,7 +74,10 @@ public class ListItemFragment extends ListFragment{
         List<Event> eventList = CRUD.getInstance().select(Event.class);
         eventsArray = (eventList != null && eventList.size() > 0) ?
                 eventList.toArray(new Event[eventList.size()]) : new Event[0];
+
+        EventModelAdapter adapter = new EventModelAdapter(getActivity(), layout, eventsArray);
         setListAdapter(new EventModelAdapter(getActivity(), layout, eventsArray));
+
 
         // Check to see if we have a frame in which to embed the details
 
