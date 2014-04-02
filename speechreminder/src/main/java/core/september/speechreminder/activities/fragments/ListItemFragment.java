@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.List;
 
@@ -32,15 +29,9 @@ public class ListItemFragment extends ListFragment{
 
 
     //private OnListItemSelectedListener mCallback;
-    boolean mDualPane;
+    //boolean mDualPane;
     int mCurCheckPosition = -1;
     private Event[] eventsArray;
-
-    public interface UpdateListener {
-        void onUpdate();
-        void onElementClicked(int pos);
-    }
-
     private UpdateListener mListener;
 
     @Override
@@ -83,21 +74,21 @@ public class ListItemFragment extends ListFragment{
 
         // fragment directly in the containing UI.
 
-        View detailsFrame = getActivity().findViewById(R.id.content_frame);
+        //View detailsFrame = getActivity().findViewById(R.id.content_frame);
 
-        mDualPane = detailsFrame != null
+        /*mDualPane = detailsFrame != null
 
-                && detailsFrame.getVisibility() == View.VISIBLE;
+                && detailsFrame.getVisibility() == View.VISIBLE;*/
 
         if (savedState != null) {
 
             // Restore last state for checked position.
 
-            mCurCheckPosition = savedState.getInt(Config.PICKED_ITEM,-1);
+            mCurCheckPosition = savedState.getInt(Config.PICKED_ITEM, -1);
 
         }
 
-        if (mDualPane) {
+       /* if (mDualPane) {
 
             // In dual-pane mode, list view highlights selected item.
 
@@ -106,11 +97,19 @@ public class ListItemFragment extends ListFragment{
 
             // Make sure our UI is in the correct state.
 
-            
 
-        }
-		
 
+        }*/
+
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.list_item_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        //return true;
     }
 
     
@@ -142,15 +141,6 @@ public class ListItemFragment extends ListFragment{
     }
 */
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
-        //MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.list_item_fragment_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
-        //return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -176,16 +166,6 @@ public class ListItemFragment extends ListFragment{
 
     }
 
-    @Override
-
-    public void onListItemClick(ListView l, View v, int pos, long id) {
-
-        getListView().setItemChecked(pos, true);
-        showDetails(pos);
-
-
-    }
-
     /**
 
      * Helper function to show the details of a selected item, either by
@@ -200,7 +180,7 @@ public class ListItemFragment extends ListFragment{
 
         mCurCheckPosition = index;
 
-        if (mDualPane) {
+/*        if (mDualPane) {
 
             // We can display everything in-place with fragments.
 
@@ -239,21 +219,37 @@ public class ListItemFragment extends ListFragment{
 
             }
 
-        } else {
+        } else {*/
 
-            // Otherwise we need to launch a new activity to display
+        // Otherwise we need to launch a new activity to display
 
-            // the dialog fragment with selected text.
+        // the dialog fragment with selected text.
 
-            Intent intent = new Intent();
+        Intent intent = new Intent();
 
-            intent.setClass(getActivity(), SpeechReminderActivity.DetailsActivity.class);
+        intent.setClass(getActivity(), SpeechReminderActivity.DetailsActivity.class);
 
-            intent.putExtra(Config.PICKED_ITEM, mCurCheckPosition);
+        intent.putExtra(Config.PICKED_ITEM, mCurCheckPosition);
 
-            startActivity(intent);
+        startActivity(intent);
 
-        }
+        // }
 
+    }
+
+    /* @Override
+
+     public void onListItemClick(ListView l, View v, int pos, long id) {
+
+         getListView().setItemChecked(pos, true);
+         showDetails(pos);
+
+
+     }
+ */
+    public interface UpdateListener {
+        void onUpdate();
+
+        void onElementClicked(int pos);
     }
 }

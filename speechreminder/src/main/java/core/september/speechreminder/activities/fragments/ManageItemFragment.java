@@ -2,18 +2,13 @@ package core.september.speechreminder.activities.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.format.Time;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -29,25 +24,7 @@ import core.september.speechreminder.models.Event;
 public class ManageItemFragment extends Fragment {
     final static String ARG_ID = "eventID";
     int mCurrentPosition = -1;
-
-    public static ManageItemFragment newInstance(int index) {
-
-        ManageItemFragment f = new ManageItemFragment();
-
-        // Supply index input as an argument.
-
-        Bundle args = new Bundle();
-
-        args.putInt(Config.PICKED_ITEM, index);
-
-        f.setArguments(args);
-
-        return f;
-
-    }
-
     Event selectedItem = null;
-
     EditText editTitle = null;
     EditText editDescription = null;
     EditText editStartDate = null;
@@ -65,7 +42,21 @@ public class ManageItemFragment extends Fragment {
     CheckBox checkBoxFriday = null;
     CheckBox checkBoxSaturday = null;
 
+    public static ManageItemFragment newInstance(int index) {
 
+        ManageItemFragment f = new ManageItemFragment();
+
+        // Supply index input as an argument.
+
+        Bundle args = new Bundle();
+
+        args.putInt(Config.PICKED_ITEM, index);
+
+        f.setArguments(args);
+
+        return f;
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,10 +64,9 @@ public class ManageItemFragment extends Fragment {
 
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
-        // This is primarily necessary when in the two-pane layout.
-        if (savedInstanceState != null) {
-            mCurrentPosition = savedInstanceState.getInt(Config.PICKED_ITEM);
-        }
+
+        mCurrentPosition = getActivity().getIntent().getExtras().getInt(Config.PICKED_ITEM);
+
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.manage_event, container, false);
