@@ -17,16 +17,10 @@
 package core.september.speechreminder.activities;
 
 
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-
 import android.widget.ArrayAdapter;
 
 import java.util.Arrays;
@@ -35,7 +29,6 @@ import core.september.android.basement.AbstractNavigationDrawerActivity;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.activities.fragments.ManageItemFragment;
-
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
 
@@ -68,9 +61,10 @@ import core.september.speechreminder.models.Event;
  */
 public class SpeechReminderActivity extends AbstractNavigationDrawerActivity implements ListItemFragment.UpdateListener {
 
+    private final static String EVENT_KEY = "EVENT_KEY";
     private boolean mTwoPane;
     private Event selectedEvent;
-    private final static String EVENT_KEY = "EVENT_KEY";
+
     @Override
     protected int contentView() {
         return R.layout.speechreminder_main;
@@ -189,6 +183,12 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         fragment.showDetails(CRUD.getInstance().select(Event.class).size() -1);
     }
 
+    @Override
+    public void onElementClicked(int pos) {
+        ListItemFragment fragment = (ListItemFragment) getSupportFragmentManager().findFragmentById(R.id.list_item_fragmet);
+        fragment.showDetails(pos);
+    }
+
 
 
 
@@ -205,20 +205,20 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            if (getResources().getConfiguration().orientation
+           /* if (getResources().getConfiguration().orientation
                     == Configuration.ORIENTATION_LANDSCAPE) {
                 // If the screen is now in landscape mode, we can show the
                 // dialog in-line with the list so we don't need this activity.
                 finish();
                 return;
-            }
+            }*/
 
-            if (savedInstanceState == null) {
-                // During initial setup, plug in the details fragment.
+
+            // During initial setup, plug in the details fragment.
                 ManageItemFragment manageItem = new ManageItemFragment();
                 manageItem.setArguments(getIntent().getExtras());
                 getSupportFragmentManager().beginTransaction().add(android.R.id.content, manageItem).commit();
-            }
+
         }
     }
 }
