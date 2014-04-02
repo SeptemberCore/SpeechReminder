@@ -30,7 +30,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:paddingLeft="10dp"
@@ -45,7 +45,7 @@
             android:id="@+id/description" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:lines="3"
             android:id="@+id/editDescription"
@@ -61,28 +61,48 @@
         android:paddingLeft="10dp"
         android:id="@+id/linearLayoutStart">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/StartAt"
-            android:paddingRight="10dp"
-            android:id="@+id/Start" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/StartAt"
+                android:paddingRight="10dp"
+                android:id="@+id/Start" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="time"
+                android:ems="10"
+                android:id="@+id/editStartDate" />
+            </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/At"
+                android:paddingRight="10dp"
+                android:id="@+id/at1" />
 
         <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="time"
-            android:ems="10"
-            android:id="@+id/editStartDate" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:inputType="date"
+            android:layout_marginLeft="60dp"
             android:ems="10"
             android:id="@+id/editStartTime" />
 
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -110,6 +130,11 @@
         android:paddingLeft="10dp"
         android:id="@+id/linearLayoutEnd">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -125,6 +150,21 @@
             android:ems="10"
             android:id="@+id/editEndDate" />
 
+        </LinearLayout>
+
+           <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/At"
+                    android:paddingRight="10dp"
+                    android:id="@+id/at2" />
+
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -132,7 +172,7 @@
             android:ems="10"
             android:id="@+id/editEndTime" />
 
-
+            </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
