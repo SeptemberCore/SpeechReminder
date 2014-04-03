@@ -1,5 +1,6 @@
 package core.september.speechreminder.activities.fragments;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,10 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 
 import core.september.speechreminder.R;
 import core.september.speechreminder.config.Config;
@@ -41,6 +46,8 @@ public class ManageItemFragment extends Fragment {
     CheckBox checkBoxThursday = null;
     CheckBox checkBoxFriday = null;
     CheckBox checkBoxSaturday = null;
+
+
 
     public static ManageItemFragment newInstance(int index) {
 
@@ -93,7 +100,27 @@ public class ManageItemFragment extends Fragment {
         outState.putLong(Config.PICKED_ITEM, mCurrentPosition);
     }
 
+    private void setDate(final Event event,final boolean start) {
 
+        Date refDate = (Date) (start ? (event.getStartDate() == null ? new Date() : event.getStartDate()) :
+                        (event.getEndDate() == null ? new Date() :  event.getEndDate()));
+
+        String[] today = (new SimpleDateFormat("yyyy-MM-dd")).format(refDate).split("-");
+        DatePickerDialog dpdStart = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
+                        String formattedDate = "".concat(String.valueOf(year)).concat("-").concat(String.valueOf(monthOfYear)).concat("_").concat(String.valueOf(dayOfMonth));
+
+                        if(start) {
+
+                        }
+
+                    }
+                }, today[0], today[1], today[2]);
+        dpd.show();
+    }
 
     public void updateArticleView() {
 
@@ -109,6 +136,14 @@ public class ManageItemFragment extends Fragment {
          editTitle = (EditText) getActivity().findViewById(R.id.editTitle);
          editDescription = (EditText) getActivity().findViewById(R.id.editDescription);
          editStartDate = (EditText) getActivity().findViewById(R.id.editStartDate);
+
+         editStartDate.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+
+             }
+         });
+
          editStartTime = (EditText) getActivity().findViewById(R.id.editStartTime);
          checkBoxAllDay = (CheckBox) getActivity().findViewById(R.id.checkBoxSAllDay);
          editEndDate = (EditText) getActivity().findViewById(R.id.editEndDate);
