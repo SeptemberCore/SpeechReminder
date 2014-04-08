@@ -20,6 +20,10 @@ package core.september.speechreminder.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
@@ -200,10 +204,13 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
     }*/
 
 
-    public static class DetailsActivity extends FragmentActivity {
+    public static class DetailsActivity extends ActionBarActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
            /* if (getResources().getConfiguration().orientation
                     == Configuration.ORIENTATION_LANDSCAPE) {
@@ -219,6 +226,29 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
                 manageItem.setArguments(getIntent().getExtras());
                 getSupportFragmentManager().beginTransaction().add(android.R.id.content, manageItem).commit();
 
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                openSearch();
+                return true;
+            case R.id.action_compose:
+                composeMessage();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
