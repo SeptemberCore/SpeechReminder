@@ -6,6 +6,9 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -76,7 +79,7 @@ public class ManageItemFragment extends Fragment {
 
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
-
+        setHasOptionsMenu(true);
         mCurrentPosition = getActivity().getIntent().getExtras().getInt(Config.PICKED_ITEM);
 
 
@@ -86,6 +89,30 @@ public class ManageItemFragment extends Fragment {
 
 
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.list_item_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        //return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.add_item:
+                Event newEvent = new Event();
+                CRUD.getInstance().insert(newEvent);
+                mCurCheckPosition = CRUD.getInstance().select(Event.class).size();
+                mListener.onUpdate();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
 
 
