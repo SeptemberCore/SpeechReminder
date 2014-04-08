@@ -1,6 +1,8 @@
 package core.september.speechreminder.activities.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,13 +12,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.SimpleFormatter;
 
+import core.september.android.basement.Util.Logger;
 import core.september.speechreminder.R;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.config.DaysOfWeek;
@@ -100,26 +105,96 @@ public class ManageItemFragment extends Fragment {
         outState.putLong(Config.PICKED_ITEM, mCurrentPosition);
     }
 
-    private void setDate(final Event event,final boolean start) {
+    private void setDate(final boolean start) {
 
-        Date refDate = (Date) (start ? (event.getStartDate() == null ? new Date() : event.getStartDate()) :
-                        (event.getEndDate() == null ? new Date() :  event.getEndDate()));
+        final Date refDate = (Date) (start ? (selectedItem.getStart() == null ? new Date() : selectedItem.getStart()) :
+                        (selectedItem.getEnd() == null ? new Date() :  selectedItem.getEnd()));
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(refDate);
 
-        String[] today = (new SimpleDateFormat("yyyy-MM-dd")).format(refDate).split("-");
-        DatePickerDialog dpdStart = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
+        //                       // String formattedDate = "".concat(String.valueOf(year)).concat("-").concat(String.valueOf(monthOfYear)).concat("_").concat(String.valueOf(dayOfMonth));
+
+        String[] today = (new SimpleDateFormat(Config.DATE_FORMAT)).format(refDate).split(Config.DATE_SPLIT);
+        DatePickerDialog dpdStart = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
 
                     @Override
                     public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
-                        String formattedDate = "".concat(String.valueOf(year)).concat("-").concat(String.valueOf(monthOfYear)).concat("_").concat(String.valueOf(dayOfMonth));
+                        try {
 
-                        if(start) {
+                        String formattedDate = "".concat(String.valueOf(year)).concat(Config.DATE_SPLIT)
+                               .concat(String.valueOf(monthOfYear+1)).concat(Config.DATE_SPLIT)
+                               .concat(String.valueOf(dayOfMonth));
+                       String formattedHour = new SimpleDateFormat(Config.HOUR_FORMAT).format(refDate);
 
+
+                            Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(Config.HOUR_FORMAT))
+                                    .parse(formattedDate.concat(Config.SPACE).concat(formattedHour));
+
+                            if(start) {
+                                selectedItem.setStart(newDate);
+                                editStartDate.setText(selectedItem.getStartDate());
+                            }
+
+                            else {
+                                selectedItem.setEnd(newDate);
+                                editEndDate.setText(selectedItem.getEndDate());
+                            }
+
+
+                        } catch (Throwable e) {
+                            Logger.debug(ManageItemFragment.this,e);
                         }
 
+
                     }
-                }, today[0], today[1], today[2]);
-        dpd.show();
+                }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+        dpdStart.show();
+    }
+
+    private void setTime(final boolean start) {
+
+        final Date refDate = (Date) (start ? (selectedItem.getStart() == null ? new Date() : selectedItem.getStart()) :
+                (selectedItem.getEnd() == null ? new Date() :  selectedItem.getEnd()));
+
+        //                       // String formattedDate = "".concat(String.valueOf(year)).concat("-").concat(String.valueOf(monthOfYear)).concat("_").concat(String.valueOf(dayOfMonth));
+
+        String[] today = (new SimpleDateFormat(Config.HOUR_FORMAT)).format(refDate).split(Config.HOUR_SPLIT);
+        TimePickerDialog dpdStart = new TimePickerDialog(this.getActivity(), new TimePickerDialog.OnTimeSetListener() {
+
+            @Override
+            public void onTimeSet(TimePicker view, int hours,int minutes) {
+                try {
+
+
+
+                    String formattedDate = new SimpleDateFormat(Config.DATE_FORMAT).format(refDate);
+                    String formattedHour = "".concat(String.valueOf(hours)).concat(Config.HOUR_SPLIT)
+                            .concat(String.valueOf(minutes));
+
+
+
+                    Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(Config.HOUR_FORMAT))
+                            .parse(formattedDate.concat(Config.SPACE).concat(formattedHour));
+
+                    if(start) {
+                        selectedItem.setStart(newDate);
+                        editStartTime.setText(selectedItem.getStartHour());
+                    }
+
+                    else {
+                        selectedItem.setEnd(newDate);
+                        editEndTime.setText(selectedItem.getEndHour());
+                    }
+
+
+                } catch (Throwable e) {
+                    Logger.debug(ManageItemFragment.this,e);
+                }
+
+
+            }
+        }, Integer.valueOf(today[0]), Integer.valueOf(today[1]),Config.IS24HOURVIEW );
+        dpdStart.show();
     }
 
     public void updateArticleView() {
@@ -135,19 +210,46 @@ public class ManageItemFragment extends Fragment {
 
          editTitle = (EditText) getActivity().findViewById(R.id.editTitle);
          editDescription = (EditText) getActivity().findViewById(R.id.editDescription);
-         editStartDate = (EditText) getActivity().findViewById(R.id.editStartDate);
 
+         editStartDate = (EditText) getActivity().findViewById(R.id.editStartDate);
+         editStartDate.setFocusable(false);
          editStartDate.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-
+                setDate(true);
              }
          });
 
-         editStartTime = (EditText) getActivity().findViewById(R.id.editStartTime);
+        editStartTime = (EditText) getActivity().findViewById(R.id.editStartTime);
+        editStartTime.setFocusable(false);
+        editStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTime(true);
+            }
+        });
+
+
+
          checkBoxAllDay = (CheckBox) getActivity().findViewById(R.id.checkBoxSAllDay);
          editEndDate = (EditText) getActivity().findViewById(R.id.editEndDate);
-         editEndTime = (EditText) getActivity().findViewById(R.id.editEndTime);
+         editEndDate.setFocusable(false);
+         editEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDate(false);
+            }
+        });
+
+
+        editEndTime = (EditText) getActivity().findViewById(R.id.editEndTime);
+        editEndTime.setFocusable(false);
+         editEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTime(false);
+            }
+        });
 
          checkBoxSunday = (CheckBox) getActivity().findViewById(R.id.checkBoxSunday);
          checkBoxMonday = (CheckBox) getActivity().findViewById(R.id.checkBoxMonday);
@@ -157,7 +259,7 @@ public class ManageItemFragment extends Fragment {
          checkBoxFriday = (CheckBox) getActivity().findViewById(R.id.checkBoxFriday);
          checkBoxSaturday = (CheckBox) getActivity().findViewById(R.id.checkBoxSaturday);
 
-        buttonConfirm = (Button) getActivity().findViewById(R.id.buttonConfirm);
+/*       // buttonConfirm = (Button) getActivity().findViewById(R.id.buttonConfirm);
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,13 +268,13 @@ public class ManageItemFragment extends Fragment {
         });
 
 
-        buttonDelete = (Button) getActivity().findViewById(R.id.buttonDelete);
+        //buttonDelete = (Button) getActivity().findViewById(R.id.buttonDelete);
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CRUD.getInstance().delete(selectedItem,"_id=?",""+selectedItem.get_id());
             }
-        });
+        });*/
 
         //yyyy-MM-dd HH:mm:ss.SSSZ
 
