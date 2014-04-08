@@ -10,6 +10,7 @@ import core.september.speechreminder.activities.SpeechReminderActivity;
 import core.september.speechreminder.iface.CRUDable;
 import core.september.speechreminder.models.AppUser;
 import core.september.speechreminder.models.Event;
+import core.september.speechreminder.receivers.BootReceiver;
 
 /**
  * Created by christian on 19/02/14.
@@ -32,6 +33,11 @@ public class Config {
 
     public final static String HOUR_FORMAT = "HH:mm";
     public final static String DATE_FORMAT = "yyyy/MM/dd";
+    public final static String DATE_SPLIT = "/";
+    public final static String HOUR_SPLIT = ":";
+    public final static String SPACE = " ";
+    public final static Boolean IS24HOURVIEW = false;
+
 
     public final static String SHORT_HOUR_FORMAT = "HH:mm";
     public final static String SHORT_DATE_FORMAT = "dd, MMMM";
