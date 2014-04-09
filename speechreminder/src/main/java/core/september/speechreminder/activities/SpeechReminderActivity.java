@@ -18,16 +18,14 @@ package core.september.speechreminder.activities;
 
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
 import java.util.Arrays;
+import java.util.List;
 
 import core.september.android.basement.AbstractNavigationDrawerActivity;
 import core.september.speechreminder.R;
@@ -184,13 +182,14 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         ft.detach(fragment);
         ft.attach(fragment);
         ft.commit();
-        fragment.showDetails(CRUD.getInstance().select(Event.class).size() -1);
+        List<Event> eventList = CRUD.getInstance().select(Event.class);
+        fragment.showDetails(eventList.get(eventList.size() - 1).get_id());
     }
 
     @Override
-    public void onElementClicked(int pos) {
+    public void onElementClicked(long id) {
         ListItemFragment fragment = (ListItemFragment) getSupportFragmentManager().findFragmentById(R.id.list_item_fragmet);
-        fragment.showDetails(pos);
+        fragment.showDetails(id);
     }
 
 

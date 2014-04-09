@@ -180,7 +180,7 @@ public class ListItemFragment extends ListFragment{
 
      */
 
-    public void showDetails(int index) {
+    public void showDetails(long id) {
 
        // mCurCheckPosition = index;
 
@@ -229,8 +229,8 @@ public class ListItemFragment extends ListFragment{
 
         // the dialog fragment with selected text.
 
-        List<Event> eventList = CRUD.getInstance().select(Event.class);
-        mCurId = eventList.get(index).get_id();
+        //List<Event> eventList = CRUD.getInstance().select(Event.class);
+        mCurId = id;
 
         Intent intent = new Intent();
 
@@ -257,6 +257,6 @@ public class ListItemFragment extends ListFragment{
     public interface UpdateListener {
         void onUpdate();
 
-        void onElementClicked(int pos);
+        void onElementClicked(long curId);
     }
 }
