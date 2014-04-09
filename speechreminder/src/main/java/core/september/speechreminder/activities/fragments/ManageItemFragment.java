@@ -36,7 +36,7 @@ import core.september.speechreminder.models.Event;
  */
 public class ManageItemFragment extends Fragment {
     final static String ARG_ID = "eventID";
-    int mCurrentPosition = -1;
+    long mCurrentID = -1;
     Event selectedItem = null;
     EditText editTitle = null;
     EditText editDescription = null;
@@ -57,7 +57,7 @@ public class ManageItemFragment extends Fragment {
 
 
 
-    public static ManageItemFragment newInstance(int index) {
+   /* public static ManageItemFragment newInstance(int index) {
 
         ManageItemFragment f = new ManageItemFragment();
 
@@ -71,7 +71,7 @@ public class ManageItemFragment extends Fragment {
 
         return f;
 
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,10 +80,8 @@ public class ManageItemFragment extends Fragment {
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
         setHasOptionsMenu(true);
-        if(getActivity().getIntent().getExtras().getLong(Config.EXTRA_FIELD) != 0L ) {
 
-        }
-        mCurrentPosition = getActivity().getIntent().getExtras().getInt(Config.PICKED_ITEM);
+        mCurrentID = getActivity().getIntent().getExtras().getInt(Config.EXTRA_FIELD);
 
 
         // Inflate the layout for this fragment
@@ -122,7 +120,7 @@ public class ManageItemFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(mCurrentPosition > -1) {
+        if(mCurrentID > -1) {
             updateArticleView();
 
         }
@@ -132,7 +130,7 @@ public class ManageItemFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong(Config.PICKED_ITEM, mCurrentPosition);
+        outState.putLong(Config.EXTRA_FIELD, mCurrentID);
     }
 
     private void setDate(final boolean start) {
@@ -233,7 +231,11 @@ public class ManageItemFragment extends Fragment {
 
         if(eventList == null || eventList.size() == 0) return;
 
-        selectedItem = eventList.get(mCurrentPosition);
+        for(Event event: eventList) {
+            if(event.get_id() == mCurrentID) {
+                selectedItem = event;
+            }
+        }
 
         int repeatBit = selectedItem.getRepeatBit();
 
@@ -332,8 +334,8 @@ public class ManageItemFragment extends Fragment {
 
     }
 
-    public int getCurrentIndex() {
-        return mCurrentPosition;
+    public long getCurrentIndex() {
+        return mCurrentID;
     }
 
     /*@Override

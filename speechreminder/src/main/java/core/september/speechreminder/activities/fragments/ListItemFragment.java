@@ -30,7 +30,7 @@ public class ListItemFragment extends ListFragment{
 
     //private OnListItemSelectedListener mCallback;
     //boolean mDualPane;
-    int mCurCheckPosition = -1;
+    long mCurId = -1;
     private Event[] eventsArray;
     private UpdateListener mListener;
 
@@ -84,7 +84,7 @@ public class ListItemFragment extends ListFragment{
 
             // Restore last state for checked position.
 
-            mCurCheckPosition = savedState.getInt(Config.PICKED_ITEM, -1);
+            mCurId = savedState.getLong(Config.EXTRA_FIELD, -1);
 
         }
 
@@ -148,7 +148,11 @@ public class ListItemFragment extends ListFragment{
             case R.id.add_item:
                 Event newEvent = new Event();
                 CRUD.getInstance().insert(newEvent);
-                mCurCheckPosition = CRUD.getInstance().select(Event.class).size();
+                //mCurCheckPosition = CRUD.getInstance().select(Event.class).size();
+
+                List<Event> eventList = CRUD.getInstance().select(Event.class);
+                mCurId = eventList.get(eventList.size()-1).get_id();
+
                 mListener.onUpdate();
                 return true;
             default:
@@ -162,7 +166,7 @@ public class ListItemFragment extends ListFragment{
 
         super.onSaveInstanceState(outState);
 
-        outState.putInt(Config.PICKED_ITEM, mCurCheckPosition);
+        outState.putLong(Config.EXTRA_FIELD, mCurId);
 
     }
 
@@ -178,7 +182,7 @@ public class ListItemFragment extends ListFragment{
 
     public void showDetails(int index) {
 
-        mCurCheckPosition = index;
+       // mCurCheckPosition = index;
 
 /*        if (mDualPane) {
 
@@ -225,11 +229,14 @@ public class ListItemFragment extends ListFragment{
 
         // the dialog fragment with selected text.
 
+        List<Event> eventList = CRUD.getInstance().select(Event.class);
+        mCurId = eventList.get(index).get_id();
+
         Intent intent = new Intent();
 
         intent.setClass(getActivity(), SpeechReminderActivity.DetailsActivity.class);
 
-        intent.putExtra(Config.PICKED_ITEM, mCurCheckPosition);
+        intent.putExtra(Config.EXTRA_FIELD, mCurId);
 
         startActivity(intent);
 

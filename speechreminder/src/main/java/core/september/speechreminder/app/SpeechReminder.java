@@ -4,6 +4,8 @@ import android.app.Application;
 
 import net.danlew.android.joda.ResourceZoneInfoProvider;
 
+import core.september.speechreminder.app.providers.TTSProvider;
+
 /**
  * Created by christian on 13/03/14.
  */
@@ -14,6 +16,7 @@ public class SpeechReminder extends Application{
     //private AlarmReceiver alarm;
     public boolean offLine;
     public boolean signedIn;
+    private TTSProvider ttsProvider;
     public static SpeechReminder getInstance() {
         return instance;
     }
@@ -27,7 +30,13 @@ public class SpeechReminder extends Application{
 
     protected void initialize() {
         ResourceZoneInfoProvider.init(this);
+        ttsProvider = new TTSProvider();
+        ttsProvider.init(this);
         //alarm = new AlarmReceiver();
+    }
+
+    public TTSProvider getTTSProvider() {
+        return ttsProvider;
     }
 
     /*public void setAlarm() {

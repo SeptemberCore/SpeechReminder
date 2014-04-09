@@ -42,7 +42,7 @@ public class Config {
     public final static String SHORT_HOUR_FORMAT = "HH:mm";
     public final static String SHORT_DATE_FORMAT = "dd, MMMM";
 
-    public static final String PICKED_ITEM = "PICKED_ITEM";
+    //public static final String PICKED_ITEM = "PICKED_ITEM";
 
 
     public static SparseArray<DaysOfWeek> dayReference() {

@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="quickblox-android-1.1.0">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/speechreminder/libs/quickblox-android-1.1.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
