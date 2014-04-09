@@ -1,7 +1,6 @@
 package core.september.speechreminder.activities.fragments;
 
 import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,12 +16,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 import core.september.android.basement.Util.Logger;
 import core.september.speechreminder.R;
@@ -81,7 +78,7 @@ public class ManageItemFragment extends Fragment {
         // the previous article selection set by onSaveInstanceState().
         setHasOptionsMenu(true);
 
-        mCurrentID = getActivity().getIntent().getExtras().getInt(Config.EXTRA_FIELD);
+        mCurrentID = getActivity().getIntent().getExtras().getLong(Config.EXTRA_FIELD);
 
 
         // Inflate the layout for this fragment
@@ -120,10 +117,9 @@ public class ManageItemFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(mCurrentID > -1) {
-            updateArticleView();
 
-        }
+        updateArticleView();
+
 
     }
 
@@ -227,30 +223,19 @@ public class ManageItemFragment extends Fragment {
 
     public void updateArticleView() {
 
-        List<Event> eventList = CRUD.getInstance().select(Event.class);
+        selectedItem = new Event();
 
-        if(eventList == null || eventList.size() == 0) return;
+        editTitle = (EditText) getActivity().findViewById(R.id.editTitle);
+        editDescription = (EditText) getActivity().findViewById(R.id.editDescription);
 
-        for(Event event: eventList) {
-            if(event.get_id() == mCurrentID) {
-                selectedItem = event;
-            }
-        }
-
-        int repeatBit = selectedItem.getRepeatBit();
-
-
-         editTitle = (EditText) getActivity().findViewById(R.id.editTitle);
-         editDescription = (EditText) getActivity().findViewById(R.id.editDescription);
-
-         editStartDate = (EditText) getActivity().findViewById(R.id.editStartDate);
-         editStartDate.setFocusable(false);
-         editStartDate.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
+        editStartDate = (EditText) getActivity().findViewById(R.id.editStartDate);
+        editStartDate.setFocusable(false);
+        editStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 setDate(true);
-             }
-         });
+            }
+        });
 
         editStartTime = (EditText) getActivity().findViewById(R.id.editStartTime);
         editStartTime.setFocusable(false);
@@ -262,11 +247,10 @@ public class ManageItemFragment extends Fragment {
         });
 
 
-
-         checkBoxAllDay = (CheckBox) getActivity().findViewById(R.id.checkBoxSAllDay);
-         editEndDate = (EditText) getActivity().findViewById(R.id.editEndDate);
-         editEndDate.setFocusable(false);
-         editEndDate.setOnClickListener(new View.OnClickListener() {
+        checkBoxAllDay = (CheckBox) getActivity().findViewById(R.id.checkBoxSAllDay);
+        editEndDate = (EditText) getActivity().findViewById(R.id.editEndDate);
+        editEndDate.setFocusable(false);
+        editEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDate(false);
@@ -276,20 +260,61 @@ public class ManageItemFragment extends Fragment {
 
         editEndTime = (EditText) getActivity().findViewById(R.id.editEndTime);
         editEndTime.setFocusable(false);
-         editEndTime.setOnClickListener(new View.OnClickListener() {
+        editEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setTime(false);
             }
         });
 
-         checkBoxSunday = (CheckBox) getActivity().findViewById(R.id.checkBoxSunday);
-         checkBoxMonday = (CheckBox) getActivity().findViewById(R.id.checkBoxMonday);
-         checkBoxTuesday = (CheckBox) getActivity().findViewById(R.id.checkBoxTuesday);
-         checkBoxWednsesday = (CheckBox) getActivity().findViewById(R.id.checkBoxWednsesday);
-         checkBoxThursday = (CheckBox) getActivity().findViewById(R.id.checkBoxThursday);
-         checkBoxFriday = (CheckBox) getActivity().findViewById(R.id.checkBoxFriday);
-         checkBoxSaturday = (CheckBox) getActivity().findViewById(R.id.checkBoxSaturday);
+        checkBoxSunday = (CheckBox) getActivity().findViewById(R.id.checkBoxSunday);
+        checkBoxMonday = (CheckBox) getActivity().findViewById(R.id.checkBoxMonday);
+        checkBoxTuesday = (CheckBox) getActivity().findViewById(R.id.checkBoxTuesday);
+        checkBoxWednsesday = (CheckBox) getActivity().findViewById(R.id.checkBoxWednsesday);
+        checkBoxThursday = (CheckBox) getActivity().findViewById(R.id.checkBoxThursday);
+        checkBoxFriday = (CheckBox) getActivity().findViewById(R.id.checkBoxFriday);
+        checkBoxSaturday = (CheckBox) getActivity().findViewById(R.id.checkBoxSaturday);
+
+        List<Event> eventList = CRUD.getInstance().select(Event.class);
+
+        if (eventList != null || eventList.size() == 0) {
+            for (Event event : eventList) {
+                if (event.get_id() == mCurrentID) {
+                    selectedItem = event;
+                }
+            }
+
+            if (selectedItem != null) {
+                int repeatBit = selectedItem.getRepeatBit();
+                editTitle.setText(selectedItem.getTitle());
+                editDescription.setText(selectedItem.getDescription());
+
+                editStartDate.setText(selectedItem.getStartDate());
+                editStartTime.setText(selectedItem.getStartHour());
+
+                checkBoxAllDay.setChecked(selectedItem.isAllDay());
+
+                editEndDate.setText(selectedItem.getEndDate());
+                editEndTime.setText(selectedItem.getEndHour());
+
+                List<DaysOfWeek> repeatDays = DaysOfWeek.getRepeating(selectedItem.getRepeatBit());
+
+                checkBoxSunday.setChecked(repeatDays.contains(DaysOfWeek.SUNDAY));
+                checkBoxMonday.setChecked(repeatDays.contains(DaysOfWeek.MONDAY));
+                checkBoxTuesday.setChecked(repeatDays.contains(DaysOfWeek.TUESDAY));
+                checkBoxWednsesday.setChecked(repeatDays.contains(DaysOfWeek.WEDNESDAY));
+                checkBoxThursday.setChecked(repeatDays.contains(DaysOfWeek.THURSDAY));
+                checkBoxFriday.setChecked(repeatDays.contains(DaysOfWeek.FRIDAY));
+                checkBoxSaturday.setChecked(repeatDays.contains(DaysOfWeek.SATURDAY));
+            }
+        }
+
+
+
+
+
+
+
 
 /*       // buttonConfirm = (Button) getActivity().findViewById(R.id.buttonConfirm);
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
@@ -311,26 +336,7 @@ public class ManageItemFragment extends Fragment {
         //yyyy-MM-dd HH:mm:ss.SSSZ
 
 
-        editTitle.setText(selectedItem.getTitle());
-        editDescription.setText(selectedItem.getDescription());
 
-        editStartDate.setText(selectedItem.getStartDate());
-        editStartTime.setText(selectedItem.getStartHour());
-
-        checkBoxAllDay.setChecked(selectedItem.isAllDay());
-
-        editEndDate.setText(selectedItem.getEndDate());
-        editEndTime.setText(selectedItem.getEndHour());
-
-        List<DaysOfWeek> repeatDays = DaysOfWeek.getRepeating(selectedItem.getRepeatBit());
-
-        checkBoxSunday.setChecked(repeatDays.contains(DaysOfWeek.SUNDAY));
-        checkBoxMonday.setChecked(repeatDays.contains(DaysOfWeek.MONDAY));
-        checkBoxTuesday.setChecked(repeatDays.contains(DaysOfWeek.TUESDAY));
-        checkBoxWednsesday.setChecked(repeatDays.contains(DaysOfWeek.WEDNESDAY));
-        checkBoxThursday.setChecked(repeatDays.contains(DaysOfWeek.THURSDAY));
-        checkBoxFriday.setChecked(repeatDays.contains(DaysOfWeek.FRIDAY));
-        checkBoxSaturday.setChecked(repeatDays.contains(DaysOfWeek.SATURDAY));
 
     }
 
@@ -347,6 +353,9 @@ public class ManageItemFragment extends Fragment {
     }*/
 
     private void toModel() {
+        if (selectedItem == null) {
+            selectedItem = new Event();
+        }
         selectedItem.setTitle(editTitle.getText().toString());
         selectedItem.setDescription(editDescription.getText().toString());
         String startDate = editStartDate.getText().toString().concat("|").concat(editStartTime.getText().toString());
