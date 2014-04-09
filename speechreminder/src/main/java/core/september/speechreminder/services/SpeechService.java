@@ -14,6 +14,7 @@ import java.util.Locale;
 
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.SpeechReminderActivity;
+import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
@@ -21,7 +22,7 @@ import core.september.speechreminder.models.Event;
 
 public class SpeechService extends IntentService {
 
-    private TextToSpeech speech;
+
     private long modelId;
     private Event event;
 
@@ -29,13 +30,7 @@ public class SpeechService extends IntentService {
         super("SpeechService");
     }
 
-    @Override public void onDestroy() {
-        // Don’t forget to shutdown tts!
-        if (speech != null) {
-            speech.stop();
-            speech.shutdown();
-        }
-    }
+
 
     //@SuppressWarnings("deprecation")
     private void notifyOnBar() {
@@ -69,27 +64,9 @@ public class SpeechService extends IntentService {
         if (intent != null) {
             modelId = intent.getExtras().getLong(Config.EXTRA_FIELD);
             event = (Event) CRUD.getInstance().selectById(Event.class, modelId);
-            speech = new TextToSpeech(this,new TextToSpeech.OnInitListener() {
-                @Override
-                public void onInit(int status) {
-                    if (status == TextToSpeech.SUCCESS) {
-                        if (speech.isLanguageAvailable(locale) >= 0) {
-                            speech.setLanguage(locale);
-                        }
-                        else if (speech.isLanguageAvailable(Locale.US) >= 0) {
-                            speech.setLanguage(Locale.US);
-                        }
-                        else if (speech.isLanguageAvailable(Locale.UK) >= 0) {
-                            speech.setLanguage(Locale.UK);
-                        }
-                       /* else {
-                            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                        }*/
-                    }
-                }
-            });
+
             notifyOnBar();
-            speech.speak(event.getDescription(), TextToSpeech.QUEUE_FLUSH, null);
+            SpeechReminder.getInstance().getTTSProvider().say(event.getDescription());
         }
     }
 
