@@ -30,5 +30,7 @@
     <string name="title_activity_speechreminder">Speech Reminder</string>
     <string name="title_activity_speechreminder_details">Details</string>
     <string name="add_item">New Event</string>
+    <string name="save_item">Save</string>
+    <string name="delete_item">Delete</string>
 
 </resources>

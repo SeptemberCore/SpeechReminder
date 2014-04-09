@@ -229,7 +229,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         }
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
@@ -250,5 +250,5 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 }
