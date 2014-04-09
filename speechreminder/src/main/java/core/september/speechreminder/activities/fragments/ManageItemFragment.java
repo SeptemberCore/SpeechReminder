@@ -80,6 +80,9 @@ public class ManageItemFragment extends Fragment {
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
         setHasOptionsMenu(true);
+        if(getActivity().getIntent().getExtras().getLong(Config.EXTRA_FIELD) != 0L ) {
+
+        }
         mCurrentPosition = getActivity().getIntent().getExtras().getInt(Config.PICKED_ITEM);
 
 
@@ -93,7 +96,7 @@ public class ManageItemFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.list_item_fragment_menu, menu);
+        inflater.inflate(R.menu.manage_item_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
         //return true;
     }
@@ -102,11 +105,11 @@ public class ManageItemFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.add_item:
-                Event newEvent = new Event();
-                CRUD.getInstance().insert(newEvent);
-                mCurCheckPosition = CRUD.getInstance().select(Event.class).size();
-                mListener.onUpdate();
+            case R.id.save_item:
+                createUpdate();
+                return true;
+            case R.id.delete_item:
+                CRUD.getInstance().delete(selectedItem,"_id=?",""+selectedItem.get_id());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
