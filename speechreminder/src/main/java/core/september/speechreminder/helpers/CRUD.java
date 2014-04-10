@@ -32,8 +32,8 @@ public class CRUD<T extends CRUDable> {
         return instance;
     }
 
-    public void insert(CRUDable crud) {
-        dao.insert(crud);
+    public long insert(CRUDable crud) {
+        return dao.insert(crud);
     }
 
     public List<T> select(Class<T> clazz) {
@@ -49,11 +49,11 @@ public class CRUD<T extends CRUDable> {
         return list != null && list.size() > 0 ? list.get(0) : null;
     }
 
-    public void update(CRUDable item, String whereClause, String whereArgs) {
+    public int update(CRUDable item, String whereClause, String whereArgs) {
         //   Item afterItem = new Item();
         //   afterItem.setTitle("after title");
         //   dao.update(afterItem, "title=?", "beforeTitle"); // UPDATE Item SET ... WHERE title='beforeTitle'
-        dao.update(item, whereClause, whereArgs);
+        return dao.update(item, whereClause, whereArgs);
     }
 
     public void delete(CRUDable item, String whereClause, String whereArgs) {
