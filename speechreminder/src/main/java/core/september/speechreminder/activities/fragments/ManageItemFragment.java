@@ -23,6 +23,7 @@ import java.util.List;
 
 import core.september.android.basement.Util.Logger;
 import core.september.speechreminder.R;
+import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.config.DaysOfWeek;
 import core.september.speechreminder.helpers.CRUD;
@@ -33,7 +34,7 @@ import core.september.speechreminder.models.Event;
  */
 public class ManageItemFragment extends Fragment {
     final static String ARG_ID = "eventID";
-    long mCurrentID = -1;
+    //long mCurrentID = -1;
     Event selectedItem = null;
     EditText editTitle = null;
     EditText editDescription = null;
@@ -78,8 +79,8 @@ public class ManageItemFragment extends Fragment {
         // the previous article selection set by onSaveInstanceState().
         setHasOptionsMenu(true);
 
-        mCurrentID = getActivity().getIntent().getExtras().getLong(Config.EXTRA_FIELD);
-
+        //mCurrentID = getActivity().getIntent().getExtras().getLong(Config.EXTRA_FIELD);
+        selectedItem = SpeechReminder.getInstance().selectedEvent;
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.manage_event, container, false);
@@ -126,7 +127,7 @@ public class ManageItemFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong(Config.EXTRA_FIELD, mCurrentID);
+        //outState.putLong(Config.EXTRA_FIELD, mCurrentID);
     }
 
     private void setDate(final boolean start) {
@@ -223,8 +224,6 @@ public class ManageItemFragment extends Fragment {
 
     public void updateArticleView() {
 
-        selectedItem = new Event();
-
         editTitle = (EditText) getActivity().findViewById(R.id.editTitle);
         editDescription = (EditText) getActivity().findViewById(R.id.editDescription);
 
@@ -275,16 +274,9 @@ public class ManageItemFragment extends Fragment {
         checkBoxFriday = (CheckBox) getActivity().findViewById(R.id.checkBoxFriday);
         checkBoxSaturday = (CheckBox) getActivity().findViewById(R.id.checkBoxSaturday);
 
-        List<Event> eventList = CRUD.getInstance().select(Event.class);
 
-        if (eventList != null || eventList.size() == 0) {
-            for (Event event : eventList) {
-                if (event.get_id() == mCurrentID) {
-                    selectedItem = event;
-                }
-            }
 
-            if (selectedItem != null) {
+
                 int repeatBit = selectedItem.getRepeatBit();
                 editTitle.setText(selectedItem.getTitle());
                 editDescription.setText(selectedItem.getDescription());
@@ -306,43 +298,12 @@ public class ManageItemFragment extends Fragment {
                 checkBoxThursday.setChecked(repeatDays.contains(DaysOfWeek.THURSDAY));
                 checkBoxFriday.setChecked(repeatDays.contains(DaysOfWeek.FRIDAY));
                 checkBoxSaturday.setChecked(repeatDays.contains(DaysOfWeek.SATURDAY));
-            }
-        }
-
-
-
-
-
-
-
-
-/*       // buttonConfirm = (Button) getActivity().findViewById(R.id.buttonConfirm);
-        buttonConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createUpdate();
-            }
-        });
-
-
-        //buttonDelete = (Button) getActivity().findViewById(R.id.buttonDelete);
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CRUD.getInstance().delete(selectedItem,"_id=?",""+selectedItem.get_id());
-            }
-        });*/
-
-        //yyyy-MM-dd HH:mm:ss.SSSZ
 
 
 
 
     }
 
-    public long getCurrentIndex() {
-        return mCurrentID;
-    }
 
     /*@Override
     public void onSaveInstanceState(Bundle outState) {
@@ -353,9 +314,7 @@ public class ManageItemFragment extends Fragment {
     }*/
 
     private void toModel() {
-        if (selectedItem == null) {
-            selectedItem = new Event();
-        }
+
         selectedItem.setTitle(editTitle.getText().toString());
         selectedItem.setDescription(editDescription.getText().toString());
         String startDate = editStartDate.getText().toString().concat("|").concat(editStartTime.getText().toString());
@@ -383,14 +342,18 @@ public class ManageItemFragment extends Fragment {
 
     private void createUpdate() {
         toModel();
+        long id;
         boolean exist = CRUD.getInstance().selectById(Event.class,selectedItem.get_id()) != null;
         if (exist) {
+            id = selectedItem.get_id();
             CRUD.getInstance().update(selectedItem,"_id=?",""+selectedItem.get_id());
         }
         else {
-            CRUD.getInstance().insert(selectedItem);
+           id = CRUD.getInstance().insert(selectedItem);
         }
-        selectedItem.assign();
+
+        Event asignable = (Event) CRUD.getInstance().selectById(Event.class,id);
+        asignable.assign();
     }
 
 }

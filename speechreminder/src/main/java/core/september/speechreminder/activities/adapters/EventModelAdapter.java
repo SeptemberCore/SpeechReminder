@@ -13,6 +13,7 @@ import java.util.List;
 import core.september.android.basement.Util.Logger;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
+import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.DaysOfWeek;
 import core.september.speechreminder.models.Event;
 
@@ -66,7 +67,7 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
         // fill data
         ViewHolder holder = (ViewHolder) rowView.getTag();
 
-        Event selectedItem = events[position];
+        final Event selectedItem = events[position];
         int repeatBit = selectedItem.getRepeatBit();
         holder.eventDate.setText(selectedItem.toRowLabel());
         holder.eventTitle.setText(selectedItem.getTitle());
@@ -82,7 +83,8 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
             @Override
             public void onClick(View view) {
                 Logger.debug(this, new Throwable("" + position));
-                mListener.onElementClicked(position);
+                SpeechReminder.getInstance().selectedEvent = selectedItem;
+                mListener.onElementClicked();
             }
         });
 

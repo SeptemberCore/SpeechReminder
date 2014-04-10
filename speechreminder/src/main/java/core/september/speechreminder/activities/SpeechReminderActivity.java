@@ -16,7 +16,7 @@
 
 package core.september.speechreminder.activities;
 
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -183,13 +183,13 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         ft.attach(fragment);
         ft.commit();
         List<Event> eventList = CRUD.getInstance().select(Event.class);
-        fragment.showDetails(eventList.get(eventList.size() - 1).get_id());
+        fragment.showDetails();
     }
 
     @Override
-    public void onElementClicked(long id) {
+    public void onElementClicked() {
         ListItemFragment fragment = (ListItemFragment) getSupportFragmentManager().findFragmentById(R.id.list_item_fragmet);
-        fragment.showDetails(id);
+        fragment.showDetails();
     }
 
 
@@ -222,10 +222,22 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
 
             // During initial setup, plug in the details fragment.
                 ManageItemFragment manageItem = new ManageItemFragment();
-                manageItem.setArguments(getIntent().getExtras());
+                //manageItem.setArguments(getIntent().getExtras());
                 getSupportFragmentManager().beginTransaction().add(android.R.id.content, manageItem).commit();
 
         }
+        
+        @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+             case android.R.id.home:
+                startActivity(new Intent(DetailsActivity.this,SpeechReminderActivity.class));
+                return true;
+             default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     }
 
    /* @Override
@@ -235,19 +247,6 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         inflater.inflate(R.menu.main_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case R.id.action_search:
-                openSearch();
-                return true;
-            case R.id.action_compose:
-                composeMessage();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
+	*/
+    
 }

@@ -5,6 +5,7 @@ import android.app.Application;
 import net.danlew.android.joda.ResourceZoneInfoProvider;
 
 import core.september.speechreminder.app.providers.TTSProvider;
+import core.september.speechreminder.models.Event;
 
 /**
  * Created by christian on 13/03/14.
@@ -17,6 +18,7 @@ public class SpeechReminder extends Application{
     public boolean offLine;
     public boolean signedIn;
     private TTSProvider ttsProvider;
+    public Event selectedEvent;
     public static SpeechReminder getInstance() {
         return instance;
     }

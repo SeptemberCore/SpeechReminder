@@ -17,6 +17,7 @@ import java.util.List;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.SpeechReminderActivity;
 import core.september.speechreminder.activities.adapters.EventModelAdapter;
+import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
@@ -30,7 +31,7 @@ public class ListItemFragment extends ListFragment{
 
     //private OnListItemSelectedListener mCallback;
     //boolean mDualPane;
-    long mCurId = -1;
+    //long mCurId = -1;
     private Event[] eventsArray;
     private UpdateListener mListener;
 
@@ -80,13 +81,7 @@ public class ListItemFragment extends ListFragment{
 
                 && detailsFrame.getVisibility() == View.VISIBLE;*/
 
-        if (savedState != null) {
 
-            // Restore last state for checked position.
-
-            mCurId = savedState.getLong(Config.EXTRA_FIELD, -1);
-
-        }
 
        /* if (mDualPane) {
 
@@ -147,11 +142,10 @@ public class ListItemFragment extends ListFragment{
         switch (item.getItemId()) {
             case R.id.add_item:
                 Event newEvent = new Event();
-                CRUD.getInstance().insert(newEvent);
+                long id = CRUD.getInstance().insert(newEvent);
                 //mCurCheckPosition = CRUD.getInstance().select(Event.class).size();
 
-                List<Event> eventList = CRUD.getInstance().select(Event.class);
-                mCurId = eventList.get(eventList.size()-1).get_id();
+                SpeechReminder.getInstance().selectedEvent = (Event) CRUD.getInstance().selectById(Event.class,id);
 
                 mListener.onUpdate();
                 return true;
@@ -166,7 +160,7 @@ public class ListItemFragment extends ListFragment{
 
         super.onSaveInstanceState(outState);
 
-        outState.putLong(Config.EXTRA_FIELD, mCurId);
+        //outState.putLong(Config.EXTRA_FIELD, mCurId);
 
     }
 
@@ -180,7 +174,7 @@ public class ListItemFragment extends ListFragment{
 
      */
 
-    public void showDetails(long id) {
+    public void showDetails() {
 
        // mCurCheckPosition = index;
 
@@ -230,13 +224,13 @@ public class ListItemFragment extends ListFragment{
         // the dialog fragment with selected text.
 
         //List<Event> eventList = CRUD.getInstance().select(Event.class);
-        mCurId = id;
+        //mCurId = id;
 
         Intent intent = new Intent();
 
         intent.setClass(getActivity(), SpeechReminderActivity.DetailsActivity.class);
 
-        intent.putExtra(Config.EXTRA_FIELD, mCurId);
+       // intent.putExtra(Config.EXTRA_FIELD, mCurId);
 
         startActivity(intent);
 
@@ -257,6 +251,6 @@ public class ListItemFragment extends ListFragment{
     public interface UpdateListener {
         void onUpdate();
 
-        void onElementClicked(long curId);
+        void onElementClicked();
     }
 }
