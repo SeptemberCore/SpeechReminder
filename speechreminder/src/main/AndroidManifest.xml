@@ -31,7 +31,12 @@
         <activity
             android:uiOptions="splitActionBarWhenNarrow"
             android:name="core.september.speechreminder.activities.SpeechReminderActivity$DetailsActivity"
-            android:label="@string/title_activity_speechreminder_details" >
+            android:label="@string/title_activity_speechreminder_details"
+            android:parentActivityName="core.september.speechreminder.activities.SpeechReminderActivity" >
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.myfirstapp.MainActivity" />
             <meta-data android:name="android.support.UI_OPTIONS"
                 android:value="splitActionBarWhenNarrow" />
 

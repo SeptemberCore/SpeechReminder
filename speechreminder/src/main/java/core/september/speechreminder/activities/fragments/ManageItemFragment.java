@@ -78,7 +78,7 @@ public class ManageItemFragment extends Fragment {
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
         setHasOptionsMenu(true);
-
+		SpeechReminder.getInstance().stopSpeach();
         //mCurrentID = getActivity().getIntent().getExtras().getLong(Config.EXTRA_FIELD);
         selectedItem = SpeechReminder.getInstance().selectedEvent;
 

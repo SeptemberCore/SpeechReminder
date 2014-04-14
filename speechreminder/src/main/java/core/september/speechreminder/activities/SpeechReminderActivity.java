@@ -229,15 +229,18 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         
         @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-             case android.R.id.home:
+            // Handle presses on the action bar items
+            return super.onOptionsItemSelected(item);
+        /*switch (item.getItemId()) {
+            *//* case android.R.id.home:
                 startActivity(new Intent(DetailsActivity.this,SpeechReminderActivity.class));
-                return true;
+                return true; *//*
              default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
+
+        }
     }
 
    /* @Override

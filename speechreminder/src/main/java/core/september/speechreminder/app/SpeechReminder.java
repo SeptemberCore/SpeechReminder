@@ -17,6 +17,7 @@ public class SpeechReminder extends Application{
     //private AlarmReceiver alarm;
     public boolean offLine;
     public boolean signedIn;
+    public boolean loopSpeach = true;
     private TTSProvider ttsProvider;
     public Event selectedEvent;
     public static SpeechReminder getInstance() {
@@ -40,6 +41,12 @@ public class SpeechReminder extends Application{
     public TTSProvider getTTSProvider() {
         return ttsProvider;
     }
+    
+    public void stopSpeach() {
+			loopSpeach = false;
+			ttsProvider.stop();
+			//loopSpeach = true;
+		}
 
     /*public void setAlarm() {
 
