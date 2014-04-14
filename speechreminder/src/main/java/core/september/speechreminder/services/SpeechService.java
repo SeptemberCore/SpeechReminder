@@ -54,6 +54,7 @@ public class SpeechService extends IntentService {
         noti.defaults |= Notification.DEFAULT_VIBRATE; //Vibration
         noti.defaults |= Notification.DEFAULT_SOUND; // Sound
 
+        SpeechReminder.getInstance().loopSpeach = true;
         notificationManager.notify(Long.valueOf(modelId).intValue(), noti);
 
     }
@@ -64,7 +65,7 @@ public class SpeechService extends IntentService {
         if (intent != null) {
             modelId = intent.getExtras().getLong(Config.EXTRA_FIELD);
             event = (Event) CRUD.getInstance().selectById(Event.class, modelId);
-
+			SpeechReminder.getInstance().selectedEvent = event;
             notifyOnBar();
             SpeechReminder.getInstance().getTTSProvider().say(event.getDescription());
         }

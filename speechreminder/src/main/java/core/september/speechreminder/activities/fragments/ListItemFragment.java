@@ -52,6 +52,21 @@ public class ListItemFragment extends ListFragment{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
+                android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
+
+        List<Event> eventList = CRUD.getInstance().select(Event.class);
+        eventsArray = (eventList != null && eventList.size() > 0) ?
+                eventList.toArray(new Event[eventList.size()]) : new Event[0];
+
+        EventModelAdapter adapter = new EventModelAdapter(getActivity(), layout, eventsArray);
+        setListAdapter(new EventModelAdapter(getActivity(), layout, eventsArray));
+    }
+
+    @Override
 
     public void onActivityCreated(Bundle savedState) {
 
