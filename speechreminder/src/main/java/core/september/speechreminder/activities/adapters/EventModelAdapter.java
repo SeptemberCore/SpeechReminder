@@ -72,12 +72,14 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
         holder.eventDate.setText(selectedItem.toRowLabel());
         holder.eventTitle.setText(selectedItem.getTitle());
         holder.checkBoxSAllDay.setChecked(selectedItem.isAllDay());
-        if (repeatBit > 0) {
+       // if (repeatBit > 0) {
             List<DaysOfWeek> repeatDays = DaysOfWeek.getRepeating(repeatBit);
-            for (DaysOfWeek day : repeatDays) {
-                holder.getByDayOfWeek(day).setChecked(true);
+             List<DaysOfWeek> allDays = DaysOfWeek.getAll();
+            
+            for (DaysOfWeek day : allDays) {
+                holder.getByDayOfWeek(day).setChecked(repeatDays.contains(day));
             }
-        }
+       // }
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override

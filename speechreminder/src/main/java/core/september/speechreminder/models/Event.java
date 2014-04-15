@@ -58,6 +58,10 @@ public class Event implements CRUDable{
 
     @Persistence
     private long lastUpdate;
+    
+    public Event() {
+		this._id = System.currentTimeMillis();
+		}
 
     public long get_id() {
         return _id;
@@ -190,7 +194,13 @@ public class Event implements CRUDable{
     public boolean isAssignable() {
 
         //return new Interval( someTime.minusHours( 3 ), someTime ).contains( checkTime );
-       return getRepeatBit() > 0 ? isAssignableRepeating() : isAssignableNoRepeating();
+       try {
+		   return getRepeatBit() > 0 ? isAssignableRepeating() : isAssignableNoRepeating();
+		   }
+       catch(Throwable t) {
+		   android.util.Log.e(this.getClass().getSimpleName(), t.getMessage(), t);
+		   return false;
+		   }
     }
     public void assign() {
         if(isAssignable()){
@@ -232,7 +242,24 @@ public class Event implements CRUDable{
         intent.putExtra(Config.EXTRA_FIELD, get_id());
 
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
-        am.cancel(pi);
+        //am.cancel(pi);
         am.set(AlarmManager.RTC_WAKEUP, getStart().getTime(), pi);
     }
+    
+    @Override
+    public void onDelete() {
+		
+		 Context context = SpeechReminder.getInstance();
+        AlarmManager am=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		
+		Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.putExtra(Config.EXTRA_FIELD, get_id());
+
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
+        am.cancel(pi);
+		}
+	@Override
+	public void onSaveUpdate() {
+			assign();
+		}
 }

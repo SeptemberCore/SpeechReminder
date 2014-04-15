@@ -35,7 +35,7 @@ public class SchedulerProvider extends BroadcastReceiver {
         //intent.putExtra(Config.EXTRA_FIELD, get_id());
 
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
-        am.cancel(pi);
+        //am.cancel(pi);
 
         DateTime date = new DateTime(DateTimeZone.getDefault()).toLocalDate().toDateTimeAtStartOfDay();
         DateTime tomorrow = date.plusDays(1);

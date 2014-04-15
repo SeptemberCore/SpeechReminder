@@ -78,7 +78,7 @@ public class ManageItemFragment extends Fragment {
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
         setHasOptionsMenu(true);
-		SpeechReminder.getInstance().stopSpeach();
+		
         //mCurrentID = getActivity().getIntent().getExtras().getLong(Config.EXTRA_FIELD);
         selectedItem = SpeechReminder.getInstance().selectedEvent;
 
@@ -102,10 +102,16 @@ public class ManageItemFragment extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.save_item:
+            if(selectedItem.get_id() < 0) {
+					 selectedItem.set_id(System.currentTimeMillis());
+				}
                 createUpdate();
                 return true;
             case R.id.delete_item:
                 CRUD.getInstance().delete(selectedItem,"_id=?",""+selectedItem.get_id());
+                selectedItem = new Event();
+                selectedItem.set_id(-1L);
+                updateArticleView();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -123,10 +129,25 @@ public class ManageItemFragment extends Fragment {
 
 
     }
+    
+    @Override
+	public void onResume() {
+    super.onResume();  // Always call the superclass method first
+
+    SpeechReminder.getInstance().stopSpeach();
+
+	}
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        createUpdate();
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
         //outState.putLong(Config.EXTRA_FIELD, mCurrentID);
     }
 
@@ -165,6 +186,8 @@ public class ManageItemFragment extends Fragment {
                                 editEndDate.setText(selectedItem.getEndDate());
                             }
 
+                           dateCorrectness();
+
 
                         } catch (Throwable e) {
                             Logger.debug(ManageItemFragment.this,e);
@@ -175,6 +198,14 @@ public class ManageItemFragment extends Fragment {
                 }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         dpdStart.show();
     }
+    
+    private void dateCorrectness() {
+			 if(selectedItem.getStart().after(selectedItem.getEnd())) {
+                                selectedItem.setEnd(selectedItem.getStart());
+                                editEndDate.setText(selectedItem.getEndDate());
+                                editEndTime.setText(selectedItem.getEndHour());
+                            }
+		}
 
     private void setTime(final boolean start) {
 
@@ -209,7 +240,10 @@ public class ManageItemFragment extends Fragment {
                     else {
                         selectedItem.setEnd(newDate);
                         editEndTime.setText(selectedItem.getEndHour());
+                        
                     }
+                    
+                    dateCorrectness();
 
 
                 } catch (Throwable e) {
@@ -341,6 +375,7 @@ public class ManageItemFragment extends Fragment {
     }
 
     private void createUpdate() {
+		if(selectedItem == null || selectedItem.get_id() < 0) return;
         toModel();
         long id;
         boolean exist = CRUD.getInstance().selectById(Event.class,selectedItem.get_id()) != null;
@@ -350,10 +385,8 @@ public class ManageItemFragment extends Fragment {
         }
         else {
            id = CRUD.getInstance().insert(selectedItem);
+           selectedItem.set_id(id);
         }
-
-        Event asignable = (Event) CRUD.getInstance().selectById(Event.class,id);
-        asignable.assign();
     }
 
 }

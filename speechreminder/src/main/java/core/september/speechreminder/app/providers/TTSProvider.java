@@ -34,7 +34,7 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
         HashMap<String, String> params = new HashMap<String, String>();
         params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,sayThis);
        // textToSpeech.speak(tts,TextToSpeech.QUEUE_FLUSH,params);
-        tts.speak(sayThis, TextToSpeech.QUEUE_FLUSH,params);
+        tts.speak(sayThis, TextToSpeech.QUEUE_ADD,params);
     }
 
 
@@ -42,6 +42,10 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
     public void stop() {
 		tts.stop();
 	}
+
+    public boolean isSpeaking() {
+        return tts.isSpeaking();
+    }
 
     @Override
     public void onInit(int status) {

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sqlitedao">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/speechreminder/libs/sqlitedao.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
