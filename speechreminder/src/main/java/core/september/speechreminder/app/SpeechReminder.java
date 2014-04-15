@@ -1,7 +1,7 @@
 package core.september.speechreminder.app;
 
 import android.app.Application;
-
+import android.content.Intent;
 import net.danlew.android.joda.ResourceZoneInfoProvider;
 
 import core.september.speechreminder.helpers.CRUD;
@@ -21,7 +21,7 @@ public class SpeechReminder extends Application{
     public boolean signedIn;
     public  static boolean loopSpeach = true;
     private TTSProvider ttsProvider;
-    public Event selectedEvent;
+    //public Event selectedEvent;
     public static SpeechReminder getInstance() {
         return instance;
     }
@@ -52,6 +52,17 @@ public class SpeechReminder extends Application{
     public void stopSpeach() {
 		loopSpeach = false;
 		 ttsProvider.stop();
+		}
+		
+	public Event getEvent(long id) {
+		try {
+				return ((Event) CRUD.getInstance().selectById(Event.class,id));
+			}
+		catch(Throwable t) {
+				android.util.Log.e(this.getClass().getSimpleName(),t.getMessage(),t);
+				return null;
+			}
+		
 		}
 
 

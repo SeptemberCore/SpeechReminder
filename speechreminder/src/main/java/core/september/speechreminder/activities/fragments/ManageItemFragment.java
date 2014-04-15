@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.content.Intent;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -79,8 +80,8 @@ public class ManageItemFragment extends Fragment {
         // the previous article selection set by onSaveInstanceState().
         setHasOptionsMenu(true);
 		
-        //mCurrentID = getActivity().getIntent().getExtras().getLong(Config.EXTRA_FIELD);
-        selectedItem = SpeechReminder.getInstance().selectedEvent;
+        long id = getArguments().getLong(Config.EXTRA_FIELD);
+        selectedItem = SpeechReminder.getInstance().getEvent(id);
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.manage_event, container, false);

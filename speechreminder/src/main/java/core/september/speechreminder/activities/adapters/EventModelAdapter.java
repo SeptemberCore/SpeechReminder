@@ -85,8 +85,8 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
             @Override
             public void onClick(View view) {
                 Logger.debug(this, new Throwable("" + position));
-                SpeechReminder.getInstance().selectedEvent = selectedItem;
-                mListener.onElementClicked();
+                //SpeechReminder.getInstance().selectedEvent = selectedItem;
+                mListener.onElementClicked(selectedItem.get_id());
             }
         });
 

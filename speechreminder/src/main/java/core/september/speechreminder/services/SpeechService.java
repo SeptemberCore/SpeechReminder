@@ -1,7 +1,7 @@
 package core.september.speechreminder.services;
 
 import android.app.IntentService;
-
+import android.content.Intent;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -63,9 +63,9 @@ public class SpeechService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         final Locale locale = this.getResources().getConfiguration().locale;
         if (intent != null) {
-            modelId = intent.getExtras().getLong(Config.EXTRA_FIELD);
+            modelId = intent.getLongExtra(Config.EXTRA_FIELD,-1);
             event = (Event) CRUD.getInstance().selectById(Event.class, modelId);
-			SpeechReminder.getInstance().selectedEvent = event;
+			//SpeechReminder.getInstance().selectedEvent = event;
             notifyOnBar();
             SpeechReminder.getInstance().loopSpeach = true;
             SpeechReminder.getInstance().getTTSProvider().say(event.getDescription());
