@@ -10,6 +10,8 @@ import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.iface.CRUDable;
 
+import core.september.speechreminder.models.Event;
+
 
 /**
  * Created by christian on 19/02/14.
@@ -33,6 +35,7 @@ public class CRUD<T extends CRUDable> {
     }
 
     public long insert(CRUDable crud) {
+		 crud.onSaveUpdate();
         return dao.insert(crud);
     }
 
@@ -53,11 +56,14 @@ public class CRUD<T extends CRUDable> {
         //   Item afterItem = new Item();
         //   afterItem.setTitle("after title");
         //   dao.update(afterItem, "title=?", "beforeTitle"); // UPDATE Item SET ... WHERE title='beforeTitle'
+        item.onSaveUpdate();
         return dao.update(item, whereClause, whereArgs);
     }
-
+    
+   
     public void delete(CRUDable item, String whereClause, String whereArgs) {
         try {
+			item.onDelete();
             dao.delete(item.getClass(), whereClause, whereArgs);
         }
         catch (Throwable t) {

@@ -1,6 +1,7 @@
 package core.september.speechreminder.config;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by christian on 13/03/14.
@@ -18,6 +19,18 @@ public enum DaysOfWeek {
      DaysOfWeek(int i) {
          this.repeat = i;
     }
+    
+    public static List<DaysOfWeek> getAll() {
+			ArrayList<DaysOfWeek> recurringDays = new ArrayList();
+			recurringDays.add(DaysOfWeek.SATURDAY);
+			recurringDays.add(DaysOfWeek.FRIDAY);
+			recurringDays.add(DaysOfWeek.THURSDAY);
+			recurringDays.add(DaysOfWeek.WEDNESDAY);
+			recurringDays.add(DaysOfWeek.TUESDAY);
+			recurringDays.add(DaysOfWeek.MONDAY);
+			recurringDays.add(DaysOfWeek.SUNDAY);
+        return recurringDays;
+		}
 
     public static ArrayList<DaysOfWeek> getRepeating(int input) {
         ArrayList<DaysOfWeek> recurringDays = new ArrayList();

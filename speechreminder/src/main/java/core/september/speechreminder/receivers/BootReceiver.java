@@ -29,7 +29,7 @@ public class BootReceiver extends BroadcastReceiver {
         //intent.putExtra(Config.EXTRA_FIELD, get_id());
 
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
-        am.cancel(pi);
+        //am.cancel(pi);
 
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pi);
     }

@@ -4,8 +4,10 @@ import android.app.Application;
 
 import net.danlew.android.joda.ResourceZoneInfoProvider;
 
+import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.app.providers.TTSProvider;
 import core.september.speechreminder.models.Event;
+import java.util.List;
 
 /**
  * Created by christian on 13/03/14.
@@ -17,7 +19,7 @@ public class SpeechReminder extends Application{
     //private AlarmReceiver alarm;
     public boolean offLine;
     public boolean signedIn;
-    public boolean loopSpeach = true;
+    public  static boolean loopSpeach = true;
     private TTSProvider ttsProvider;
     public Event selectedEvent;
     public static SpeechReminder getInstance() {
@@ -35,6 +37,11 @@ public class SpeechReminder extends Application{
         ResourceZoneInfoProvider.init(this);
         ttsProvider = new TTSProvider();
         ttsProvider.init(this);
+        
+         List<Event> eventList = CRUD.getInstance().select(Event.class);
+        for(Event event: eventList) {
+            event.assign();
+        }
         //alarm = new AlarmReceiver();
     }
 
@@ -43,10 +50,10 @@ public class SpeechReminder extends Application{
     }
     
     public void stopSpeach() {
-			loopSpeach = false;
-			ttsProvider.stop();
-			//loopSpeach = true;
+		loopSpeach = false;
+		 ttsProvider.stop();
 		}
+
 
     /*public void setAlarm() {
 

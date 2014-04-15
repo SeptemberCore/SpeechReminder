@@ -52,4 +52,7 @@ public class AppUser implements CRUDable {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public void onSaveUpdate() {}
+	public void onDelete() {}
 }
