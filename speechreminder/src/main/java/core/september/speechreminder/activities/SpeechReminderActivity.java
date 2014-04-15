@@ -176,20 +176,20 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
     }
 
     @Override
-    public void onUpdate() {
+    public void onUpdate(long id) {
         ListItemFragment fragment = (ListItemFragment) getSupportFragmentManager().findFragmentById(R.id.list_item_fragmet);
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.detach(fragment);
         ft.attach(fragment);
         ft.commit();
         List<Event> eventList = CRUD.getInstance().select(Event.class);
-        fragment.showDetails();
+        fragment.showDetails(id);
     }
 
     @Override
-    public void onElementClicked() {
+    public void onElementClicked(long id) {
         ListItemFragment fragment = (ListItemFragment) getSupportFragmentManager().findFragmentById(R.id.list_item_fragmet);
-        fragment.showDetails();
+        fragment.showDetails(id);
     }
 
 
@@ -219,9 +219,10 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
                 return;
             }*/
 
-
+				//long id = getIntent().getLongExtra(Config.EXTRA_FIELD);
             // During initial setup, plug in the details fragment.
                 ManageItemFragment manageItem = new ManageItemFragment();
+                manageItem.setArguments(getIntent().getExtras());
                 //manageItem.setArguments(getIntent().getExtras());
                 getSupportFragmentManager().beginTransaction().add(android.R.id.content, manageItem).commit();
 

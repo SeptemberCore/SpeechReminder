@@ -160,9 +160,9 @@ public class ListItemFragment extends ListFragment{
                 long id = CRUD.getInstance().insert(newEvent);
                 //mCurCheckPosition = CRUD.getInstance().select(Event.class).size();
 
-                SpeechReminder.getInstance().selectedEvent = (Event) CRUD.getInstance().selectById(Event.class,id);
+                //SpeechReminder.getInstance().selectedEvent = (Event) CRUD.getInstance().selectById(Event.class,id);
 
-                mListener.onUpdate();
+                mListener.onUpdate(id);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -189,7 +189,7 @@ public class ListItemFragment extends ListFragment{
 
      */
 
-    public void showDetails() {
+    public void showDetails(long id) {
 
        // mCurCheckPosition = index;
 
@@ -245,7 +245,7 @@ public class ListItemFragment extends ListFragment{
 
         intent.setClass(getActivity(), SpeechReminderActivity.DetailsActivity.class);
 
-       // intent.putExtra(Config.EXTRA_FIELD, mCurId);
+		intent.putExtra(Config.EXTRA_FIELD, id);
 
         startActivity(intent);
 
@@ -264,8 +264,8 @@ public class ListItemFragment extends ListFragment{
      }
  */
     public interface UpdateListener {
-        void onUpdate();
+        void onUpdate(long id);
 
-        void onElementClicked();
+        void onElementClicked(long id);
     }
 }

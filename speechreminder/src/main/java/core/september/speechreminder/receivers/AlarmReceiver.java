@@ -23,7 +23,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         // TODO: This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast.
         //throw new UnsupportedOperationException("Not yet implemented");
-        long modelId = intent.getExtras().getLong(Config.EXTRA_FIELD);
+         long modelId = intent.getLongExtra(Config.EXTRA_FIELD,-1);
         //Event event = (Event) CRUD.getInstance().selectById(Event.class, modelId);
         //START SERVICE WITH NOTIFY EVENT
         Intent serviceIntent = new Intent(context, SpeechService.class);
