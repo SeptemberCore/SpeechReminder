@@ -239,6 +239,7 @@ public class Event implements CRUDable{
         AlarmManager am=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.setAction(String.valueOf(get_id()));
         intent.putExtra(Config.EXTRA_FIELD, get_id());
 
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
@@ -249,10 +250,11 @@ public class Event implements CRUDable{
     @Override
     public void onDelete() {
 		
-		 Context context = SpeechReminder.getInstance();
+		Context context = SpeechReminder.getInstance();
         AlarmManager am=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		
 		Intent intent = new Intent(context, AlarmReceiver.class);
+		intent.setAction(String.valueOf(get_id()));
         intent.putExtra(Config.EXTRA_FIELD, get_id());
 
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
