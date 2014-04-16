@@ -36,6 +36,7 @@ public class SpeechService extends IntentService {
     private void notifyOnBar() {
 
         Intent intent = new Intent(this, SpeechReminderActivity.DetailsActivity.class);
+        intent.setAction(String.valueOf(modelId));
         intent.putExtra(Config.EXTRA_FIELD,modelId);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
 

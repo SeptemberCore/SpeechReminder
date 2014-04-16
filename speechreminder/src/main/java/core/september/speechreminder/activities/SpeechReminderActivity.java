@@ -19,6 +19,8 @@ package core.september.speechreminder.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
@@ -31,6 +33,7 @@ import core.september.android.basement.AbstractNavigationDrawerActivity;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.activities.fragments.ManageItemFragment;
+import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
 
@@ -230,16 +233,24 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         
         @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle presses on the action bar items
-            return super.onOptionsItemSelected(item);
-        /*switch (item.getItemId()) {
-            *//* case android.R.id.home:
-                startActivity(new Intent(DetailsActivity.this,SpeechReminderActivity.class));
-                return true; *//*
-             default:
-                return super.onOptionsItemSelected(item);
+          switch (item.getItemId()) {
+    case android.R.id.home:
+        Intent upIntent = new Intent(this, SpeechReminderActivity.class);
+        if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+            // This activity is not part of the application's task, so create a new task
+            // with a synthesized back stack.
+            TaskStackBuilder.create(this)
+                    .addNextIntent(upIntent)
+                    .startActivities();
+            finish();
+        } else {
+            // This activity is part of the application's task, so simply
+            // navigate up to the hierarchical parent activity.
+            NavUtils.navigateUpTo(this, upIntent);
         }
-    }*/
+        return true;
+}
+return super.onOptionsItemSelected(item);
 
         }
     }
