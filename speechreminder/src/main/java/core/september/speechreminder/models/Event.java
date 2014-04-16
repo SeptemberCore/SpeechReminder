@@ -13,7 +13,6 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,10 +29,10 @@ import core.september.speechreminder.receivers.AlarmReceiver;
 /**
  * Created by christian on 13/03/14.
  */
-public class Event implements CRUDable{
+public class Event implements CRUDable {
     @Persistence
     @PrimaryKey(autoIncrement = true)
-    private long   _id;
+    private long _id;
 
     @Persistence
     private String title;
@@ -58,10 +57,10 @@ public class Event implements CRUDable{
 
     @Persistence
     private long lastUpdate;
-    
+
     public Event() {
-		this._id = System.currentTimeMillis();
-		}
+        this._id = System.currentTimeMillis();
+    }
 
     public long get_id() {
         return _id;
@@ -139,13 +138,13 @@ public class Event implements CRUDable{
     public String toRowLabel() {
         StringBuffer buffer = new StringBuffer();
         DateTime _start = new DateTime(getStart());
-        DateTimeFormat.forPattern(Config.SHORT_DATE_FORMAT).printTo(buffer,_start);
+        DateTimeFormat.forPattern(Config.SHORT_DATE_FORMAT).printTo(buffer, _start);
         buffer.append(" ");
-        DateTimeFormat.forPattern(Config.SHORT_HOUR_FORMAT).printTo(buffer,_start);
-        if(!isAllDay()) {
+        DateTimeFormat.forPattern(Config.SHORT_HOUR_FORMAT).printTo(buffer, _start);
+        if (!isAllDay()) {
             DateTime _end = new DateTime(getEnd());
             buffer.append(" - ");
-            DateTimeFormat.forPattern(Config.SHORT_HOUR_FORMAT).printTo(buffer,_end);
+            DateTimeFormat.forPattern(Config.SHORT_HOUR_FORMAT).printTo(buffer, _end);
         }
         return buffer.toString();
     }
@@ -153,7 +152,7 @@ public class Event implements CRUDable{
     public String getHour(Date date) {
         StringBuffer buffer = new StringBuffer();
         DateTime _start = new DateTime(date);
-        DateTimeFormat.forPattern(Config.HOUR_FORMAT).printTo(buffer,_start);
+        DateTimeFormat.forPattern(Config.HOUR_FORMAT).printTo(buffer, _start);
         return buffer.toString();
     }
 
@@ -168,7 +167,7 @@ public class Event implements CRUDable{
     public String getDate(Date date) {
         StringBuffer buffer = new StringBuffer();
         DateTime _start = new DateTime(date);
-        DateTimeFormat.forPattern(Config.DATE_FORMAT).printTo(buffer,_start);
+        DateTimeFormat.forPattern(Config.DATE_FORMAT).printTo(buffer, _start);
         return buffer.toString();
     }
 
@@ -184,9 +183,8 @@ public class Event implements CRUDable{
         try {
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             return sdf.parse(input);
-        }
-        catch (Throwable t) {
-            Logger.error(this,t );
+        } catch (Throwable t) {
+            Logger.error(this, t);
         }
         return null;
     }
@@ -194,16 +192,16 @@ public class Event implements CRUDable{
     public boolean isAssignable() {
 
         //return new Interval( someTime.minusHours( 3 ), someTime ).contains( checkTime );
-       try {
-		   return getRepeatBit() > 0 ? isAssignableRepeating() : isAssignableNoRepeating();
-		   }
-       catch(Throwable t) {
-		   android.util.Log.e(this.getClass().getSimpleName(), t.getMessage(), t);
-		   return false;
-		   }
+        try {
+            return getRepeatBit() > 0 ? isAssignableRepeating() : isAssignableNoRepeating();
+        } catch (Throwable t) {
+            android.util.Log.e(this.getClass().getSimpleName(), t.getMessage(), t);
+            return false;
+        }
     }
+
     public void assign() {
-        if(isAssignable()){
+        if (isAssignable()) {
             setAlarm();
         }
     }
@@ -211,11 +209,11 @@ public class Event implements CRUDable{
     private Event updateDate() {
         LocalDateTime lDateTime = new DateTime(start).toLocalDateTime();
         int hour = lDateTime.getHourOfDay();
-        int minute =  lDateTime.getMinuteOfHour();
+        int minute = lDateTime.getMinuteOfHour();
 
         Calendar calendar = GregorianCalendar.getInstance(TimeZone.getDefault());
-        calendar.set(Calendar.HOUR_OF_DAY,hour);
-        calendar.set(Calendar.MINUTE,minute);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
         start = calendar.getTime();
         return this;
     }
@@ -236,7 +234,7 @@ public class Event implements CRUDable{
 
     protected void setAlarm() {
         Context context = SpeechReminder.getInstance();
-        AlarmManager am=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.setAction(String.valueOf(get_id()));
@@ -246,22 +244,23 @@ public class Event implements CRUDable{
         //am.cancel(pi);
         am.set(AlarmManager.RTC_WAKEUP, getStart().getTime(), pi);
     }
-    
+
     @Override
     public void onDelete() {
-		
-		Context context = SpeechReminder.getInstance();
-        AlarmManager am=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		
-		Intent intent = new Intent(context, AlarmReceiver.class);
-		intent.setAction(String.valueOf(get_id()));
+
+        Context context = SpeechReminder.getInstance();
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(context, AlarmReceiver.class);
+        intent.setAction(String.valueOf(get_id()));
         intent.putExtra(Config.EXTRA_FIELD, get_id());
 
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
         am.cancel(pi);
-		}
-	@Override
-	public void onSaveUpdate() {
-			assign();
-		}
+    }
+
+    @Override
+    public void onSaveUpdate() {
+        assign();
+    }
 }

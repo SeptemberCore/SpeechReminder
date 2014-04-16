@@ -7,12 +7,12 @@ import com.quickblox.module.users.model.QBUser;
 import core.september.speechreminder.config.QBQueries;
 
 public class AuthHelper {
-	
-	public static void singIn(String login, String password, QBCallback callback, QBQueries context) {
+
+    public static void singIn(String login, String password, QBCallback callback, QBQueries context) {
         QBUser qbUser = new QBUser(login, password);
         QBUsers.signIn(qbUser, callback, context);
     }
-    
+
     public static void signOut(QBCallback callback, QBQueries context) {
         QBUsers.signOut(callback, context);
     }
@@ -23,7 +23,7 @@ public class AuthHelper {
         qbUser.setPassword(password);
         QBUsers.signUpSignInTask(qbUser, callback, context);
     }
-	
-	
-	}
+
+
+}
 

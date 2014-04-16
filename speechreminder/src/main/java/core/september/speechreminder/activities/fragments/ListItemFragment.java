@@ -17,7 +17,6 @@ import java.util.List;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.SpeechReminderActivity;
 import core.september.speechreminder.activities.adapters.EventModelAdapter;
-import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
@@ -25,8 +24,7 @@ import core.september.speechreminder.models.Event;
 /**
  * Created by christian on 19/03/14.
  */
-public class ListItemFragment extends ListFragment{
-
+public class ListItemFragment extends ListFragment {
 
 
     //private OnListItemSelectedListener mCallback;
@@ -180,18 +178,16 @@ public class ListItemFragment extends ListFragment{
     }
 
     /**
-
      * Helper function to show the details of a selected item, either by
-
+     * <p/>
      * displaying a fragment in-place in the current UI, or starting a
-
+     * <p/>
      * whole new activity in which it is displayed.
-
      */
 
     public void showDetails(long id) {
 
-       // mCurCheckPosition = index;
+        // mCurCheckPosition = index;
 
 /*        if (mDualPane) {
 
@@ -245,7 +241,7 @@ public class ListItemFragment extends ListFragment{
 
         intent.setClass(getActivity(), SpeechReminderActivity.DetailsActivity.class);
 
-		intent.putExtra(Config.EXTRA_FIELD, id);
+        intent.putExtra(Config.EXTRA_FIELD, id);
 
         startActivity(intent);
 

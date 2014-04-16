@@ -15,7 +15,6 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.content.Intent;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -79,13 +78,12 @@ public class ManageItemFragment extends Fragment {
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
         setHasOptionsMenu(true);
-		
+
         long id = getArguments().getLong(Config.EXTRA_FIELD);
         selectedItem = SpeechReminder.getInstance().getEvent(id);
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.manage_event, container, false);
-
 
 
     }
@@ -103,13 +101,13 @@ public class ManageItemFragment extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.save_item:
-            if(selectedItem.get_id() < 0) {
-					 selectedItem.set_id(System.currentTimeMillis());
-				}
+                if (selectedItem.get_id() < 0) {
+                    selectedItem.set_id(System.currentTimeMillis());
+                }
                 createUpdate();
                 return true;
             case R.id.delete_item:
-                CRUD.getInstance().delete(selectedItem,"_id=?",""+selectedItem.get_id());
+                CRUD.getInstance().delete(selectedItem, "_id=?", "" + selectedItem.get_id());
                 selectedItem = new Event();
                 selectedItem.set_id(-1L);
                 updateArticleView();
@@ -120,8 +118,6 @@ public class ManageItemFragment extends Fragment {
     }
 
 
-
-
     @Override
     public void onStart() {
         super.onStart();
@@ -130,14 +126,14 @@ public class ManageItemFragment extends Fragment {
 
 
     }
-    
+
     @Override
-	public void onResume() {
-    super.onResume();  // Always call the superclass method first
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
 
-    SpeechReminder.getInstance().stopSpeach();
+        SpeechReminder.getInstance().stopSpeach();
 
-	}
+    }
 
     @Override
     public void onPause() {
@@ -155,7 +151,7 @@ public class ManageItemFragment extends Fragment {
     private void setDate(final boolean start) {
 
         final Date refDate = (Date) (start ? (selectedItem.getStart() == null ? new Date() : selectedItem.getStart()) :
-                        (selectedItem.getEnd() == null ? new Date() :  selectedItem.getEnd()));
+                (selectedItem.getEnd() == null ? new Date() : selectedItem.getEnd()));
         Calendar cal = Calendar.getInstance();
         cal.setTime(refDate);
 
@@ -164,54 +160,52 @@ public class ManageItemFragment extends Fragment {
         String[] today = (new SimpleDateFormat(Config.DATE_FORMAT)).format(refDate).split(Config.DATE_SPLIT);
         DatePickerDialog dpdStart = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
 
-                    @Override
-                    public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
-                        try {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                try {
 
-                        String formattedDate = "".concat(String.valueOf(year)).concat(Config.DATE_SPLIT)
-                               .concat(String.valueOf(monthOfYear+1)).concat(Config.DATE_SPLIT)
-                               .concat(String.valueOf(dayOfMonth));
-                       String formattedHour = new SimpleDateFormat(Config.HOUR_FORMAT).format(refDate);
-
-
-                            Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(Config.HOUR_FORMAT))
-                                    .parse(formattedDate.concat(Config.SPACE).concat(formattedHour));
-
-                            if(start) {
-                                selectedItem.setStart(newDate);
-                                editStartDate.setText(selectedItem.getStartDate());
-                            }
-
-                            else {
-                                selectedItem.setEnd(newDate);
-                                editEndDate.setText(selectedItem.getEndDate());
-                            }
-
-                           dateCorrectness();
+                    String formattedDate = "".concat(String.valueOf(year)).concat(Config.DATE_SPLIT)
+                            .concat(String.valueOf(monthOfYear + 1)).concat(Config.DATE_SPLIT)
+                            .concat(String.valueOf(dayOfMonth));
+                    String formattedHour = new SimpleDateFormat(Config.HOUR_FORMAT).format(refDate);
 
 
-                        } catch (Throwable e) {
-                            Logger.debug(ManageItemFragment.this,e);
-                        }
+                    Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(Config.HOUR_FORMAT))
+                            .parse(formattedDate.concat(Config.SPACE).concat(formattedHour));
 
-
+                    if (start) {
+                        selectedItem.setStart(newDate);
+                        editStartDate.setText(selectedItem.getStartDate());
+                    } else {
+                        selectedItem.setEnd(newDate);
+                        editEndDate.setText(selectedItem.getEndDate());
                     }
-                }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+
+                    dateCorrectness();
+
+
+                } catch (Throwable e) {
+                    Logger.debug(ManageItemFragment.this, e);
+                }
+
+
+            }
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
         dpdStart.show();
     }
-    
+
     private void dateCorrectness() {
-			 if(selectedItem.getStart().after(selectedItem.getEnd())) {
-                                selectedItem.setEnd(selectedItem.getStart());
-                                editEndDate.setText(selectedItem.getEndDate());
-                                editEndTime.setText(selectedItem.getEndHour());
-                            }
-		}
+        if (selectedItem.getStart().after(selectedItem.getEnd())) {
+            selectedItem.setEnd(selectedItem.getStart());
+            editEndDate.setText(selectedItem.getEndDate());
+            editEndTime.setText(selectedItem.getEndHour());
+        }
+    }
 
     private void setTime(final boolean start) {
 
         final Date refDate = (Date) (start ? (selectedItem.getStart() == null ? new Date() : selectedItem.getStart()) :
-                (selectedItem.getEnd() == null ? new Date() :  selectedItem.getEnd()));
+                (selectedItem.getEnd() == null ? new Date() : selectedItem.getEnd()));
 
         //                       // String formattedDate = "".concat(String.valueOf(year)).concat("-").concat(String.valueOf(monthOfYear)).concat("_").concat(String.valueOf(dayOfMonth));
 
@@ -219,9 +213,8 @@ public class ManageItemFragment extends Fragment {
         TimePickerDialog dpdStart = new TimePickerDialog(this.getActivity(), new TimePickerDialog.OnTimeSetListener() {
 
             @Override
-            public void onTimeSet(TimePicker view, int hours,int minutes) {
+            public void onTimeSet(TimePicker view, int hours, int minutes) {
                 try {
-
 
 
                     String formattedDate = new SimpleDateFormat(Config.DATE_FORMAT).format(refDate);
@@ -229,31 +222,28 @@ public class ManageItemFragment extends Fragment {
                             .concat(String.valueOf(minutes));
 
 
-
                     Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(Config.HOUR_FORMAT))
                             .parse(formattedDate.concat(Config.SPACE).concat(formattedHour));
 
-                    if(start) {
+                    if (start) {
                         selectedItem.setStart(newDate);
                         editStartTime.setText(selectedItem.getStartHour());
-                    }
-
-                    else {
+                    } else {
                         selectedItem.setEnd(newDate);
                         editEndTime.setText(selectedItem.getEndHour());
-                        
+
                     }
-                    
+
                     dateCorrectness();
 
 
                 } catch (Throwable e) {
-                    Logger.debug(ManageItemFragment.this,e);
+                    Logger.debug(ManageItemFragment.this, e);
                 }
 
 
             }
-        }, Integer.valueOf(today[0]), Integer.valueOf(today[1]),Config.IS24HOURVIEW );
+        }, Integer.valueOf(today[0]), Integer.valueOf(today[1]), Config.IS24HOURVIEW);
         dpdStart.show();
     }
 
@@ -310,31 +300,27 @@ public class ManageItemFragment extends Fragment {
         checkBoxSaturday = (CheckBox) getActivity().findViewById(R.id.checkBoxSaturday);
 
 
+        int repeatBit = selectedItem.getRepeatBit();
+        editTitle.setText(selectedItem.getTitle());
+        editDescription.setText(selectedItem.getDescription());
 
+        editStartDate.setText(selectedItem.getStartDate());
+        editStartTime.setText(selectedItem.getStartHour());
 
-                int repeatBit = selectedItem.getRepeatBit();
-                editTitle.setText(selectedItem.getTitle());
-                editDescription.setText(selectedItem.getDescription());
+        checkBoxAllDay.setChecked(selectedItem.isAllDay());
 
-                editStartDate.setText(selectedItem.getStartDate());
-                editStartTime.setText(selectedItem.getStartHour());
+        editEndDate.setText(selectedItem.getEndDate());
+        editEndTime.setText(selectedItem.getEndHour());
 
-                checkBoxAllDay.setChecked(selectedItem.isAllDay());
+        List<DaysOfWeek> repeatDays = DaysOfWeek.getRepeating(selectedItem.getRepeatBit());
 
-                editEndDate.setText(selectedItem.getEndDate());
-                editEndTime.setText(selectedItem.getEndHour());
-
-                List<DaysOfWeek> repeatDays = DaysOfWeek.getRepeating(selectedItem.getRepeatBit());
-
-                checkBoxSunday.setChecked(repeatDays.contains(DaysOfWeek.SUNDAY));
-                checkBoxMonday.setChecked(repeatDays.contains(DaysOfWeek.MONDAY));
-                checkBoxTuesday.setChecked(repeatDays.contains(DaysOfWeek.TUESDAY));
-                checkBoxWednsesday.setChecked(repeatDays.contains(DaysOfWeek.WEDNESDAY));
-                checkBoxThursday.setChecked(repeatDays.contains(DaysOfWeek.THURSDAY));
-                checkBoxFriday.setChecked(repeatDays.contains(DaysOfWeek.FRIDAY));
-                checkBoxSaturday.setChecked(repeatDays.contains(DaysOfWeek.SATURDAY));
-
-
+        checkBoxSunday.setChecked(repeatDays.contains(DaysOfWeek.SUNDAY));
+        checkBoxMonday.setChecked(repeatDays.contains(DaysOfWeek.MONDAY));
+        checkBoxTuesday.setChecked(repeatDays.contains(DaysOfWeek.TUESDAY));
+        checkBoxWednsesday.setChecked(repeatDays.contains(DaysOfWeek.WEDNESDAY));
+        checkBoxThursday.setChecked(repeatDays.contains(DaysOfWeek.THURSDAY));
+        checkBoxFriday.setChecked(repeatDays.contains(DaysOfWeek.FRIDAY));
+        checkBoxSaturday.setChecked(repeatDays.contains(DaysOfWeek.SATURDAY));
 
 
     }
@@ -368,7 +354,7 @@ public class ManageItemFragment extends Fragment {
                 (checkBoxWednsesday.isChecked() ? 8 : 0) +
                 (checkBoxThursday.isChecked() ? 16 : 0) +
                 (checkBoxFriday.isChecked() ? 32 : 0) +
-                (checkBoxSaturday.isChecked() ? 64 : 0) ;
+                (checkBoxSaturday.isChecked() ? 64 : 0);
 
         selectedItem.setRepeatBit(repeatNumber);
 
@@ -376,17 +362,16 @@ public class ManageItemFragment extends Fragment {
     }
 
     private void createUpdate() {
-		if(selectedItem == null || selectedItem.get_id() < 0) return;
+        if (selectedItem == null || selectedItem.get_id() < 0) return;
         toModel();
         long id;
-        boolean exist = CRUD.getInstance().selectById(Event.class,selectedItem.get_id()) != null;
+        boolean exist = CRUD.getInstance().selectById(Event.class, selectedItem.get_id()) != null;
         if (exist) {
             id = selectedItem.get_id();
-            CRUD.getInstance().update(selectedItem,"_id=?",""+selectedItem.get_id());
-        }
-        else {
-           id = CRUD.getInstance().insert(selectedItem);
-           selectedItem.set_id(id);
+            CRUD.getInstance().update(selectedItem, "_id=?", "" + selectedItem.get_id());
+        } else {
+            id = CRUD.getInstance().insert(selectedItem);
+            selectedItem.set_id(id);
         }
     }
 
