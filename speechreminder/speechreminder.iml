@@ -71,12 +71,16 @@
     <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="appcompat-v7-19.0.1" level="project" />
+    <orderEntry type="library" exported="" name="commons-codec-1.8" level="project" />
+    <orderEntry type="library" exported="" name="backport-util-concurrent-3.1" level="project" />
     <orderEntry type="library" exported="" name="android.joda-2.3" level="project" />
     <orderEntry type="library" exported="" name="gridlayout-v7-19.0.1" level="project" />
     <orderEntry type="library" exported="" name="quickblox-android-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="joda-convert-1.5" level="project" />
+    <orderEntry type="library" exported="" name="commons-lang-2.6" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.0.1" level="project" />
     <orderEntry type="library" exported="" name="sqlitedao" level="project" />
+    <orderEntry type="library" exported="" name="ical4j-1.0.5.2" level="project" />
   </component>
 </module>
 

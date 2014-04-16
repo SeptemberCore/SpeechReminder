@@ -11,8 +11,6 @@ import org.joda.time.DateTimeZone;
 
 import java.util.List;
 
-import core.september.speechreminder.app.SpeechReminder;
-import core.september.speechreminder.config.Config;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
 
@@ -24,12 +22,12 @@ public class SchedulerProvider extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         List<Event> eventList = CRUD.getInstance().select(Event.class);
-        for(Event event: eventList) {
+        for (Event event : eventList) {
             event.assign();
         }
 
         //Context context = SpeechReminder.getInstance();
-        AlarmManager am=(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent myIntent = new Intent(context, this.getClass());
         //intent.putExtra(Config.EXTRA_FIELD, get_id());

@@ -13,7 +13,6 @@ import java.util.List;
 import core.september.android.basement.Util.Logger;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
-import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.DaysOfWeek;
 import core.september.speechreminder.models.Event;
 
@@ -72,14 +71,14 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
         holder.eventDate.setText(selectedItem.toRowLabel());
         holder.eventTitle.setText(selectedItem.getTitle());
         holder.checkBoxSAllDay.setChecked(selectedItem.isAllDay());
-       // if (repeatBit > 0) {
-            List<DaysOfWeek> repeatDays = DaysOfWeek.getRepeating(repeatBit);
-             List<DaysOfWeek> allDays = DaysOfWeek.getAll();
-            
-            for (DaysOfWeek day : allDays) {
-                holder.getByDayOfWeek(day).setChecked(repeatDays.contains(day));
-            }
-       // }
+        // if (repeatBit > 0) {
+        List<DaysOfWeek> repeatDays = DaysOfWeek.getRepeating(repeatBit);
+        List<DaysOfWeek> allDays = DaysOfWeek.getAll();
+
+        for (DaysOfWeek day : allDays) {
+            holder.getByDayOfWeek(day).setChecked(repeatDays.contains(day));
+        }
+        // }
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override

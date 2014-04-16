@@ -10,16 +10,14 @@ import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.iface.CRUDable;
 
-import core.september.speechreminder.models.Event;
-
 
 /**
  * Created by christian on 19/02/14.
  */
 public class CRUD<T extends CRUDable> {
+    private final static String TAG = CRUD.class.getSimpleName();
     private static CRUD instance;
     private static SQLiteDAO dao;
-    private final static String TAG = CRUD.class.getSimpleName();
 
     private CRUD() {
         //ClassPath.getTopLevelClasses("core.september.android.limboo.models");
@@ -35,7 +33,7 @@ public class CRUD<T extends CRUDable> {
     }
 
     public long insert(CRUDable crud) {
-		 crud.onSaveUpdate();
+        crud.onSaveUpdate();
         return dao.insert(crud);
     }
 
@@ -47,8 +45,8 @@ public class CRUD<T extends CRUDable> {
         return dao.get(clazz,"_id=?",""+id);
     }*/
 
-    public T selectById(Class<T> clazz,long id) {
-        List<T> list = dao.get(clazz,"_id=?",""+id);
+    public T selectById(Class<T> clazz, long id) {
+        List<T> list = dao.get(clazz, "_id=?", "" + id);
         return list != null && list.size() > 0 ? list.get(0) : null;
     }
 
@@ -59,15 +57,14 @@ public class CRUD<T extends CRUDable> {
         item.onSaveUpdate();
         return dao.update(item, whereClause, whereArgs);
     }
-    
-   
+
+
     public void delete(CRUDable item, String whereClause, String whereArgs) {
         try {
-			item.onDelete();
+            item.onDelete();
             dao.delete(item.getClass(), whereClause, whereArgs);
-        }
-        catch (Throwable t) {
-            Log.e(TAG,t.getMessage(),t);
+        } catch (Throwable t) {
+            Log.e(TAG, t.getMessage(), t);
         }
     }
 }

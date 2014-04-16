@@ -15,6 +15,7 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
     private TextToSpeech tts;
     private Context context;
     private boolean needDownloadData = false;
+    private String message;
 
     public boolean isNeedDownloadData() {
         return needDownloadData;
@@ -27,21 +28,18 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
         this.context = context;
     }
 
-    private String message;
-
     public void say(String sayThis) {
 
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,sayThis);
-       // textToSpeech.speak(tts,TextToSpeech.QUEUE_FLUSH,params);
-        tts.speak(sayThis, TextToSpeech.QUEUE_ADD,params);
+        params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, sayThis);
+        // textToSpeech.speak(tts,TextToSpeech.QUEUE_FLUSH,params);
+        tts.speak(sayThis, TextToSpeech.QUEUE_ADD, params);
     }
 
 
-    
     public void stop() {
-		tts.stop();
-	}
+        tts.stop();
+    }
 
     public boolean isSpeaking() {
         return tts.isSpeaking();
@@ -52,7 +50,7 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
         //Locale loc = new Locale("de", "", "");
 
 
-        Locale correctLocale = tts.isLanguageAvailable(context.getResources().getConfiguration().locale) == TextToSpeech.LANG_NOT_SUPPORTED?
+        Locale correctLocale = tts.isLanguageAvailable(context.getResources().getConfiguration().locale) == TextToSpeech.LANG_NOT_SUPPORTED ?
                 Locale.US : context.getResources().getConfiguration().locale;
 
         needDownloadData = tts.isLanguageAvailable(correctLocale) == TextToSpeech.LANG_MISSING_DATA;
@@ -65,8 +63,8 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
 
             @Override
             public void onUtteranceCompleted(String utteranceId) {
-                if(SpeechReminder.getInstance().loopSpeach) {
-                    tts.playSilence(500,TextToSpeech.QUEUE_ADD,null);
+                if (SpeechReminder.getInstance().loopSpeach) {
+                    tts.playSilence(500, TextToSpeech.QUEUE_ADD, null);
                     TTSProvider.this.say(utteranceId);
                 }
 
@@ -74,7 +72,6 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
             }
         });
     }
-
 
 
     public void shutdown() {

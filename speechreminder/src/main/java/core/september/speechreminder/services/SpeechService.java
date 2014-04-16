@@ -1,13 +1,10 @@
 package core.september.speechreminder.services;
 
 import android.app.IntentService;
-import android.content.Intent;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.Context;
-import android.speech.tts.TextToSpeech;
 import android.support.v4.app.NotificationCompat;
 
 import java.util.Locale;
@@ -31,13 +28,12 @@ public class SpeechService extends IntentService {
     }
 
 
-
     //@SuppressWarnings("deprecation")
     private void notifyOnBar() {
 
         Intent intent = new Intent(this, SpeechReminderActivity.DetailsActivity.class);
         intent.setAction(String.valueOf(modelId));
-        intent.putExtra(Config.EXTRA_FIELD,modelId);
+        intent.putExtra(Config.EXTRA_FIELD, modelId);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         Notification noti = new NotificationCompat.Builder(this)
@@ -64,9 +60,9 @@ public class SpeechService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         final Locale locale = this.getResources().getConfiguration().locale;
         if (intent != null) {
-            modelId = intent.getLongExtra(Config.EXTRA_FIELD,-1);
+            modelId = intent.getLongExtra(Config.EXTRA_FIELD, -1);
             event = (Event) CRUD.getInstance().selectById(Event.class, modelId);
-			//SpeechReminder.getInstance().selectedEvent = event;
+            //SpeechReminder.getInstance().selectedEvent = event;
             notifyOnBar();
             SpeechReminder.getInstance().loopSpeach = true;
             SpeechReminder.getInstance().getTTSProvider().say(event.getDescription());

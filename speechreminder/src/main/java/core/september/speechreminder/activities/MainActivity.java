@@ -10,8 +10,6 @@ import android.view.WindowManager;
 import java.util.concurrent.TimeUnit;
 
 import core.september.speechreminder.R;
-import core.september.speechreminder.config.Config;
-import core.september.speechreminder.helpers.DaoHelper;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -25,7 +23,6 @@ public class MainActivity extends ActionBarActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-
         setContentView(R.layout.activity_main);
 
         (new Handler()).postDelayed(new Runnable() {
@@ -33,7 +30,7 @@ public class MainActivity extends ActionBarActivity {
             public void run() {
                 //Class routing = (DaoHelper.getAppUser() == null) ? SignInUpActivity.class : Config.LANDING_ACTIVITY;
                 Class routing = SpeechReminderActivity.class;
-                startActivity(new Intent(MainActivity.this,routing));
+                startActivity(new Intent(MainActivity.this, routing));
                 MainActivity.this.finish();
             }
         }, TimeUnit.SECONDS.toMillis(3));

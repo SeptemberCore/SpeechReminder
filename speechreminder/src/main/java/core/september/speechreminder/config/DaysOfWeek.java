@@ -16,21 +16,22 @@ public enum DaysOfWeek {
     SATURDAY(64);
 
     private int repeat;
-     DaysOfWeek(int i) {
-         this.repeat = i;
+
+    DaysOfWeek(int i) {
+        this.repeat = i;
     }
-    
+
     public static List<DaysOfWeek> getAll() {
-			ArrayList<DaysOfWeek> recurringDays = new ArrayList();
-			recurringDays.add(DaysOfWeek.SATURDAY);
-			recurringDays.add(DaysOfWeek.FRIDAY);
-			recurringDays.add(DaysOfWeek.THURSDAY);
-			recurringDays.add(DaysOfWeek.WEDNESDAY);
-			recurringDays.add(DaysOfWeek.TUESDAY);
-			recurringDays.add(DaysOfWeek.MONDAY);
-			recurringDays.add(DaysOfWeek.SUNDAY);
+        ArrayList<DaysOfWeek> recurringDays = new ArrayList();
+        recurringDays.add(DaysOfWeek.SATURDAY);
+        recurringDays.add(DaysOfWeek.FRIDAY);
+        recurringDays.add(DaysOfWeek.THURSDAY);
+        recurringDays.add(DaysOfWeek.WEDNESDAY);
+        recurringDays.add(DaysOfWeek.TUESDAY);
+        recurringDays.add(DaysOfWeek.MONDAY);
+        recurringDays.add(DaysOfWeek.SUNDAY);
         return recurringDays;
-		}
+    }
 
     public static ArrayList<DaysOfWeek> getRepeating(int input) {
         ArrayList<DaysOfWeek> recurringDays = new ArrayList();
@@ -38,31 +39,31 @@ public enum DaysOfWeek {
         switch (level) {
             case 64:
                 recurringDays.add(DaysOfWeek.SATURDAY);
-                recurringDays.addAll(getRepeating(input-level));
-            break;
+                recurringDays.addAll(getRepeating(input - level));
+                break;
             case 32:
                 recurringDays.add(DaysOfWeek.FRIDAY);
-                recurringDays.addAll(getRepeating(input-level));
+                recurringDays.addAll(getRepeating(input - level));
                 break;
             case 16:
                 recurringDays.add(DaysOfWeek.THURSDAY);
-                recurringDays.addAll(getRepeating(input-level));
+                recurringDays.addAll(getRepeating(input - level));
                 break;
             case 8:
                 recurringDays.add(DaysOfWeek.WEDNESDAY);
-                recurringDays.addAll(getRepeating(input-level));
+                recurringDays.addAll(getRepeating(input - level));
                 break;
             case 4:
                 recurringDays.add(DaysOfWeek.TUESDAY);
-                recurringDays.addAll(getRepeating(input-level));
+                recurringDays.addAll(getRepeating(input - level));
                 break;
             case 2:
                 recurringDays.add(DaysOfWeek.MONDAY);
-                recurringDays.addAll(getRepeating(input-level));
+                recurringDays.addAll(getRepeating(input - level));
                 break;
             case 1:
                 recurringDays.add(DaysOfWeek.SUNDAY);
-                recurringDays.addAll(getRepeating(input-level));
+                recurringDays.addAll(getRepeating(input - level));
                 break;
 
         }

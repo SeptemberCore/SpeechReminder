@@ -17,6 +17,7 @@ public class SignInUpActivity extends ActionBarActivity {
     protected Button mBtnSignIn;
     protected Button mBtnSignUp;
     protected Button mBtnWorkOffLine;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
