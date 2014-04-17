@@ -24,8 +24,14 @@ public class MainActivity extends ActionBarActivity {
 
 
         setContentView(R.layout.activity_main);
+        
+        if(SpeechReminder.getInstance().needDownloadData()) {
+			
+			}
 
-        (new Handler()).postDelayed(new Runnable() {
+		else {
+				
+		(new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 //Class routing = (DaoHelper.getAppUser() == null) ? SignInUpActivity.class : Config.LANDING_ACTIVITY;
@@ -34,6 +40,10 @@ public class MainActivity extends ActionBarActivity {
                 MainActivity.this.finish();
             }
         }, TimeUnit.SECONDS.toMillis(3));
+			
+			
+			}
+
 
     }
 

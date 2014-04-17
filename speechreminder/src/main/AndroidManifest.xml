@@ -13,6 +13,7 @@
 
         <activity
             android:name="core.september.speechreminder.activities.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +23,7 @@
         </activity>
         <activity
             android:name="core.september.speechreminder.activities.SpeechReminderActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_speechreminder"
             android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
@@ -30,6 +32,7 @@
         </activity>
         <activity
             android:name="core.september.speechreminder.activities.SpeechReminderActivity$DetailsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:label="@string/title_activity_speechreminder_details"
             android:parentActivityName="core.september.speechreminder.activities.SpeechReminderActivity"

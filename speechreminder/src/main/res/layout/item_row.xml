@@ -22,14 +22,12 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/Green"
                 android:text="22/09/1981 - 22/09/1981"
                 android:id="@+id/eventDate" />
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/Green"
                 android:text="This is the event title"
                 android:id="@+id/eventTitle" />
 
@@ -38,14 +36,14 @@
 
         </LinearLayout>
 
-        <CheckBox
+       <!-- <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="All day"
             android:textColor="@color/Green"
             android:textSize="9dp"
             android:id="@+id/checkBoxSAllDay"
-            android:enabled="false" />
+            android:enabled="false" />-->
 
     </LinearLayout>
 

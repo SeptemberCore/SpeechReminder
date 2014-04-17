@@ -33,6 +33,10 @@ public class SpeechReminder extends Application {
         instance = this;
         instance.initialize();
     }
+    
+    public boolean needDownloadData() {
+			return ttsProvider.isNeedDownloadData();
+		}
 
     protected void initialize() {
         ResourceZoneInfoProvider.init(this);

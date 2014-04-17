@@ -16,10 +16,15 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
     private Context context;
     private boolean needDownloadData = false;
     private String message;
+    private Locale correctLocale;
 
     public boolean isNeedDownloadData() {
         return needDownloadData;
     }
+    
+    public Locale correctLocale() {
+			return correctLocale;
+		}
 
     public void init(Context context) {
         if (tts == null) {
@@ -29,11 +34,13 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
     }
 
     public void say(String sayThis) {
-
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, sayThis);
-        // textToSpeech.speak(tts,TextToSpeech.QUEUE_FLUSH,params);
-        tts.speak(sayThis, TextToSpeech.QUEUE_ADD, params);
+		if(!needDownloadData) {
+				HashMap<String, String> params = new HashMap<String, String>();
+				params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, sayThis);
+				// textToSpeech.speak(tts,TextToSpeech.QUEUE_FLUSH,params);
+				tts.speak(sayThis, TextToSpeech.QUEUE_ADD, params);
+			}
+        
     }
 
 
@@ -50,16 +57,14 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
         //Locale loc = new Locale("de", "", "");
 
 
-        Locale correctLocale = tts.isLanguageAvailable(context.getResources().getConfiguration().locale) == TextToSpeech.LANG_NOT_SUPPORTED ?
+        correctLocale = tts.isLanguageAvailable(context.getResources().getConfiguration().locale) == TextToSpeech.LANG_NOT_SUPPORTED ?
                 Locale.US : context.getResources().getConfiguration().locale;
 
         needDownloadData = tts.isLanguageAvailable(correctLocale) == TextToSpeech.LANG_MISSING_DATA;
 
         if (tts.isLanguageAvailable(correctLocale) >= TextToSpeech.LANG_AVAILABLE) {
             tts.setLanguage(correctLocale);
-        }
-
-        tts.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener() {
+            tts.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener() {
 
             @Override
             public void onUtteranceCompleted(String utteranceId) {
@@ -71,10 +76,25 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
 
             }
         });
+        }
+
+        
     }
 
 
     public void shutdown() {
         tts.shutdown();
     }
+    
+    public void reset() {
+		if(tts!= null) {
+			try {
+				tts.shutdown();
+				tts = null;
+				}
+			catch(Throwable e) {
+				android.util.Log.e(this.getClass().getSimpleName(),e.getMessage(),e);
+				}
+			}
+		}
 }
