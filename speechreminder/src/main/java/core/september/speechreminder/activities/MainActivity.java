@@ -3,13 +3,17 @@ package core.september.speechreminder.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
 
 import core.september.speechreminder.R;
+import core.september.speechreminder.app.SpeechReminder;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -24,12 +28,41 @@ public class MainActivity extends ActionBarActivity {
 
 
         setContentView(R.layout.activity_main);
+
+        Boolean needData = SpeechReminder.getInstance().needDownloadData();
+
+
         
-        if(SpeechReminder.getInstance().needDownloadData()) {
-			
+        if(needData) {
+
+            TextView disclaimerText = (TextView) findViewById(R.id.disclaimerText);
+            final String NEW_LINE = System.getProperty("line.separator");
+
+            StringBuilder builder = new StringBuilder();
+            builder.append("DISCLAIMER :");
+            builder.append(NEW_LINE);
+            builder.append("It appear you have no valid TTS data installed on device");
+            builder.append(NEW_LINE);
+            builder.append("please TOUCH HERE to download TTS data and after restart this app");
+
+
+            disclaimerText.setText(builder.toString());
+
+            findViewById(R.id.disclaimerWrapper).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent installIntent = new Intent();
+                    installIntent.setAction(
+                            TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                    startActivity(installIntent);
+                    finish();
+                }
+            });
 			}
 
 		else {
+
+            findViewById(R.id.disclaimerWrapper).setVisibility(View.GONE);
 				
 		(new Handler()).postDelayed(new Runnable() {
             @Override
