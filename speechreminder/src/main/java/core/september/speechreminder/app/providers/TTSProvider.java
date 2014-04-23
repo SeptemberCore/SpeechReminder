@@ -1,6 +1,8 @@
 package core.september.speechreminder.app.providers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 
 import java.util.HashMap;
@@ -64,11 +66,13 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
 
         if (tts.isLanguageAvailable(correctLocale) >= TextToSpeech.LANG_AVAILABLE) {
             tts.setLanguage(correctLocale);
+            final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(SpeechReminder.getInstance());
             tts.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener() {
 
             @Override
             public void onUtteranceCompleted(String utteranceId) {
-                if (SpeechReminder.getInstance().loopSpeach) {
+                if (SpeechReminder.getInstance().loopSpeach
+                       && pref.getBoolean("loopAlarm" , true) ) {
                     tts.playSilence(500, TextToSpeech.QUEUE_ADD, null);
                     TTSProvider.this.say(utteranceId);
                 }

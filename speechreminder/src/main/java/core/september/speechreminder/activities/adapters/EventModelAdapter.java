@@ -58,7 +58,7 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
             viewHolder.checkBoxFriday = (CheckBox) rowView.findViewById(R.id.checkBoxFriday);
             viewHolder.checkBoxSaturday = (CheckBox) rowView.findViewById(R.id.checkBoxSaturday);
 
-            viewHolder.checkBoxSAllDay = (CheckBox) rowView.findViewById(R.id.checkBoxSAllDay);
+            //viewHolder.checkBoxSAllDay = (CheckBox) rowView.findViewById(R.id.checkBoxSAllDay);
 
             rowView.setTag(viewHolder);
         }
@@ -70,7 +70,7 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
         int repeatBit = selectedItem.getRepeatBit();
         holder.eventDate.setText(selectedItem.toRowLabel());
         holder.eventTitle.setText(selectedItem.getTitle());
-        holder.checkBoxSAllDay.setChecked(selectedItem.isAllDay());
+        //holder.checkBoxSAllDay.setChecked(selectedItem.isAllDay());
         // if (repeatBit > 0) {
         List<DaysOfWeek> repeatDays = DaysOfWeek.getRepeating(repeatBit);
         List<DaysOfWeek> allDays = DaysOfWeek.getAll();
@@ -96,7 +96,7 @@ public class EventModelAdapter extends ArrayAdapter<Event> {
 
         public TextView eventDate;
         public TextView eventTitle;
-        public CheckBox checkBoxSAllDay;
+        //public CheckBox checkBoxSAllDay;
         public CheckBox checkBoxSunday;
         public CheckBox checkBoxMonday;
         public CheckBox checkBoxTuesday;

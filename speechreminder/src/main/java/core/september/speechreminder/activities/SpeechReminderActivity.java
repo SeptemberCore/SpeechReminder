@@ -68,6 +68,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
     private final static String EVENT_KEY = "EVENT_KEY";
     private boolean mTwoPane;
     private Event selectedEvent;
+    private final int RESULT_SETTINGS = 1;
 
     @Override
     protected int contentView() {
@@ -86,7 +87,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
 
     @Override
     protected ArrayAdapter mDrawerListAdapter() {
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Arrays.asList("Uno", "Due"));
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Arrays.asList("Preferences"));
         return adapter;
     }
 
@@ -168,7 +169,29 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(mPlanetTitles[position]);*/
+        switch(position) {
+            case 0: //Settinfgs
+                Intent i = new Intent(this, SettingsActivity.class);
+                startActivityForResult(i, RESULT_SETTINGS);
+                break;
+        }
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case RESULT_SETTINGS:
+                List<Event> eventList = CRUD.getInstance().select(Event.class);
+                for(Event event: eventList) {
+                    event.assign();
+                }
+                break;
+
+        }
+
     }
 
     @Override

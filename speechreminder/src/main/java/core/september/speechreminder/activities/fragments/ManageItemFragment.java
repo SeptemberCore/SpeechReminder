@@ -40,9 +40,9 @@ public class ManageItemFragment extends Fragment {
     EditText editDescription = null;
     EditText editStartDate = null;
     EditText editStartTime = null;
-    CheckBox checkBoxAllDay = null;
-    EditText editEndDate = null;
-    EditText editEndTime = null;
+    //CheckBox checkBoxAllDay = null;
+    //EditText editEndDate = null;
+    //EditText editEndTime = null;
     Button buttonConfirm = null;
     Button buttonDelete = null;
     CheckBox checkBoxSunday = null;
@@ -178,10 +178,10 @@ public class ManageItemFragment extends Fragment {
                         editStartDate.setText(selectedItem.getStartDate());
                     } else {
                         selectedItem.setEnd(newDate);
-                        editEndDate.setText(selectedItem.getEndDate());
+                        //editEndDate.setText(selectedItem.getEndDate());
                     }
 
-                    dateCorrectness();
+                    //dateCorrectness();
 
 
                 } catch (Throwable e) {
@@ -194,13 +194,13 @@ public class ManageItemFragment extends Fragment {
         dpdStart.show();
     }
 
-    private void dateCorrectness() {
+    /*private void dateCorrectness() {
         if (selectedItem.getStart().after(selectedItem.getEnd())) {
             selectedItem.setEnd(selectedItem.getStart());
             editEndDate.setText(selectedItem.getEndDate());
             editEndTime.setText(selectedItem.getEndHour());
         }
-    }
+    }*/
 
     private void setTime(final boolean start) {
 
@@ -229,12 +229,12 @@ public class ManageItemFragment extends Fragment {
                         selectedItem.setStart(newDate);
                         editStartTime.setText(selectedItem.getStartHour());
                     } else {
-                        selectedItem.setEnd(newDate);
-                        editEndTime.setText(selectedItem.getEndHour());
+                        //selectedItem.setEnd(newDate);
+                        //editEndTime.setText(selectedItem.getEndHour());
 
                     }
 
-                    dateCorrectness();
+                   // dateCorrectness();
 
 
                 } catch (Throwable e) {
@@ -271,7 +271,7 @@ public class ManageItemFragment extends Fragment {
         });
 
 
-        checkBoxAllDay = (CheckBox) getActivity().findViewById(R.id.checkBoxSAllDay);
+        /*checkBoxAllDay = (CheckBox) getActivity().findViewById(R.id.checkBoxSAllDay);
         editEndDate = (EditText) getActivity().findViewById(R.id.editEndDate);
         editEndDate.setFocusable(false);
         editEndDate.setOnClickListener(new View.OnClickListener() {
@@ -289,7 +289,7 @@ public class ManageItemFragment extends Fragment {
             public void onClick(View view) {
                 setTime(false);
             }
-        });
+        });*/
 
         checkBoxSunday = (CheckBox) getActivity().findViewById(R.id.checkBoxSunday);
         checkBoxMonday = (CheckBox) getActivity().findViewById(R.id.checkBoxMonday);
@@ -307,10 +307,10 @@ public class ManageItemFragment extends Fragment {
         editStartDate.setText(selectedItem.getStartDate());
         editStartTime.setText(selectedItem.getStartHour());
 
-        checkBoxAllDay.setChecked(selectedItem.isAllDay());
+        //checkBoxAllDay.setChecked(selectedItem.isAllDay());
 
-        editEndDate.setText(selectedItem.getEndDate());
-        editEndTime.setText(selectedItem.getEndHour());
+        //editEndDate.setText(selectedItem.getEndDate());
+        //editEndTime.setText(selectedItem.getEndHour());
 
         List<DaysOfWeek> repeatDays = DaysOfWeek.getRepeating(selectedItem.getRepeatBit());
 
@@ -342,11 +342,11 @@ public class ManageItemFragment extends Fragment {
         Date sDate = selectedItem.toDate(startDate, Config.DATE_FORMAT.concat("|").concat(Config.HOUR_FORMAT));
         selectedItem.setStart(sDate);
 
-        selectedItem.setAllDay(checkBoxAllDay.isChecked());
+        //selectedItem.setAllDay(checkBoxAllDay.isChecked());
 
-        String endDate = editEndDate.getText().toString().concat("|").concat(editEndTime.getText().toString());
-        Date eDate = selectedItem.toDate(endDate, Config.DATE_FORMAT.concat("|").concat(Config.HOUR_FORMAT));
-        selectedItem.setEnd(eDate);
+        //String endDate = editEndDate.getText().toString().concat("|").concat(editEndTime.getText().toString());
+        //Date eDate = selectedItem.toDate(endDate, Config.DATE_FORMAT.concat("|").concat(Config.HOUR_FORMAT));
+        //selectedItem.setEnd(eDate);
 
         int repeatNumber = (checkBoxSunday.isChecked() ? 1 : 0) +
                 (checkBoxMonday.isChecked() ? 2 : 0) +
