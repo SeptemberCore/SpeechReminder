@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:padding="15dp"
-        android:background="@drawable/transparent_shadow"
-        android:layout_weight="1">
+        android:background="@drawable/transparent_shadow">
 
     <LinearLayout
         android:orientation="horizontal"

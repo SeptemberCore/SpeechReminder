@@ -3,7 +3,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
+    android:background="@color/Orange"
+    android:padding="15dp"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="15dp"
+        android:background="@drawable/transparent_shadow">
 
     <LinearLayout
         android:id="@+id/linearLayoutTitle"
@@ -189,6 +199,6 @@
     </LinearLayout>
 
 
-
+    </LinearLayout>
 
 </LinearLayout>
