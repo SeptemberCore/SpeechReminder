@@ -5,29 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import java.util.List;
-
-import core.september.android.basement.Util.Logger;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
-import core.september.speechreminder.config.DaysOfWeek;
-import core.september.speechreminder.models.Event;
 
 /**
  * Created by christian on 19/03/14.
  */
-public class EventModelAdapter extends ArrayAdapter<Integer> {
+public class LeftMenuAdapter extends ArrayAdapter<Integer> {
+    final private int[] icons = new int[]{R.drawable.ic_action_settings, R.drawable.ic_location_web_site, R.drawable.ic_content_email};
+    final private int[] texts = new int[]{R.string.action_settings, R.string.location_web_site, R.string.content_email};
     private Activity context;
-    private  Integer[] positions;
+    private Integer[] positions;
     private ListItemFragment.UpdateListener mListener;
 
-
-    public EventModelAdapter(Activity context, int layout, Integer[] positions) {
-        super(context, R.layout.left_drawer_row, events);
+    public LeftMenuAdapter(Activity context, int layout, Integer[] positions) {
+        super(context, R.layout.left_drawer_row, positions);
         this.context = context;
         this.positions = positions;
         /*try {
@@ -49,16 +44,8 @@ public class EventModelAdapter extends ArrayAdapter<Integer> {
             /*viewHolder.text = (TextView) rowView.findViewById(R.id.TextView01);
             viewHolder.image = (ImageView) rowView
                     .findViewById(R.id.ImageView01);*/
-            viewHolder.eventDate = (TextView) rowView.findViewById(R.id.eventDate);
-            viewHolder.eventTitle = (TextView) rowView.findViewById(R.id.eventTitle);
-            viewHolder.checkBoxSunday = (CheckBox) rowView.findViewById(R.id.checkBoxSunday);
-            viewHolder.checkBoxMonday = (CheckBox) rowView.findViewById(R.id.checkBoxMonday);
-            viewHolder.checkBoxTuesday = (CheckBox) rowView.findViewById(R.id.checkBoxTuesday);
-            viewHolder.checkBoxWednsesday = (CheckBox) rowView.findViewById(R.id.checkBoxWednsesday);
-            viewHolder.checkBoxThursday = (CheckBox) rowView.findViewById(R.id.checkBoxThursday);
-            viewHolder.checkBoxFriday = (CheckBox) rowView.findViewById(R.id.checkBoxFriday);
-            viewHolder.checkBoxSaturday = (CheckBox) rowView.findViewById(R.id.checkBoxSaturday);
-
+            viewHolder.icon = (ImageView) rowView.findViewById(R.id.menu_icon);
+            viewHolder.menuEntry = (TextView) rowView.findViewById(R.id.menu_entry);
             //viewHolder.checkBoxSAllDay = (CheckBox) rowView.findViewById(R.id.checkBoxSAllDay);
 
             rowView.setTag(viewHolder);
@@ -67,28 +54,9 @@ public class EventModelAdapter extends ArrayAdapter<Integer> {
         // fill data
         ViewHolder holder = (ViewHolder) rowView.getTag();
 
-        final Event selectedItem = events[position];
-        int repeatBit = selectedItem.getRepeatBit();
-        holder.eventDate.setText(selectedItem.toRowLabel());
-        holder.eventTitle.setText(selectedItem.getTitle());
-        //holder.checkBoxSAllDay.setChecked(selectedItem.isAllDay());
-        // if (repeatBit > 0) {
-        List<DaysOfWeek> repeatDays = DaysOfWeek.getRepeating(repeatBit);
-        List<DaysOfWeek> allDays = DaysOfWeek.getAll();
+        holder.icon.setImageDrawable(context.getResources().getDrawable(icons[position]));
+        holder.menuEntry.setText(context.getResources().getString(texts[position]));
 
-        for (DaysOfWeek day : allDays) {
-            holder.getByDayOfWeek(day).setChecked(repeatDays.contains(day));
-        }
-        // }
-
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Logger.debug(this, new Throwable("" + position));
-                //SpeechReminder.getInstance().selectedEvent = selectedItem;
-                mListener.onElementClicked(selectedItem.get_id());
-            }
-        });
 
         return rowView;
     }
@@ -97,7 +65,7 @@ public class EventModelAdapter extends ArrayAdapter<Integer> {
 
         public ImageView icon;
         public TextView menuEntry;
-       
+
 
     }
 }

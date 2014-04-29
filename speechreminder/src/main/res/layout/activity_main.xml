@@ -2,30 +2,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Orange"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/Orange"
     tools:context=".activities.MainActivity">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/disclaimerWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:padding="15dp"
-        android:id="@+id/disclaimerWrapper"
-        android:background="@drawable/transparent_shadow"
+        android:orientation="vertical"
+
         >
 
         <TextView
+            android:id="@+id/logo_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_gravity="center_horizontal"
+            android:padding="30dp"
+            android:text="09Co®e"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="60dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/logo_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/transparent_shadow"
+            android:padding="30dp"
+            android:text="Speech Reminder v1.0Beta"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Orange"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/disclaimerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/transparent_shadow"
+            android:padding="30dp"
             android:text="Large Text"
-            android:id="@+id/disclaimerText" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 
 

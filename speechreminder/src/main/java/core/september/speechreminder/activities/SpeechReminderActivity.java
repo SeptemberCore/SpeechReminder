@@ -26,11 +26,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
-import java.util.Arrays;
 import java.util.List;
 
 import core.september.android.basement.AbstractNavigationDrawerActivity;
 import core.september.speechreminder.R;
+import core.september.speechreminder.activities.adapters.LeftMenuAdapter;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.activities.fragments.ManageItemFragment;
 import core.september.speechreminder.helpers.CRUD;
@@ -66,9 +66,9 @@ import core.september.speechreminder.models.Event;
 public class SpeechReminderActivity extends AbstractNavigationDrawerActivity implements ListItemFragment.UpdateListener {
 
     private final static String EVENT_KEY = "EVENT_KEY";
+    private final int RESULT_SETTINGS = 1;
     private boolean mTwoPane;
     private Event selectedEvent;
-    private final int RESULT_SETTINGS = 1;
 
     @Override
     protected int contentView() {
@@ -87,7 +87,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
 
     @Override
     protected ArrayAdapter mDrawerListAdapter() {
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Arrays.asList("Preferences"));
+        ArrayAdapter adapter = new LeftMenuAdapter(this, R.layout.left_drawer_row, new Integer[]{0, 1, 2});
         return adapter;
     }
 

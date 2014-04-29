@@ -52,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
 
             disclaimerText.setText(builder.toString());
 
-            findViewById(R.id.disclaimerWrapper).setOnClickListener(new View.OnClickListener() {
+            disclaimerText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent installIntent = new Intent();
@@ -66,9 +66,9 @@ public class MainActivity extends ActionBarActivity {
 
 		else {
 
-            findViewById(R.id.disclaimerWrapper).setVisibility(View.GONE);
-				
-		(new Handler()).postDelayed(new Runnable() {
+            findViewById(R.id.disclaimerText).setVisibility(View.GONE);
+
+            (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 //Class routing = (DaoHelper.getAppUser() == null) ? SignInUpActivity.class : Config.LANDING_ACTIVITY;
