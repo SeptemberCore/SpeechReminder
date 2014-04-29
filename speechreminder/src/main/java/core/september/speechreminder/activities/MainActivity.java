@@ -26,10 +26,12 @@ public class MainActivity extends ActionBarActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        getSupportActionBar().hide();
+
 
 
         setContentView(R.layout.activity_main);
+
+        //getSupportActionBar().hide();
 
         Boolean needData = SpeechReminder.getInstance().needDownloadData();
 
