@@ -209,7 +209,13 @@ public class ManageItemFragment extends Fragment {
 
         //                       // String formattedDate = "".concat(String.valueOf(year)).concat("-").concat(String.valueOf(monthOfYear)).concat("_").concat(String.valueOf(dayOfMonth));
 
-        String[] today = (new SimpleDateFormat(Config.HOUR_FORMAT)).format(refDate).split(Config.HOUR_SPLIT);
+        //String[] today = (new SimpleDateFormat(Config.HOUR_FORMAT)).format(refDate).split(Config.HOUR_SPLIT);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(refDate);
+        final int hour = calendar.get(Calendar.HOUR_OF_DAY) ; //Config.IS24HOURVIEW ? calendar.get(Calendar.HOUR_OF_DAY) : calendar.get(Calendar.HOUR);
+        int minutes =   calendar.get(Calendar.MINUTE);
+
+
         TimePickerDialog dpdStart = new TimePickerDialog(this.getActivity(), new TimePickerDialog.OnTimeSetListener() {
 
             @Override
@@ -217,16 +223,20 @@ public class ManageItemFragment extends Fragment {
                 try {
 
 
-                    String formattedDate = new SimpleDateFormat(Config.DATE_FORMAT).format(refDate);
-                    String formattedHour = "".concat(String.valueOf(hours)).concat(Config.HOUR_SPLIT)
-                            .concat(String.valueOf(minutes));
+//                    String formattedDate = new SimpleDateFormat(Config.DATE_FORMAT).format(refDate);
+//                    String formattedHour = "".concat(String.valueOf(hours)).concat(Config.HOUR_SPLIT)
+//                            .concat(String.valueOf(minutes));
 
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(refDate);
+                    cal.set(Calendar.HOUR_OF_DAY,hours);
+                    cal.set(Calendar.MINUTE,minutes);
 
-                    Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(Config.HOUR_FORMAT))
-                            .parse(formattedDate.concat(Config.SPACE).concat(formattedHour));
+//                    Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(Config.HOUR_FORMAT))
+//                            .parse(formattedDate.concat(Config.SPACE).concat(formattedHour));
 
                     if (start) {
-                        selectedItem.setStart(newDate);
+                        selectedItem.setStart(cal.getTime());
                         editStartTime.setText(selectedItem.getStartHour());
                     } else {
                         //selectedItem.setEnd(newDate);
@@ -243,7 +253,7 @@ public class ManageItemFragment extends Fragment {
 
 
             }
-        }, Integer.valueOf(today[0]), Integer.valueOf(today[1]), Config.IS24HOURVIEW);
+        },hour,minutes, Config.IS24HOURVIEW);
         dpdStart.show();
     }
 

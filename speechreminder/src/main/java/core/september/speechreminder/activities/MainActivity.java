@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-
+        //findViewById(android.R.id.title).setColo
 
         setContentView(R.layout.activity_main);
 

@@ -1,11 +1,17 @@
 package core.september.speechreminder.app;
 
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 
 import net.danlew.android.joda.ResourceZoneInfoProvider;
 
 import java.util.List;
 
+import core.september.speechreminder.R;
 import core.september.speechreminder.app.providers.TTSProvider;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
@@ -20,7 +26,9 @@ public class SpeechReminder extends Application {
     //private AlarmReceiver alarm;
     public boolean offLine;
     public boolean signedIn;
+    public boolean initialized = false;
     private TTSProvider ttsProvider;
+    private SharedPreferences pref;// = PreferenceManager.getDefaultSharedPreferences(SpeechReminder.getInstance());
 
     //public Event selectedEvent;
     public static SpeechReminder getInstance() {
@@ -42,13 +50,26 @@ public class SpeechReminder extends Application {
         ResourceZoneInfoProvider.init(this);
         ttsProvider = new TTSProvider();
         ttsProvider.init(this);
-
+		
+		pref = PreferenceManager.getDefaultSharedPreferences(SpeechReminder.getInstance());
         List<Event> eventList = CRUD.getInstance().select(Event.class);
-        for (Event event : eventList) {
-            event.assign();
-        }
+        if(eventList!= null) {
+			for (Event event : eventList) {
+				event.assign();
+				}
+			}
+        
+        initialized = true;
         //alarm = new AlarmReceiver();
     }
+
+    public SharedPreferences getPref() {
+        return pref;
+    }
+    
+    public boolean isInitialized() {
+			return initialized;
+		}
 
     public TTSProvider getTTSProvider() {
         return ttsProvider;
@@ -69,10 +90,31 @@ public class SpeechReminder extends Application {
 
     }
 
+	private void notifyOnBar(Class input, String title, String text) {
+	
+		if(pref.getBoolean("scheduleNotify" , true)) {
+					Notification noti = new NotificationCompat.Builder(this)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setSmallIcon(R.drawable.ic_launcher).build();
+                //.setContentIntent(pIntent).build();
+                /*.addAction(R.drawable.icon, "Call", pIntent)
+                .addAction(R.drawable.icon, "More", pIntent)
+                .addAction(R.drawable.icon, "And more", pIntent).build();*/
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        // hide the notification after its selected
+        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+        noti.defaults |= Notification.DEFAULT_LIGHTS; // LED
+        noti.defaults |= Notification.DEFAULT_VIBRATE; //Vibration
+        noti.defaults |= Notification.DEFAULT_SOUND; // Sound
+        
 
-    /*public void setAlarm() {
+        //SpeechReminder.getInstance().loopSpeach = true;
+        notificationManager.notify(input.getName().hashCode(), noti);
+			}
 
-    }*/
+
+    }
 
 
 }

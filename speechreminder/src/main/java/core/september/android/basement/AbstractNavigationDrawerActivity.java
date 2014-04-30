@@ -2,6 +2,7 @@ package core.september.android.basement;
 
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +14,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import core.september.android.basement.Util.Logger;
+import core.september.speechreminder.R;
 
 /**
  * Created by christian on 21/03/14.
@@ -46,6 +49,13 @@ public abstract class AbstractNavigationDrawerActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(contentView());
 
+        int actionBarTitleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+        if (actionBarTitleId > 0) {
+            TextView title = (TextView) findViewById(actionBarTitleId);
+            if (title != null) {
+                title.setTextColor(getResources().getColor(R.color.WhiteSmoke));
+            }
+        }
         //mPlanetTitles = getResources().getStringArray(R.array.planets_array);
         mDrawerLayout = (DrawerLayout) findViewById(drawerLayout());
         mDrawerList = (ListView) findViewById(leftDrawer());

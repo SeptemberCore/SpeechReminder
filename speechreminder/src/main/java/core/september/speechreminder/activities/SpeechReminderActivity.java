@@ -17,6 +17,7 @@
 package core.september.speechreminder.activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
@@ -25,6 +26,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -33,6 +35,7 @@ import core.september.speechreminder.R;
 import core.september.speechreminder.activities.adapters.LeftMenuAdapter;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.activities.fragments.ManageItemFragment;
+import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
 
@@ -174,6 +177,9 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivityForResult(i, RESULT_SETTINGS);
                 break;
+            case 1: //simple notification test
+				//SpeechReminder.getInstance().notifyOnBar(this.getClass(),"Simple title","simple notification");
+				break;
         }
         mDrawerLayout.closeDrawer(mDrawerList);
     }
@@ -235,6 +241,14 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
 
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+            int actionBarTitleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+            if (actionBarTitleId > 0) {
+                TextView title = (TextView) findViewById(actionBarTitleId);
+                if (title != null) {
+                    title.setTextColor(getResources().getColor(R.color.WhiteSmoke));
+                }
+            }
 
            /* if (getResources().getConfiguration().orientation
                     == Configuration.ORIENTATION_LANDSCAPE) {

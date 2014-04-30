@@ -7,5 +7,11 @@
             android:key="loopAlarm"
             android:summary="Loop alarm speech"
             android:title="Loop" />
+		
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="24hFormat"
+            android:summary="24 Hour format"
+            android:title="AM/PM 24" />
     </PreferenceCategory>
 </PreferenceScreen>

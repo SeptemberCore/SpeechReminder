@@ -61,8 +61,21 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
 
         correctLocale = tts.isLanguageAvailable(context.getResources().getConfiguration().locale) == TextToSpeech.LANG_NOT_SUPPORTED ?
                 Locale.US : context.getResources().getConfiguration().locale;
+                
+//        if(tts.isLanguageAvailable(context.getResources().getConfiguration().locale) == TextToSpeech.LANG_NOT_SUPPORTED) {
+//				SpeechReminder.getInstance().notifyOnBar(tts.getClass(),"Locale proplem",
+//					"Current locale "+context.getResources().getConfiguration().locale+
+//					" is not supported, i'll try to use "+Locale.US);
+//			}
 
         needDownloadData = tts.isLanguageAvailable(correctLocale) == TextToSpeech.LANG_MISSING_DATA;
+        
+//        if(needDownloadData) {
+//				SpeechReminder.getInstance().notifyOnBar(TTSProvider.class,"Locale proplem",
+//					"Locale data for "+context.getResources().getConfiguration().locale+
+//					" are missing, try to download it"
+//				);
+//			}
 
         if (tts.isLanguageAvailable(correctLocale) >= TextToSpeech.LANG_AVAILABLE) {
             tts.setLanguage(correctLocale);

@@ -52,7 +52,14 @@
             android:enabled="true"
             android:exported="true" >
         </receiver>
+       
         <receiver
+            android:name="core.september.speechreminder.receivers.SchedulerProvider"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+        
+         <receiver
             android:name="core.september.speechreminder.receivers.BootReceiver"
             android:enabled="true"
             android:exported="true" >
@@ -60,15 +67,10 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name="core.september.speechreminder.receivers.SchedulerProvider"
-            android:enabled="true"
-            android:exported="true" >
-        </receiver>
 
         <service
             android:name="core.september.speechreminder.services.SpeechService"
-            android:exported="false" >
+            android:exported="true" >
         </service>
 
         <activity

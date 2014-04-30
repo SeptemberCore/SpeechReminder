@@ -7,6 +7,7 @@ import org.joda.time.DateTimeConstants;
 
 import core.september.speechreminder.activities.SignInUpActivity;
 import core.september.speechreminder.activities.SpeechReminderActivity;
+import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.iface.CRUDable;
 import core.september.speechreminder.models.AppUser;
 import core.september.speechreminder.models.Event;
@@ -23,13 +24,14 @@ public class Config {
     public final static String END_OF_LINE = System.getProperty("line.separator");
     public final static Class LANDING_ACTIVITY = SignInUpActivity.class;
     public final static Class PLANNING_ACTIVITY = SpeechReminderActivity.class;
-    public final static String HOUR_FORMAT = "HH:mm";
+
     public final static String DATE_FORMAT = "yyyy/MM/dd";
     public final static String DATE_SPLIT = "/";
     public final static String HOUR_SPLIT = ":";
     public final static String SPACE = " ";
-    public final static Boolean IS24HOURVIEW = false;
-    public final static String SHORT_HOUR_FORMAT = "HH:mm";
+    public static Boolean IS24HOURVIEW = SpeechReminder.getInstance().getPref().getBoolean("24hFormat",true);
+    public static String SHORT_HOUR_FORMAT = IS24HOURVIEW ? "HH:mm" : "hh:mm aa";
+    public static String HOUR_FORMAT = SHORT_HOUR_FORMAT;
     public final static String SHORT_DATE_FORMAT = "dd, MMMM";
     //private static List<Class<? extends CRUDable>> models = null;
     public static Class<? extends CRUDable>[] _models = new Class[]{Event.class, AppUser.class};

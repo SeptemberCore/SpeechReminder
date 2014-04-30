@@ -141,11 +141,11 @@ public class Event implements CRUDable {
         DateTimeFormat.forPattern(Config.SHORT_DATE_FORMAT).printTo(buffer, _start);
         buffer.append(" ");
         DateTimeFormat.forPattern(Config.SHORT_HOUR_FORMAT).printTo(buffer, _start);
-        if (!isAllDay()) {
-            DateTime _end = new DateTime(getEnd());
-            buffer.append(" - ");
-            DateTimeFormat.forPattern(Config.SHORT_HOUR_FORMAT).printTo(buffer, _end);
-        }
+//        if (!isAllDay()) {
+//            DateTime _end = new DateTime(getEnd());
+//            buffer.append(" - ");
+//            DateTimeFormat.forPattern(Config.SHORT_HOUR_FORMAT).printTo(buffer, _end);
+//        }
         return buffer.toString();
     }
 
