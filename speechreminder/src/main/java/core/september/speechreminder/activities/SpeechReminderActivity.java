@@ -35,7 +35,6 @@ import core.september.speechreminder.R;
 import core.september.speechreminder.activities.adapters.LeftMenuAdapter;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.activities.fragments.ManageItemFragment;
-import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
 
@@ -172,14 +171,14 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(mPlanetTitles[position]);*/
-        switch(position) {
+        switch (position) {
             case 0: //Settinfgs
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivityForResult(i, RESULT_SETTINGS);
                 break;
             case 1: //simple notification test
-				//SpeechReminder.getInstance().notifyOnBar(this.getClass(),"Simple title","simple notification");
-				break;
+                //SpeechReminder.getInstance().notifyOnBar(this.getClass(),"Simple title","simple notification");
+                break;
         }
         mDrawerLayout.closeDrawer(mDrawerList);
     }
@@ -191,7 +190,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         switch (requestCode) {
             case RESULT_SETTINGS:
                 List<Event> eventList = CRUD.getInstance().select(Event.class);
-                for(Event event: eventList) {
+                for (Event event : eventList) {
                     event.assign();
                 }
                 break;
@@ -271,11 +270,12 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case android.R.id.home:
-                    Intent upIntent = new Intent(this, SpeechReminderActivity.class);
-                    if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    Intent upIntent = new Intent(DetailsActivity.this, SpeechReminderActivity.class);
+                    if (NavUtils.shouldUpRecreateTask(DetailsActivity.this, upIntent)) {
                         // This activity is not part of the application's task, so create a new task
                         // with a synthesized back stack.
-                        TaskStackBuilder.create(this)
+                        //startActivity(upIntent);
+                        TaskStackBuilder.create(DetailsActivity.this)
                                 .addNextIntent(upIntent)
                                 .startActivities();
                         finish();

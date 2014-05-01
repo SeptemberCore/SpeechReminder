@@ -167,10 +167,11 @@ public class ManageItemFragment extends Fragment {
                     String formattedDate = "".concat(String.valueOf(year)).concat(Config.DATE_SPLIT)
                             .concat(String.valueOf(monthOfYear + 1)).concat(Config.DATE_SPLIT)
                             .concat(String.valueOf(dayOfMonth));
-                    String formattedHour = new SimpleDateFormat(Config.HOUR_FORMAT).format(refDate);
+                    String formattedHour = new SimpleDateFormat(Config.getInstance().HOUR_FORMAT()).format(refDate);
 
 
-                    Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(Config.HOUR_FORMAT))
+                    Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(
+                            Config.getInstance().HOUR_FORMAT()))
                             .parse(formattedDate.concat(Config.SPACE).concat(formattedHour));
 
                     if (start) {
@@ -253,7 +254,7 @@ public class ManageItemFragment extends Fragment {
 
 
             }
-        },hour,minutes, Config.IS24HOURVIEW);
+        }, hour, minutes, Config.getInstance().IS24HOURVIEW());
         dpdStart.show();
     }
 
@@ -349,7 +350,7 @@ public class ManageItemFragment extends Fragment {
         selectedItem.setTitle(editTitle.getText().toString());
         selectedItem.setDescription(editDescription.getText().toString());
         String startDate = editStartDate.getText().toString().concat("|").concat(editStartTime.getText().toString());
-        Date sDate = selectedItem.toDate(startDate, Config.DATE_FORMAT.concat("|").concat(Config.HOUR_FORMAT));
+        Date sDate = selectedItem.toDate(startDate, Config.DATE_FORMAT.concat("|").concat(Config.getInstance().HOUR_FORMAT()));
         selectedItem.setStart(sDate);
 
         //selectedItem.setAllDay(checkBoxAllDay.isChecked());

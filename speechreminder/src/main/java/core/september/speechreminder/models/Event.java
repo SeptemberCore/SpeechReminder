@@ -140,7 +140,7 @@ public class Event implements CRUDable {
         DateTime _start = new DateTime(getStart());
         DateTimeFormat.forPattern(Config.SHORT_DATE_FORMAT).printTo(buffer, _start);
         buffer.append(" ");
-        DateTimeFormat.forPattern(Config.SHORT_HOUR_FORMAT).printTo(buffer, _start);
+        DateTimeFormat.forPattern(Config.getInstance().SHORT_HOUR_FORMAT()).printTo(buffer, _start);
 //        if (!isAllDay()) {
 //            DateTime _end = new DateTime(getEnd());
 //            buffer.append(" - ");
@@ -152,7 +152,7 @@ public class Event implements CRUDable {
     public String getHour(Date date) {
         StringBuffer buffer = new StringBuffer();
         DateTime _start = new DateTime(date);
-        DateTimeFormat.forPattern(Config.HOUR_FORMAT).printTo(buffer, _start);
+        DateTimeFormat.forPattern(Config.getInstance().HOUR_FORMAT()).printTo(buffer, _start);
         return buffer.toString();
     }
 
@@ -233,6 +233,7 @@ public class Event implements CRUDable {
 
 
     protected void setAlarm() {
+        android.util.Log.d(this.getClass().getSimpleName(), "Setting alarm for event: " + get_id() + " : " + getDescription());
         Context context = SpeechReminder.getInstance();
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 

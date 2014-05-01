@@ -8,8 +8,7 @@ import core.september.speechreminder.config.Config;
 import core.september.speechreminder.services.SpeechService;
 
 public class AlarmReceiver extends BroadcastReceiver {
-    public AlarmReceiver() {
-    }
+
 
     @Override
     public void onReceive(Context context, Intent intent) {

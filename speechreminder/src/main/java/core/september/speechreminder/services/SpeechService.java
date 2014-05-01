@@ -58,6 +58,7 @@ public class SpeechService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        android.util.Log.d(this.getClass().getSimpleName(), "Handling speech");
         final Locale locale = this.getResources().getConfiguration().locale;
         if (intent != null) {
             modelId = intent.getLongExtra(Config.EXTRA_FIELD, -1);

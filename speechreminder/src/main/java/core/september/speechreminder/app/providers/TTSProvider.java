@@ -36,13 +36,22 @@ public class TTSProvider extends HashMap<String, String> implements TextToSpeech
     }
 
     public void say(String sayThis) {
-		if(!needDownloadData) {
+        android.util.Log.d(this.getClass().getSimpleName(), "Trying to say: " + sayThis);
+        if(!needDownloadData) {
 				HashMap<String, String> params = new HashMap<String, String>();
 				params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, sayThis);
 				// textToSpeech.speak(tts,TextToSpeech.QUEUE_FLUSH,params);
 				tts.speak(sayThis, TextToSpeech.QUEUE_ADD, params);
 			}
         
+    }
+
+    public void sayOne(String sayThis) {
+        android.util.Log.d(this.getClass().getSimpleName(), "Trying to sayOne: " + sayThis);
+        if (!needDownloadData) {
+            tts.speak(sayThis, TextToSpeech.QUEUE_ADD, null);
+        }
+
     }
 
 

@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="core.september.speechreminder" >
+    package="core.september.speechreminder">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="core.september.speechreminder.app.SpeechReminder"
+        android:name=".app.SpeechReminder"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Sppechab" >
-        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-        <uses-permission android:name="android.permission.WAKE_LOCK" />
+        android:theme="@style/Theme.Sppechab">
+
+        <receiver android:name=".receivers.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+
+        <receiver
+            android:name="core.september.speechreminder.receivers.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
+        <receiver
+            android:name="core.september.speechreminder.receivers.SchedulerProvider"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
+        <service
+            android:name="core.september.speechreminder.services.SpeechService"
+            android:exported="true"></service>
+
 
         <activity
             android:name="core.september.speechreminder.activities.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +48,7 @@
             android:name="core.september.speechreminder.activities.SpeechReminderActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_speechreminder"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.support.UI_OPTIONS"
                 android:value="splitActionBarWhenNarrow" />
@@ -36,7 +59,7 @@
             android:exported="true"
             android:label="@string/title_activity_speechreminder_details"
             android:parentActivityName="core.september.speechreminder.activities.SpeechReminderActivity"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:uiOptions="splitActionBarWhenNarrow">
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
@@ -47,36 +70,10 @@
                 android:value="splitActionBarWhenNarrow" />
         </activity>
 
-        <receiver
-            android:name="core.september.speechreminder.receivers.AlarmReceiver"
-            android:enabled="true"
-            android:exported="true" >
-        </receiver>
-       
-        <receiver
-            android:name="core.september.speechreminder.receivers.SchedulerProvider"
-            android:enabled="true"
-            android:exported="true" >
-        </receiver>
-        
-         <receiver
-            android:name="core.september.speechreminder.receivers.BootReceiver"
-            android:enabled="true"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="core.september.speechreminder.services.SpeechService"
-            android:exported="true" >
-        </service>
 
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>
