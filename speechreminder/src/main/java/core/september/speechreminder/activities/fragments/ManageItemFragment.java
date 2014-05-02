@@ -24,6 +24,7 @@ import java.util.List;
 import core.september.android.basement.Util.Logger;
 import core.september.speechreminder.R;
 import core.september.speechreminder.app.SpeechReminder;
+import core.september.speechreminder.app.providers.TTSProvider;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.config.DaysOfWeek;
 import core.september.speechreminder.helpers.CRUD;
@@ -111,6 +112,9 @@ public class ManageItemFragment extends Fragment {
                 selectedItem = new Event();
                 selectedItem.set_id(-1L);
                 updateArticleView();
+                return true;
+            case R.id.speech_preview:
+                SpeechReminder.getInstance().getTTSProvider().sayOne(editDescription.getText().toString());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

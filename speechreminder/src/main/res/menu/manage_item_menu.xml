@@ -12,4 +12,9 @@
         android:icon="@drawable/ic_content_discard"
         app:showAsAction="always"
         android:title="@string/delete_item" />
+
+    <item android:id="@+id/speech_preview"
+        android:icon="@drawable/ic_av_play"
+        app:showAsAction="always"
+        android:title="@string/speech_preview" />
 </menu>

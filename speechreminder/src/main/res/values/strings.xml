@@ -34,5 +34,6 @@
     <string name="delete_item">Delete</string>
     <string name="location_web_site">More apps</string>
     <string name="content_email">Contact developer</string>
+    <string name="speech_preview">Voice preview</string>
 
 </resources>
