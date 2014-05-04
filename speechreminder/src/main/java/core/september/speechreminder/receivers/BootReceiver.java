@@ -28,6 +28,6 @@ public class BootReceiver extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, myIntent, 0);
         //am.cancel(pi);
 
-        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pi);
+        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 120000, pi);
     }
 }

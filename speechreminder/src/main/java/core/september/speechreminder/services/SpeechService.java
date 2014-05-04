@@ -63,9 +63,11 @@ public class SpeechService extends IntentService {
         if (intent != null) {
             modelId = intent.getLongExtra(Config.EXTRA_FIELD, -1);
             event = (Event) CRUD.getInstance().selectById(Event.class, modelId);
+            android.util.Log.d(this.getClass().getSimpleName(), "Trying to speech event "+event.get_id()+" "+event.getDescription());
             //SpeechReminder.getInstance().selectedEvent = event;
             notifyOnBar();
             SpeechReminder.getInstance().loopSpeach = true;
+            android.util.Log.d(this.getClass().getSimpleName(), "Trying to speech event ");
             SpeechReminder.getInstance().getTTSProvider().say(event.getDescription());
         }
     }
