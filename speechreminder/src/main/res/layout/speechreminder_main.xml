@@ -12,10 +12,23 @@
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
-    <FrameLayout
-        android:id="@+id/content_frame_no_dual"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+      
+        
+        
+      <LinearLayout 
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent" >
+            
+         <LinearLayout android:id="@+id/banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </LinearLayout>
+            
+            <FrameLayout
+				android:id="@+id/content_frame_no_dual"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" >
 
 
         <fragment
@@ -25,12 +38,15 @@
             android:id="@+id/list_item_fragmet"
             tools:layout="@layout/simple_list_item_1" />
 
-        <LinearLayout android:id="@+id/banner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </LinearLayout>
+       
 
     </FrameLayout>
+            
+
+            
+        </LinearLayout>   
+      
+    
 
     <ListView android:id="@+id/left_drawer"
         android:layout_width="240dp"
