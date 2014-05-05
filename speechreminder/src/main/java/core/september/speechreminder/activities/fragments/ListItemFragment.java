@@ -115,7 +115,10 @@ public class ListItemFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //MenuInflater inflater = getActivity().getMenuInflater();
+        //super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
         inflater.inflate(R.menu.list_item_fragment_menu, menu);
+
         super.onCreateOptionsMenu(menu, inflater);
         //return true;
     }

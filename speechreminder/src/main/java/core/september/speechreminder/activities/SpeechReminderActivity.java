@@ -19,6 +19,8 @@ package core.september.speechreminder.activities;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -38,6 +40,7 @@ import java.util.List;
 import core.september.android.basement.AbstractNavigationDrawerActivity;
 import core.september.speechreminder.R;
 import core.september.speechreminder.activities.adapters.LeftMenuAdapter;
+import core.september.speechreminder.activities.fragments.LicenseFragment;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.activities.fragments.ManageItemFragment;
 import core.september.speechreminder.config.Config;
@@ -79,6 +82,8 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
     private Event selectedEvent;
     private RevMobFullscreen fullscreen;
 
+    private int lastpicked = 0;
+
     @Override
     protected int contentView() {
         return R.layout.speechreminder_main;
@@ -96,7 +101,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
 
     @Override
     protected ArrayAdapter mDrawerListAdapter() {
-        ArrayAdapter adapter = new LeftMenuAdapter(this, R.layout.left_drawer_row, new Integer[]{0, 1, 2});
+        ArrayAdapter adapter = new LeftMenuAdapter(this, R.layout.left_drawer_row, new Integer[]{0, 1, 2, 3, 4});
         return adapter;
     }
 
@@ -176,33 +181,37 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
 
     @Override
     protected void selectItem(int position) {
-        // update the main content by replacing fragments
-/*        switch (position) {
-            case LIST_ACTIVITY:
 
-                break;
-        }
-        Fragment fragment = new PlanetFragment();
-        Bundle args = new Bundle();
-        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-        fragment.setArguments(args);
-
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-        // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mPlanetTitles[position]);*/
         switch (position) {
-            case 0: //Settinfgs
+            case 0:
+                if (lastpicked != 0) {
+                    Fragment home = new ListItemFragment();
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.content_frame_no_dual, home);
+                    transaction.commit();
+                }
+                break;
+            case 1: //Settinfgs
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivityForResult(i, RESULT_SETTINGS);
                 break;
-            case 1: //simple notification test
+            case 2: //simple notification test
                 //SpeechReminder.getInstance().notifyOnBar(this.getClass(),"Simple title","simple notification");
                 fullscreen.show();
                 break;
+            case 4:
+                if (lastpicked != 4) {
+                    lastpicked = 4;
+                    Fragment license = new LicenseFragment();
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.content_frame_no_dual, license);
+                    transaction.commit();
+                }
+                break;
         }
+        lastpicked = position;
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 

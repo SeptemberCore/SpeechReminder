@@ -35,5 +35,7 @@
     <string name="location_web_site">More apps</string>
     <string name="content_email">Contact developer</string>
     <string name="speech_preview">Voice preview</string>
+    <string name="action_home">Home</string>
+    <string name="content_license">License</string>
 
 </resources>

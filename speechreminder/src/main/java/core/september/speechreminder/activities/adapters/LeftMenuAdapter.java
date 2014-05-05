@@ -15,8 +15,20 @@ import core.september.speechreminder.activities.fragments.ListItemFragment;
  * Created by christian on 19/03/14.
  */
 public class LeftMenuAdapter extends ArrayAdapter<Integer> {
-    final private int[] icons = new int[]{R.drawable.ic_action_settings, R.drawable.ic_location_web_site, R.drawable.ic_content_email};
-    final private int[] texts = new int[]{R.string.action_settings, R.string.location_web_site, R.string.content_email};
+    final private int[] icons = new int[]{
+            R.drawable.ic_content_picture,
+            R.drawable.ic_action_settings,
+            R.drawable.ic_location_web_site,
+            R.drawable.ic_content_email,
+            R.drawable.ic_content_paste
+    };
+    final private int[] texts = new int[]{
+            R.string.action_home,
+            R.string.action_settings,
+            R.string.location_web_site,
+            R.string.content_email,
+            R.string.content_license,
+    };
     private Activity context;
     private Integer[] positions;
     private ListItemFragment.UpdateListener mListener;
