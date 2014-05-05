@@ -25,8 +25,13 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.revmob.RevMob;
+import com.revmob.ads.banner.RevMobBanner;
+import com.revmob.ads.fullscreen.RevMobFullscreen;
 
 import java.util.List;
 
@@ -35,6 +40,7 @@ import core.september.speechreminder.R;
 import core.september.speechreminder.activities.adapters.LeftMenuAdapter;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.activities.fragments.ManageItemFragment;
+import core.september.speechreminder.config.Config;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
 
@@ -71,6 +77,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
     private final int RESULT_SETTINGS = 1;
     private boolean mTwoPane;
     private Event selectedEvent;
+    private RevMobFullscreen fullscreen;
 
     @Override
     protected int contentView() {
@@ -133,6 +140,21 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //setContentView(R.layout.main);
+
+        RevMob revmob = RevMob.start(this, Config.REVMOB_APP_ID);
+        RevMobBanner banner = revmob.createBanner(this);
+        fullscreen = revmob.createFullscreen(this, null); // pre-load it without showing it
+        if(findViewById(R.id.banner) != null) {
+            ViewGroup view = (ViewGroup) findViewById(R.id.banner);
+            view.addView(banner);
+        }
+
+    }
+
+    @Override
     protected boolean handleNavigationButton(MenuItem item, FallBackDefault fallBackDefault) {
         // Handle action buttons
         switch (item.getItemId()) {
@@ -178,6 +200,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
                 break;
             case 1: //simple notification test
                 //SpeechReminder.getInstance().notifyOnBar(this.getClass(),"Simple title","simple notification");
+                fullscreen.show();
                 break;
         }
         mDrawerLayout.closeDrawer(mDrawerList);

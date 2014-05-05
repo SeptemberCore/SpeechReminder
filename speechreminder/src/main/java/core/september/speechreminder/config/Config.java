@@ -20,6 +20,7 @@ public class Config {
     public final static String APPLICATION_ID = "7289";
     public final static String AUTHORIZATION_KEY = "HSxgbucxBk-8qvg";
     public final static String AUTHORIZATION_SECRET = "8xvwxEayHXG-X-p";
+    public final static String REVMOB_APP_ID = "53677ee5b39360ed0773fc39";
     public final static int NULL = -1;
     public final static String END_OF_LINE = System.getProperty("line.separator");
     public final static Class LANDING_ACTIVITY = SignInUpActivity.class;
