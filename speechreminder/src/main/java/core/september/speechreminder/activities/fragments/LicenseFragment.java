@@ -39,7 +39,7 @@ public class LicenseFragment extends WebViewFragment {
         } catch (IOException e) {
             return view;
         }
-        view.loadData(text.toString(), "text/html", null);
+        view.loadData(text.toString(), "text/html", "utf-8");
         return view;
     }
 

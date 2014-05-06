@@ -49,7 +49,8 @@ public class SpeechService extends IntentService {
         noti.flags |= Notification.FLAG_AUTO_CANCEL;
         noti.defaults |= Notification.DEFAULT_LIGHTS; // LED
         noti.defaults |= Notification.DEFAULT_VIBRATE; //Vibration
-        noti.defaults |= Notification.DEFAULT_SOUND; // Sound
+        noti.defaults |= SpeechReminder.getInstance().getPref().getBoolean("notifyPlaySound", true) ?
+							Notification.DEFAULT_SOUND : 0; // Sound
 
         //SpeechReminder.getInstance().loopSpeach = true;
         notificationManager.notify(Long.valueOf(modelId).intValue(), noti);

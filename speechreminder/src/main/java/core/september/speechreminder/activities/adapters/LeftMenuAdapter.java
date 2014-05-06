@@ -19,14 +19,14 @@ public class LeftMenuAdapter extends ArrayAdapter<Integer> {
             R.drawable.ic_content_picture,
             R.drawable.ic_action_settings,
             R.drawable.ic_location_web_site,
-            R.drawable.ic_content_email,
+            R.drawable.ic_rating_good,
             R.drawable.ic_content_paste
     };
     final private int[] texts = new int[]{
             R.string.action_home,
             R.string.action_settings,
             R.string.location_web_site,
-            R.string.content_email,
+            R.string.rate_app,
             R.string.content_license,
     };
     private Activity context;

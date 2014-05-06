@@ -37,7 +37,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/transparent_shadow"
             android:padding="30dp"
-            android:text="Speech Reminder v1.0Beta"
+            android:text="Speech Reminder"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/Orange"
             android:textStyle="bold" />

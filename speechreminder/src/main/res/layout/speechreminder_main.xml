@@ -28,12 +28,12 @@
             <FrameLayout
 				android:id="@+id/content_frame_no_dual"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content" >
+				android:layout_height="fill_parent" >
 
 
         <fragment
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:name="core.september.speechreminder.activities.fragments.ListItemFragment"
             android:id="@+id/list_item_fragmet"
             tools:layout="@layout/simple_list_item_1" />

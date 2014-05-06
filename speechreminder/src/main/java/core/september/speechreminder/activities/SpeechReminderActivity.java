@@ -16,8 +16,11 @@
 
 package core.september.speechreminder.activities;
 
+import java.util.Random;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,14 +29,17 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.revmob.RevMob;
+import com.revmob.RevMobAdsListener;
 import com.revmob.ads.banner.RevMobBanner;
 import com.revmob.ads.fullscreen.RevMobFullscreen;
+import com.revmob.ads.link.RevMobLink;
 
 import java.util.List;
 
@@ -43,6 +49,7 @@ import core.september.speechreminder.activities.adapters.LeftMenuAdapter;
 import core.september.speechreminder.activities.fragments.LicenseFragment;
 import core.september.speechreminder.activities.fragments.ListItemFragment;
 import core.september.speechreminder.activities.fragments.ManageItemFragment;
+import core.september.speechreminder.app.SpeechReminder;
 import core.september.speechreminder.config.Config;
 import core.september.speechreminder.helpers.CRUD;
 import core.september.speechreminder.models.Event;
@@ -77,10 +84,12 @@ import core.september.speechreminder.models.Event;
 public class SpeechReminderActivity extends AbstractNavigationDrawerActivity implements ListItemFragment.UpdateListener {
 
     private final static String EVENT_KEY = "EVENT_KEY";
+    private final static String ROOTPACKAGE = "core.september.speechreminder";
     private final int RESULT_SETTINGS = 1;
     private boolean mTwoPane;
     private Event selectedEvent;
     private RevMobFullscreen fullscreen;
+    private RevMobLink link;
 
     private int lastpicked = 0;
 
@@ -148,14 +157,25 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
     public void onResume() {
         super.onResume();
         //setContentView(R.layout.main);
+        
+         RevMobAdsListener listener = new RevMobAdsListener() {
+            public void onRevMobAdReceived() { Log.i("[RevMob]", "onAdReceived"); }
+            public void onRevMobAdNotReceived(String message) {} // you can hide the More Games Button here
+            public void onRevMobAdDisplayed() {}
+            public void onRevMobAdDismiss() {}
+            public void onRevMobAdClicked() {}
+        };
 
         RevMob revmob = RevMob.start(this, Config.REVMOB_APP_ID);
         RevMobBanner banner = revmob.createBanner(this);
-        fullscreen = revmob.createFullscreen(this, null); // pre-load it without showing it
+        fullscreen = revmob.createFullscreen(this, listener); // pre-load it without showing it
         if(findViewById(R.id.banner) != null) {
             ViewGroup view = (ViewGroup) findViewById(R.id.banner);
             view.addView(banner);
         }
+
+       
+        link = revmob.createAdLink(this, listener);
 
     }
 
@@ -198,7 +218,20 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
                 break;
             case 2: //simple notification test
                 //SpeechReminder.getInstance().notifyOnBar(this.getClass(),"Simple title","simple notification");
+                //fullscreen.show();
+                if((new Random()).nextInt()%2 == 0)
+                link.open();
+                else 
                 fullscreen.show();
+                break;
+            case 3: //Rate app on Play Store
+                Uri uri = Uri.parse("market://details?id=" + ROOTPACKAGE);
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + ROOTPACKAGE)));
+                }
                 break;
             case 4:
                 if (lastpicked != 4) {
@@ -266,6 +299,7 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
 
 
     public static class DetailsActivity extends ActionBarActivity {
+        private RevMobFullscreen fullscreen;
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -299,6 +333,13 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         }
 
         @Override
+        public void onResume() {
+            super.onResume();
+            RevMob revmob = RevMob.start(this, Config.REVMOB_APP_ID);
+            fullscreen = revmob.createFullscreen(this, null); // pre-load it without showing it
+        }
+
+        @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case android.R.id.home:
@@ -306,11 +347,11 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
                     if (NavUtils.shouldUpRecreateTask(DetailsActivity.this, upIntent)) {
                         // This activity is not part of the application's task, so create a new task
                         // with a synthesized back stack.
-                        //startActivity(upIntent);
-                        TaskStackBuilder.create(DetailsActivity.this)
-                                .addNextIntent(upIntent)
-                                .startActivities();
-                        finish();
+                        startActivity(upIntent);
+                       // TaskStackBuilder.create(DetailsActivity.this)
+                       //         .addNextIntent(upIntent)
+                       //         .startActivities();
+                        fullscreen.show();
                     } else {
                         // This activity is part of the application's task, so simply
                         // navigate up to the hierarchical parent activity.

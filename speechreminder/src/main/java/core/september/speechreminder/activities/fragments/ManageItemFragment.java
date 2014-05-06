@@ -152,42 +152,29 @@ public class ManageItemFragment extends Fragment {
         //outState.putLong(Config.EXTRA_FIELD, mCurrentID);
     }
 
-    private void setDate(final boolean start) {
+    private void setDate() {
 
-        final Date refDate = (Date) (start ? (selectedItem.getStart() == null ? new Date() : selectedItem.getStart()) :
-                (selectedItem.getEnd() == null ? new Date() : selectedItem.getEnd()));
+        final Date refDate = selectedItem.getStart() == null ? new Date() : selectedItem.getStart();
+           
         Calendar cal = Calendar.getInstance();
         cal.setTime(refDate);
 
         //                       // String formattedDate = "".concat(String.valueOf(year)).concat("-").concat(String.valueOf(monthOfYear)).concat("_").concat(String.valueOf(dayOfMonth));
 
-        String[] today = (new SimpleDateFormat(Config.DATE_FORMAT)).format(refDate).split(Config.DATE_SPLIT);
+        //String[] today = (new SimpleDateFormat(Config.DATE_FORMAT)).format(refDate).split(Config.DATE_SPLIT);
         DatePickerDialog dpdStart = new DatePickerDialog(this.getActivity(), new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 try {
 
-                    String formattedDate = "".concat(String.valueOf(year)).concat(Config.DATE_SPLIT)
-                            .concat(String.valueOf(monthOfYear + 1)).concat(Config.DATE_SPLIT)
-                            .concat(String.valueOf(dayOfMonth));
-                    String formattedHour = new SimpleDateFormat(Config.getInstance().HOUR_FORMAT()).format(refDate);
-
-
-                    Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(
-                            Config.getInstance().HOUR_FORMAT()))
-                            .parse(formattedDate.concat(Config.SPACE).concat(formattedHour));
-
-                    if (start) {
-                        selectedItem.setStart(newDate);
-                        editStartDate.setText(selectedItem.getStartDate());
-                    } else {
-                        selectedItem.setEnd(newDate);
-                        //editEndDate.setText(selectedItem.getEndDate());
-                    }
-
-                    //dateCorrectness();
-
+                    Calendar calendarInner = Calendar.getInstance();
+					calendarInner.set(Calendar.YEAR, year);
+					calendarInner.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+					calendarInner.set(Calendar.MONTH, monthOfYear);
+                    selectedItem.setStart(calendarInner.getTime());
+                    editStartDate.setText(selectedItem.getStartDate());
+                  
 
                 } catch (Throwable e) {
                     Logger.debug(ManageItemFragment.this, e);
@@ -207,14 +194,10 @@ public class ManageItemFragment extends Fragment {
         }
     }*/
 
-    private void setTime(final boolean start) {
+    private void setTime() {
 
-        final Date refDate = (Date) (start ? (selectedItem.getStart() == null ? new Date() : selectedItem.getStart()) :
-                (selectedItem.getEnd() == null ? new Date() : selectedItem.getEnd()));
-
-        //                       // String formattedDate = "".concat(String.valueOf(year)).concat("-").concat(String.valueOf(monthOfYear)).concat("_").concat(String.valueOf(dayOfMonth));
-
-        //String[] today = (new SimpleDateFormat(Config.HOUR_FORMAT)).format(refDate).split(Config.HOUR_SPLIT);
+        final Date refDate = selectedItem.getStart() == null ? new Date() : selectedItem.getStart();
+        
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(refDate);
         final int hour = calendar.get(Calendar.HOUR_OF_DAY) ; //Config.IS24HOURVIEW ? calendar.get(Calendar.HOUR_OF_DAY) : calendar.get(Calendar.HOUR);
@@ -232,25 +215,14 @@ public class ManageItemFragment extends Fragment {
 //                    String formattedHour = "".concat(String.valueOf(hours)).concat(Config.HOUR_SPLIT)
 //                            .concat(String.valueOf(minutes));
 
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(refDate);
-                    cal.set(Calendar.HOUR_OF_DAY,hours);
-                    cal.set(Calendar.MINUTE,minutes);
+                    Calendar calInner = Calendar.getInstance();
+                    calInner.setTime(refDate);
+                    calInner.set(Calendar.HOUR_OF_DAY,hours);
+                    calInner.set(Calendar.MINUTE,minutes);
 
-//                    Date newDate = new SimpleDateFormat(Config.DATE_FORMAT.concat(Config.SPACE).concat(Config.HOUR_FORMAT))
-//                            .parse(formattedDate.concat(Config.SPACE).concat(formattedHour));
-
-                    if (start) {
-                        selectedItem.setStart(cal.getTime());
-                        editStartTime.setText(selectedItem.getStartHour());
-                    } else {
-                        //selectedItem.setEnd(newDate);
-                        //editEndTime.setText(selectedItem.getEndHour());
-
-                    }
-
-                   // dateCorrectness();
-
+                    selectedItem.setStart(calInner.getTime());
+                    editStartTime.setText(selectedItem.getStartHour());
+                   
 
                 } catch (Throwable e) {
                     Logger.debug(ManageItemFragment.this, e);
@@ -272,7 +244,7 @@ public class ManageItemFragment extends Fragment {
         editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDate(true);
+                setDate();
             }
         });
 
@@ -281,7 +253,7 @@ public class ManageItemFragment extends Fragment {
         editStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setTime(true);
+                setTime();
             }
         });
 
@@ -353,9 +325,9 @@ public class ManageItemFragment extends Fragment {
 
         selectedItem.setTitle(editTitle.getText().toString());
         selectedItem.setDescription(editDescription.getText().toString());
-        String startDate = editStartDate.getText().toString().concat("|").concat(editStartTime.getText().toString());
-        Date sDate = selectedItem.toDate(startDate, Config.DATE_FORMAT.concat("|").concat(Config.getInstance().HOUR_FORMAT()));
-        selectedItem.setStart(sDate);
+        //String startDate = editStartDate.getText().toString().concat("|").concat(editStartTime.getText().toString());
+        //Date sDate = selectedItem.toDate(startDate, Config.DATE_FORMAT.concat("|").concat(Config.getInstance().HOUR_FORMAT()));
+        //selectedItem.setStart(sDate);
 
         //selectedItem.setAllDay(checkBoxAllDay.isChecked());
 
