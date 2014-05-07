@@ -206,16 +206,18 @@ public class Event implements CRUDable {
         }
     }
 
-    private Event updateDate() {
+    private long updatedDate() {
         LocalDateTime lDateTime = new DateTime(start).toLocalDateTime();
+
         int hour = lDateTime.getHourOfDay();
         int minute = lDateTime.getMinuteOfHour();
-
+        DateTime date = new DateTime(DateTimeZone.getDefault()).toLocalDate().toDateTimeAtStartOfDay();
         Calendar calendar = GregorianCalendar.getInstance(TimeZone.getDefault());
+        calendar.setTime(date.toDate());
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
-        start = calendar.getTime();
-        return this;
+        //start = calendar.getTime();
+        return calendar.getTime().getTime();
     }
 
     private boolean isAssignableRepeating() {
@@ -223,7 +225,7 @@ public class Event implements CRUDable {
         int today = dateTime.toLocalDateTime().dayOfWeek().get();
         DaysOfWeek todayOfWeek = Config.dayReference().get(today);
         return (DaysOfWeek.getRepeating(getRepeatBit()).contains(todayOfWeek)) &&
-                dateTime.isBefore(updateDate().getStart().getTime());
+                dateTime.isBefore(updatedDate());
     }
 
     private boolean isAssignableNoRepeating() {

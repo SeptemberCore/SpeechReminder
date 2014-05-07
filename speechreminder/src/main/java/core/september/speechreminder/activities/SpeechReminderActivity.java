@@ -152,6 +152,12 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.list_item_fragment, firstFragment).commit();*/
     }
+    
+    @Override
+        public void onBackPressed(){ 
+				fullscreen.show();
+				super.onBackPressed();
+			}
 
     @Override
     public void onResume() {
@@ -362,6 +368,12 @@ public class SpeechReminderActivity extends AbstractNavigationDrawerActivity imp
             return super.onOptionsItemSelected(item);
 
         }
+        
+        @Override
+        public void onBackPressed(){ 
+				fullscreen.show();
+				super.onBackPressed();
+			}
     }
 
    /* @Override
