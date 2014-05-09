@@ -1,4 +1,4 @@
 /build
 speechreminder.apk
 speechreminder.iml
-build.gradle
+#build.gradle
