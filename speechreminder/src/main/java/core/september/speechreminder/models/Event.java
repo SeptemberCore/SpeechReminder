@@ -245,7 +245,8 @@ public class Event implements CRUDable {
 
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
         //am.cancel(pi);
-        am.set(AlarmManager.RTC_WAKEUP, getStart().getTime(), pi);
+long repeatDate = getRepeatBit() > 0 ? updatedDate() :getStart().getTime();
+        am.set(AlarmManager.RTC_WAKEUP, repeatDate, pi);
     }
 
     @Override
