@@ -1,4 +1,8 @@
 /build
 speechreminder.apk
 speechreminder.iml
+<<<<<<< HEAD
 #build.gradle
+=======
+build.gradle
+>>>>>>> 1297dffd5f9cab0a34e5e8f88100df49005f1a8b
